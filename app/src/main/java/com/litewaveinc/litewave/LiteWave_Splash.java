@@ -26,6 +26,10 @@ public class LiteWave_Splash extends AppCompatActivity {
             }
         };
         timer.start();
+
+        // Check to see if there is a show then goto the chooselevel
+        // Call getEvents 
+        // Else display No Events today.
     }
 
     @Override
