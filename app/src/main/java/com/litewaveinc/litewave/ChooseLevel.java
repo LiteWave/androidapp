@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.support.v7.app.ActionBar;
 
 public class ChooseLevel extends AppCompatActivity {
 
@@ -13,6 +14,8 @@ public class ChooseLevel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_level);
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.hide();
         Button imageButton = (Button) this.findViewById(R.id.button1);
         imageButton.setText("Text");
         Thread timer = new Thread(){

@@ -18,10 +18,10 @@ public class GameTime extends AppCompatActivity {
                     sleep(3000);
                 }catch (InterruptedException e) {
                     e.printStackTrace();
-                }finally{
-                    Intent myIntent = new Intent(GameTime.this, ShowStarts.class);
-                    startActivity(myIntent);
-                }
+                }/*finally{
+                    //Intent myIntent = new Intent(GameTime.this, ShowStarts.class);
+                    //startActivity(myIntent);
+                }*/
             }
         };
         timer.start();
