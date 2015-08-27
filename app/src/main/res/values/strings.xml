@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">LiteWave</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_choose_event">ChooseEvent</string>
+    <string name="title_activity_choose_level">Choose Level</string>
+    <string name="title_activity_choose_seat">Choose Seat</string>
+    <string name="title_activity_game_time">Game Time</string>
+
+    <string name="title_activity_show_starts">Show Starts</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_winners_circle">Winners Circle</string>
+
+    <string name="title_activity_thanks_for_participating">Thanks For Participating</string>
+</resources>
