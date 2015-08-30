@@ -16,4 +16,7 @@
     <string name="title_activity_thanks_for_participating">Thanks For Participating</string>
 
     <string name="getEventsURL">http://104.130.156.82:8080/api/clients/5260316cbf80240000000001/events</string>
+    <string name="noEventsToday">"No events today"</string>
+
+    <string name="getStadiumsURL">http://104.130.156.82:8080/api/stadiums</string>
 </resources>

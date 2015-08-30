@@ -18,10 +18,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChooseEvent"
-            android:label="@string/title_activity_choose_event" >
-        </activity>
-        <activity
             android:name=".ChooseLevel"
             android:label="@string/title_activity_choose_level" >
         </activity>

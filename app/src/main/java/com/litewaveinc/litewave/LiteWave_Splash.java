@@ -1,13 +1,25 @@
 package com.litewaveinc.litewave;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class LiteWave_Splash extends AppCompatActivity {
+
+    Handler mHandler = new Handler();
+    TextView noEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,24 +27,82 @@ public class LiteWave_Splash extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_lite_wave__splash);
-        Thread timer = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
-                }catch (InterruptedException e) {
+        noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
+
+        new checkEvents().execute("");
+    }
+
+    private class checkEvents extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            // do while for future retry logic
+            //do {
+                try {
+                    Thread.sleep(3000);
+                    return RESTClientHelper.callRESTService(getString(R.string.getEventsURL));
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-                }finally{
-                    RESTClientHelper.callRESTService(getString(R.string.getEventsURL));
-                    Intent myIntent = new Intent(LiteWave_Splash.this, ChooseLevel.class);
-                    startActivity(myIntent);
+                }
+            //} while (RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null);
+            return null;
+        }
+
+        private String getCurrentEvent(JSONArray eventCollection) throws JSONException {
+            String result = "";
+            for(int i = 0 ; i < eventCollection.length(); i++){
+                JSONObject jsonobject = eventCollection.getJSONObject(i);
+                String serverDate = jsonobject.getString("date");
+                serverDate = serverDate.substring(0,serverDate.indexOf('T'));
+
+                Date currentDate = Calendar.getInstance().getTime();
+                java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("y-MM-d");
+                String formattedCurrentDate = simpleDateFormat.format(currentDate);
+
+                if(0 == serverDate.compareTo(formattedCurrentDate))
+                {
+                    result = jsonobject.getString("_id");
+                    return result;
                 }
             }
-        };
-        timer.start();
+            return null;
+        }
 
-        // Check to see if there is a show then goto the chooselevel
-        // Call getEvents
-        // Else display No Events today displayed in text.
+        @Override
+        protected void onPostExecute(String result) {
+            String currentStadiumID = "";
+
+            if(result != "" && result !="[]") {
+                try {
+                     currentStadiumID = getCurrentEvent(JSONHelper.getJSONArray(result));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(LiteWave_Splash.this, ChooseLevel.class);
+                Bundle b = new Bundle();
+                b.putString("StadiumID", currentStadiumID); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                noEvents.setText(R.string.noEventsToday);
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
+            {
+                noEvents.setText(R.string.noEventsToday);
+            }
+        }
     }
 
     @Override

@@ -1,57 +1,52 @@
 package com.litewaveinc.litewave;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.support.v7.app.ActionBar;
+import android.widget.TextView;
+import android.os.Handler;
 
 public class ChooseLevel extends AppCompatActivity {
+
+    //private Button _imageButton;
+    Handler mHandler = new Handler();
+    TextView textView1;
+    int num1=0,num2=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_level);
-        //ActionBar actionBar = getSupportActionBar();
-        //actionBar.hide();
-        Button imageButton = (Button) this.findViewById(R.id.button1);
-        imageButton.setText("Text");
-        Thread timer = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }finally{
-                    Intent myIntent = new Intent(ChooseLevel.this, ChooseSeat.class);
-                    startActivity(myIntent);
+        //Then grab the id in your new Activity:
+
+        Bundle b = getIntent().getExtras();
+        String value = b.getString("StadiumID");
+
+        textView1 = (TextView) this.findViewById(R.id.textView1);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                {
+                    textView1.setText(String.valueOf(num1)+" ");
+                    num1++;
+                    if (num1<10)
+                    {
+                        mHandler.postDelayed(this, 1000);
+                    }
                 }
             }
         };
-        timer.start();
+        mHandler.post(runnable);
+
+        Thread mythread = new Thread(runnable);
+        mythread.start();
+
+        //ActionBar actionBar = getSupportActionBar();
+        //actionBar.hide();
+        //this._imageButton = (Button) this.findViewById(R.id.button1);
+        //_imageButton.setText("Text");
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_choose_level, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

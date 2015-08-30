@@ -10,12 +10,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import android.os.AsyncTask;
 
 /**
  * Created by jonathan on 8/28/15.
  */
 public class RESTClientHelper {
-    public static JSONArray callRESTService(String enpointURL) {
+
+
+    public static String callRESTService(String enpointURL) {
+        String response = null;
+
         try {
             URL url = new URL(enpointURL);
             HttpURLConnection conn;
@@ -31,11 +36,7 @@ public class RESTClientHelper {
                 result.append(line);
             }
             rd.close();
-            String responseText = result.toString();
-            return(new JSONArray(responseText));
-            //mainResponseJSONObject = mainResponseJSONObject;
-        } catch (JSONException e) {
-            e.printStackTrace();
+            response = result.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -43,8 +44,7 @@ public class RESTClientHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally {
-            return null;
-        }
+
+        return response;
     }
 }

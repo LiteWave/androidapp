@@ -7,8 +7,20 @@
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
     <ImageView
+        android:visibility="visible"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/defaultsplash" />
+
+    <TextView
+        android:id="@+id/textViewNoEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:enabled="false"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textColor="#010101" />
 
 </RelativeLayout>
