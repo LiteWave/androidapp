@@ -29,13 +29,14 @@ public class LiteWave_Splash extends AppCompatActivity {
         setContentView(R.layout.activity_lite_wave__splash);
         noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
 
+        //Excecutes a Async Task from the main UX thread
         new checkEvents().execute("");
     }
 
     private class checkEvents extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            // do while for future retry logic
+            //TODO: do while for future retry logic
             //do {
                 try {
                     Thread.sleep(3000);
@@ -56,9 +57,11 @@ public class LiteWave_Splash extends AppCompatActivity {
                 serverDate = serverDate.substring(0,serverDate.indexOf('T'));
 
                 Date currentDate = Calendar.getInstance().getTime();
+                //Format the datetime to match the format so we con compare against the current date
                 java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("y-MM-d");
                 String formattedCurrentDate = simpleDateFormat.format(currentDate);
 
+                //If there is an event today return the stadium id.
                 if(0 == serverDate.compareTo(formattedCurrentDate))
                 {
                     result = jsonobject.getString("_id");
@@ -80,7 +83,9 @@ public class LiteWave_Splash extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(LiteWave_Splash.this, ChooseLevel.class);
+                //Setup a bundle to be passed to the next intent
                 Bundle b = new Bundle();
+                //Pass the StadiumID to be used to get the seat information
                 b.putString("StadiumID", currentStadiumID); //Your id
                 intent.putExtras(b); //Put your id to your next Intent
                 startActivity(intent);
