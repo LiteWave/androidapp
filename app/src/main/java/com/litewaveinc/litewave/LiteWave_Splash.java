@@ -39,6 +39,7 @@ public class LiteWave_Splash extends AppCompatActivity {
             //do {
                 try {
                     Thread.sleep(3000);
+                    //TODO: Move URL to resource
                     return RESTClientHelper.callRESTService(getString(R.string.getEventsURL));
                 } catch (InterruptedException e) {
                     e.printStackTrace();

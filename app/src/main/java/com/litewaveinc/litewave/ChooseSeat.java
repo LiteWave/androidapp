@@ -13,8 +13,7 @@ public class ChooseSeat extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_seat);
-        Button imageButton = (Button) this.findViewById(R.id.button1);
-        imageButton.setText("Text");
+
         Thread timer = new Thread(){
             public void run(){
                 try{
