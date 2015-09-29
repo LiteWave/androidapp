@@ -1,8 +1,10 @@
 package com.litewaveinc.litewave;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.Handler;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class ChooseLevel extends AppCompatActivity {
 
@@ -45,9 +54,12 @@ public class ChooseLevel extends AppCompatActivity {
 
 
         Bundle b = getIntent().getExtras();
-        String value = b.getString("StadiumID");
+        String stadiumID = b.getString("StadiumID");
 
         //TODO: Call Webservice to get the stadium information.
+        //Excecutes a Async Task from the main UX thread
+        new getLevels().execute(stadiumID);
+
         //Create Buttons dependent on service call on number of rows per stadium.
         //TODO: Add the iterator to number of levels in the stadium.
         for(int j=0;j<3;j++) {
@@ -90,6 +102,7 @@ public class ChooseLevel extends AppCompatActivity {
         }
 
 
+
         //SAMPLE CODE: This code creates a runable to update text at runtime if needed.
         /*textView1 = (TextView) this.findViewById(R.id.textView1);
 
@@ -111,5 +124,77 @@ public class ChooseLevel extends AppCompatActivity {
         Thread mythread = new Thread(runnable);
         mythread.start();*/
     }
+
+    private class getLevels extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String getStadiumURL = getString(R.string.getStadiumsURL).replaceFirst("/:stadiumid", "test");
+            //TODO: do while for future retry logic
+            //do {
+            // Construct URL
+
+            return RESTClientHelper.callRESTService(getStadiumURL);
+            //} while (RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null);
+
+        }
+
+        private String getCurrentLevels(JSONArray eventCollection) throws JSONException {
+            String result = "";
+            for(int i = 0 ; i < eventCollection.length(); i++){
+                JSONObject jsonobject = eventCollection.getJSONObject(i);
+                String serverDate = jsonobject.getString("date");
+                serverDate = serverDate.substring(0,serverDate.indexOf('T'));
+
+                Date currentDate = Calendar.getInstance().getTime();
+                //Format the datetime to match the format so we con compare against the current date
+                java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("y-MM-d");
+                String formattedCurrentDate = simpleDateFormat.format(currentDate);
+
+                //If there is an event today return the stadium id.
+                if(0 == serverDate.compareTo(formattedCurrentDate))
+                {
+                    result = jsonobject.getString("_id");
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            String currentStadiumID = "";
+            //BUG: Seems to be a issue when no events today. currentStadiumID will be null (need to fix)
+            if(result != "" && result !="[]") {
+                //currentStadiumID = getCurrentEvent(JSONHelper.getJSONArray(result));
+
+                Intent intent = new Intent(ChooseLevel.this, ChooseSeat.class);
+                //Setup a bundle to be passed to the next intent
+                Bundle b = new Bundle();
+                //Pass the StadiumID to be used to get the seat information
+                b.putString("StadiumID", currentStadiumID); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivity(intent);
+                finish();
+            }
+            else
+            {
+                //noEvents.setText(R.string.noEventsToday);
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
+            {
+                //noEvents.setText(R.string.noEventsToday);
+            }
+        }
+    }
+
 
 }
