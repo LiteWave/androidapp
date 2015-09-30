@@ -1,9 +1,7 @@
 package com.litewaveinc.litewave;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +11,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.os.Handler;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 
 public class ChooseLevel extends AppCompatActivity {
 
@@ -51,7 +45,6 @@ public class ChooseLevel extends AppCompatActivity {
 
         //Set the margin spacing for the buttons so they are distributed.
         params.setMargins(0,24,0,24);
-
 
         Bundle b = getIntent().getExtras();
         String stadiumID = b.getString("StadiumID");
@@ -90,7 +83,6 @@ public class ChooseLevel extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Clicked Button Index :" + index,
                             Toast.LENGTH_LONG).show();
-
                 }
             });
 
@@ -128,52 +120,42 @@ public class ChooseLevel extends AppCompatActivity {
     private class getLevels extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            String getStadiumURL = getString(R.string.getStadiumsURL).replaceFirst("/:stadiumid", "test");
+            String getStadiumInfoURL = getString(R.string.getStadiumInfoURL);
+            getStadiumInfoURL = getStadiumInfoURL.replaceFirst("STADIUMID", params[0].toString());
             //TODO: do while for future retry logic
             //do {
-            // Construct URL
-
-            return RESTClientHelper.callRESTService(getStadiumURL);
+            return RESTClientHelper.callRESTService(getStadiumInfoURL);
             //} while (RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null);
 
         }
 
-        private String getCurrentLevels(JSONArray eventCollection) throws JSONException {
+        private ArrayList<String> getCurrentLevels(JSONArray stadiumSeatingCollection) throws JSONException {
             String result = "";
-            for(int i = 0 ; i < eventCollection.length(); i++){
-                JSONObject jsonobject = eventCollection.getJSONObject(i);
-                String serverDate = jsonobject.getString("date");
-                serverDate = serverDate.substring(0,serverDate.indexOf('T'));
-
-                Date currentDate = Calendar.getInstance().getTime();
-                //Format the datetime to match the format so we con compare against the current date
-                java.text.SimpleDateFormat simpleDateFormat = new java.text.SimpleDateFormat("y-MM-d");
-                String formattedCurrentDate = simpleDateFormat.format(currentDate);
-
-                //If there is an event today return the stadium id.
-                if(0 == serverDate.compareTo(formattedCurrentDate))
-                {
-                    result = jsonobject.getString("_id");
-                    return result;
-                }
+            ArrayList<String> sectionList = new ArrayList<String>();
+            for(int i = 0 ; i < stadiumSeatingCollection.length(); i++){
+                sectionList.add(stadiumSeatingCollection.getJSONObject(i).getString("name"));
             }
-            return null;
+            return sectionList;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            String currentStadiumID = "";
+            ArrayList<String> levels;
             //BUG: Seems to be a issue when no events today. currentStadiumID will be null (need to fix)
             if(result != "" && result !="[]") {
-                //currentStadiumID = getCurrentEvent(JSONHelper.getJSONArray(result));
+                try {
+                    levels = getCurrentLevels(JSONHelper.getJSONArray(result));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                Intent intent = new Intent(ChooseLevel.this, ChooseSeat.class);
+                //Intent intent = new Intent(ChooseLevel.this, ChooseSeat.class);
                 //Setup a bundle to be passed to the next intent
                 Bundle b = new Bundle();
                 //Pass the StadiumID to be used to get the seat information
-                b.putString("StadiumID", currentStadiumID); //Your id
-                intent.putExtras(b); //Put your id to your next Intent
-                startActivity(intent);
+                //b.putString("StadiumID", currentStadiumID); //Your id
+                //intent.putExtras(b); //Put your id to your next Intent
+                //startActivity(intent);
                 finish();
             }
             else

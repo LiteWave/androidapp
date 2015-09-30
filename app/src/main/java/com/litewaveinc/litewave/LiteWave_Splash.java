@@ -48,7 +48,7 @@ public class LiteWave_Splash extends AppCompatActivity {
             return null;
         }
 
-        private String getCurrentEvent(JSONArray eventCollection) throws JSONException {
+        private String getCurrentStadium(JSONArray eventCollection) throws JSONException {
             String result = "";
             for(int i = 0 ; i < eventCollection.length(); i++){
                 JSONObject jsonobject = eventCollection.getJSONObject(i);
@@ -63,7 +63,7 @@ public class LiteWave_Splash extends AppCompatActivity {
                 //If there is an event today return the stadium id.
                 if(0 == serverDate.compareTo(formattedCurrentDate))
                 {
-                    result = jsonobject.getString("_id");
+                    result = jsonobject.getString("_stadiumId");
                     return result;
                 }
             }
@@ -76,7 +76,7 @@ public class LiteWave_Splash extends AppCompatActivity {
             //BUG: Seems to be a issue when no events today. currentStadiumID will be null (need to fix)
             if(result != "" && result !="[]") {
                 try {
-                     currentStadiumID = getCurrentEvent(JSONHelper.getJSONArray(result));
+                     currentStadiumID = getCurrentStadium(JSONHelper.getJSONArray(result));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
