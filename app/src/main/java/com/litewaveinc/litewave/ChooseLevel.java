@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class ChooseLevel extends AppCompatActivity {
 
-    //CODE SAMPLE as part of runnable sample below.
+    //CODE SAMPLE: as part of runnable sample below.
     //private Button _imageButton;
     //Handler mHandler = new Handler();
     //TextView textView1;
@@ -131,6 +131,7 @@ public class ChooseLevel extends AppCompatActivity {
 
         private ArrayList<String> getCurrentLevels(JSONArray stadiumSeatingCollection) throws JSONException {
             String result = "";
+            //NOTE: Sequence Section->Level->Row-Seat
             ArrayList<String> sectionList = new ArrayList<String>();
             for(int i = 0 ; i < stadiumSeatingCollection.length(); i++){
                 sectionList.add(stadiumSeatingCollection.getJSONObject(i).getString("name"));

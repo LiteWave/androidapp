@@ -73,8 +73,8 @@ public class LiteWave_Splash extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             String currentStadiumID = "";
-            //BUG: Seems to be a issue when no events today. currentStadiumID will be null (need to fix)
-            if(result != "" && result !="[]") {
+
+            if(result != "" && result !="[]" && result != null) {
                 try {
                      currentStadiumID = getCurrentStadium(JSONHelper.getJSONArray(result));
 
@@ -92,6 +92,7 @@ public class LiteWave_Splash extends AppCompatActivity {
             }
             else
             {
+                //TOD: Possibly add a new activity for no events or pass to the next choose level activity.
                 noEvents.setText(R.string.noEventsToday);
             }
         }
