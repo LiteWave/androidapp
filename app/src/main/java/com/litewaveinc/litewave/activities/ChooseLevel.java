@@ -175,10 +175,7 @@ public class ChooseLevel extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
-            {
-                //noEvents.setText(R.string.noEventsToday);
-            }
+
         }
     }
 

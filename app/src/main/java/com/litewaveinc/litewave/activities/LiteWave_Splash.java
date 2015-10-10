@@ -24,9 +24,9 @@ import java.util.Date;
 public class LiteWave_Splash extends AppCompatActivity {
 
     public static boolean _isDebug = false;
+    private String _eventsURL = "";
 
-    Handler mHandler = new Handler();
-    TextView noEvents;
+    TextView _noEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,12 @@ public class LiteWave_Splash extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         setContentView(R.layout.activity_lite_wave__splash);
-        noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
+        _noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
+
+        this._eventsURL = getString(R.string.apiURL) + getString(R.string.getEvents);
+
+        this._eventsURL = this._eventsURL.replaceFirst("\\[clientID\\]",
+                                getString(R.string.clientID_Blazers));
 
         //Excecutes a Async Task from the main UX thread
         new checkEvents().execute("");
@@ -47,7 +52,7 @@ public class LiteWave_Splash extends AppCompatActivity {
             //do {
                 try {
                     Thread.sleep(3000);
-                    return RESTClientHelper.callRESTService(getString(R.string.getEventsURL));
+                    return RESTClientHelper.callRESTService(_eventsURL);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -80,14 +85,12 @@ public class LiteWave_Splash extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             String currentStadiumID = "";
+            try {
+            if((result != "" && result !="[]" && result != null) &&
+                    (getCurrentStadium(JSONHelper.getJSONArray(result)) != null))
+            {
+                currentStadiumID = getCurrentStadium(JSONHelper.getJSONArray(result));
 
-            if(result != "" && result !="[]" && result != null) {
-                try {
-                     currentStadiumID = getCurrentStadium(JSONHelper.getJSONArray(result));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 Intent intent = new Intent(LiteWave_Splash.this, ChooseLevel.class);
                 //Setup a bundle to be passed to the next intent
                 Bundle b = new Bundle();
@@ -100,7 +103,10 @@ public class LiteWave_Splash extends AppCompatActivity {
             else
             {
                 //TOD: Possibly add a new activity for no events or pass to the next choose level activity.
-                noEvents.setText(R.string.noEventsToday);
+                _noEvents.setText(R.string.noEventsToday);
+            }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
 
@@ -115,9 +121,9 @@ public class LiteWave_Splash extends AppCompatActivity {
             {
                 //TODO: Maybe add debug URLS?
             }
-            else if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
+            else if(RESTClientHelper.callRESTService(_eventsURL) == null)
             {
-                noEvents.setText(R.string.noEventsToday);
+                _noEvents.setText(R.string.noEventsToday);
             }
         }
     }
