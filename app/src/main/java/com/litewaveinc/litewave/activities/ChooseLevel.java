@@ -34,6 +34,7 @@ public class ChooseLevel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_choose_level);
         //OPTION: This is the option to hide the title bar. Need to decide on best layout.
         ActionBar actionBar = getSupportActionBar();
