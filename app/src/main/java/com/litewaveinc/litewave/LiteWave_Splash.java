@@ -18,6 +18,8 @@ import java.util.Date;
 
 public class LiteWave_Splash extends AppCompatActivity {
 
+    public static boolean _isDebug = false;
+
     Handler mHandler = new Handler();
     TextView noEvents;
 
@@ -104,7 +106,11 @@ public class LiteWave_Splash extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(Void... values) {
-            if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
+            if(_isDebug)
+            {
+                //TODO: Maybe add debug URLS?
+            }
+            else if(RESTClientHelper.callRESTService(getString(R.string.getEventsURL)) == null)
             {
                 noEvents.setText(R.string.noEventsToday);
             }

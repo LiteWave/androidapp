@@ -18,11 +18,11 @@ import android.os.AsyncTask;
 public class RESTClientHelper {
 
 
-    public static String callRESTService(String enpointURL) {
+    public static String callRESTService(String endpointURL) {
         String response = null;
 
         try {
-            URL url = new URL(enpointURL);
+            URL url = new URL(endpointURL);
             HttpURLConnection conn;
             BufferedReader rd;
             String line;

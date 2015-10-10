@@ -55,12 +55,12 @@ public class ChooseLevel extends AppCompatActivity {
 
         //Create Buttons dependent on service call on number of rows per stadium.
         //TODO: Add the iterator to number of levels in the stadium.
+        //TODO: Move logic to post execute asyc task?
         for(int j=0;j<3;j++) {
             // Create LinearLayout
             LinearLayout ll = new LinearLayout(this);
             ll.setOrientation(LinearLayout.VERTICAL);
             ll.setGravity(Gravity.CENTER_HORIZONTAL);
-
 
             final int index = j;
             final Button btn = new Button(this);
