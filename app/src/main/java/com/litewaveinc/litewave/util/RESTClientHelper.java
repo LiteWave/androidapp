@@ -1,4 +1,4 @@
-package com.litewaveinc.litewave;
+package com.litewaveinc.litewave.util;
 
 import org.json.JSONArray;
 import org.json.JSONException;

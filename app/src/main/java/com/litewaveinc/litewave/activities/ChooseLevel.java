@@ -1,4 +1,4 @@
-package com.litewaveinc.litewave;
+package com.litewaveinc.litewave.activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.litewaveinc.litewave.util.JSONHelper;
+import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.util.RESTClientHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 

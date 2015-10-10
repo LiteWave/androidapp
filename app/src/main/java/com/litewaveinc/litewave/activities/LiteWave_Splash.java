@@ -1,4 +1,4 @@
-package com.litewaveinc.litewave;
+package com.litewaveinc.litewave.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.litewaveinc.litewave.util.JSONHelper;
+import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.util.RESTClientHelper;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

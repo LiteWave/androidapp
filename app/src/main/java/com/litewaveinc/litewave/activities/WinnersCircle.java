@@ -1,5 +1,6 @@
-package com.litewaveinc.litewave;
+package com.litewaveinc.litewave.activities;
 
+import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -16,7 +17,7 @@ import android.view.View;
  *
  * @see SystemUiHider
  */
-public class ThanksForParticipating extends Activity {
+public class WinnersCircle extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -49,7 +50,7 @@ public class ThanksForParticipating extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_thanks_for_participating);
+        setContentView(R.layout.activity_winners_circle);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
