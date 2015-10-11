@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import com.litewaveinc.litewave.util.JSONHelper;
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.util.RESTClientHelper;
+import com.litewaveinc.litewave.services.API;
+import com.litewaveinc.litewave.services.APIResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +31,15 @@ public class LiteWave_Splash extends AppCompatActivity {
     Handler mHandler = new Handler();
     TextView noEvents;
 
+    public class StadiumsResponse extends APIResponse {
+
+        @Override
+        public void success(JSONArray content) {
+            Log.d("Debug", content.toString());
+            System.out.println(content.toString());
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +50,8 @@ public class LiteWave_Splash extends AppCompatActivity {
 
         //Excecutes a Async Task from the main UX thread
         new checkEvents().execute("");
+
+        API.getEvents(new StadiumsResponse());
     }
 
     private class checkEvents extends AsyncTask<String, Void, String> {
