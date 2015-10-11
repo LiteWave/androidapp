@@ -31,12 +31,11 @@ public class LiteWave_Splash extends AppCompatActivity {
     Handler mHandler = new Handler();
     TextView noEvents;
 
-    public class StadiumsResponse extends APIResponse {
+    public class EventsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
             Log.d("Debug", content.toString());
-            System.out.println(content.toString());
         }
     }
 
@@ -51,7 +50,7 @@ public class LiteWave_Splash extends AppCompatActivity {
         //Excecutes a Async Task from the main UX thread
         new checkEvents().execute("");
 
-        API.getEvents(new StadiumsResponse());
+        API.getEvents(new EventsResponse());
     }
 
     private class checkEvents extends AsyncTask<String, Void, String> {
