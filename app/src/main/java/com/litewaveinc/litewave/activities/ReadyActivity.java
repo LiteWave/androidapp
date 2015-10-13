@@ -1,6 +1,5 @@
 package com.litewaveinc.litewave.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,12 +7,12 @@ import android.view.MenuItem;
 
 import com.litewaveinc.litewave.R;
 
-public class GameTime extends AppCompatActivity {
+public class ReadyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_time);
+        setContentView(R.layout.activity_ready);
         Thread timer = new Thread(){
             public void run(){
                 try{
@@ -21,7 +20,7 @@ public class GameTime extends AppCompatActivity {
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }/*finally{
-                    //Intent myIntent = new Intent(GameTime.this, ShowStarts.class);
+                    //Intent myIntent = new Intent(ReadyActivity.this, ShowStarts.class);
                     //startActivity(myIntent);
                 }*/
             }

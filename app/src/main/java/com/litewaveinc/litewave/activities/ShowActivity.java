@@ -17,7 +17,7 @@ import android.view.View;
  *
  * @see SystemUiHider
  */
-public class WinnersCircle extends Activity {
+public class ShowActivity extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -50,7 +50,7 @@ public class WinnersCircle extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_winners_circle);
+        setContentView(R.layout.activity_show);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
