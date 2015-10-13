@@ -17,7 +17,7 @@ import android.view.View;
  *
  * @see SystemUiHider
  */
-public class ThanksForParticipating extends Activity {
+public class ResultsActivity extends Activity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -50,7 +50,7 @@ public class ThanksForParticipating extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_thanks_for_participating);
+        setContentView(R.layout.activity_results);
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);

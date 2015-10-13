@@ -8,12 +8,12 @@ import android.view.MenuItem;
 
 import com.litewaveinc.litewave.R;
 
-public class ChooseSeat extends AppCompatActivity {
+public class SeatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_seat);
+        setContentView(R.layout.activity_seat);
 
         Thread timer = new Thread(){
             public void run(){
@@ -22,7 +22,7 @@ public class ChooseSeat extends AppCompatActivity {
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally{
-                    Intent myIntent = new Intent(ChooseSeat.this, GameTime.class);
+                    Intent myIntent = new Intent(SeatActivity.this, ReadyActivity.class);
                     startActivity(myIntent);
                 }
             }

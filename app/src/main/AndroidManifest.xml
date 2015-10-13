@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activities.LiteWave_Splash"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,25 +18,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ChooseLevel"
+            android:name=".activities.LevelActivity"
             android:label="@string/title_activity_choose_level" >
         </activity>
         <activity
-            android:name=".activities.ChooseSeat"
+            android:name=".activities.SeatActivity"
             android:label="@string/title_activity_choose_seat" >
         </activity>
         <activity
-            android:name=".activities.GameTime"
+            android:name=".activities.ReadyActivity"
             android:label="@string/title_activity_game_time" >
         </activity>
         <activity
-            android:name=".activities.WinnersCircle"
+            android:name=".activities.ShowActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_winners_circle"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity
-            android:name=".activities.ThanksForParticipating"
+            android:name=".activities.ResultsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_thanks_for_participating"
             android:theme="@style/FullscreenTheme" >
