@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONArray content) {
-            Log.d("Debug", content.toString());
             if (content.length() > 0) {
                 for(int i = 0 ; i < content.length(); i++) {
                     JSONObject event = null;
@@ -75,10 +74,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
 
+        API.init(getApplicationContext());
+
         checkEvents();
     }
 
     protected void checkEvents() {
+
         API.getEvents(new EventsResponse());
     }
 

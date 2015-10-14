@@ -1,6 +1,8 @@
 package com.litewaveinc.litewave.services;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
 
 import org.json.JSONArray;
 
@@ -13,7 +15,6 @@ import com.litewaveinc.litewave.R;
 
 import cz.msebera.android.httpclient.Header;
 
-
 /**
  * Created by jonathan on 10/10/15.
  */
@@ -21,34 +22,44 @@ import cz.msebera.android.httpclient.Header;
 
 public final class API {
 
-    public static void getEvents(Context context, IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events", context, response);
+    static protected Context appContext;
+
+    public static void init(Context context) {
+        API.appContext = context;
+    }
+
+    public static void getEvents(IAPIResponse response) {
+        API.get("clients/5260316cbf80240000000001/events", response);
     }
 
     public static void getEvent(String eventID, Context context, IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events/" + eventID, context, response);
+        API.get("clients/5260316cbf80240000000001/events/" + eventID, response);
     }
 
-    private static void get(String url, Context context, IAPIResponse response) {
-        API.request(url, "GET", new RequestParams(), context, response);
+    private static void get(String url, IAPIResponse response) {
+        API.request(url, "GET", new RequestParams(), response);
     }
 
-    private static void post(String url, RequestParams params, Context context, IAPIResponse response) {
-        API.request(url, "POST", params, context, response);
+    private static void post(String url, RequestParams params, IAPIResponse response) {
+        API.request(url, "POST", params, response);
     }
 
-    private static void put(String url, RequestParams params, Context context, IAPIResponse response) {
-        API.request(url, "PUT", params, context, response);
+    private static void put(String url, RequestParams params, IAPIResponse response) {
+        API.request(url, "PUT", params, response);
     }
 
-    private static void delete(String url, Context context, IAPIResponse response) {
-        API.request(url, "DELETE", new RequestParams(), context, response);
+    private static void delete(String url, IAPIResponse response) {
+        API.request(url, "DELETE", new RequestParams(), response);
     }
 
-    private static void request(String url, String method, RequestParams params, Context context, final IAPIResponse apiResponse) {
+    private static void request(String url, String method, RequestParams params, final IAPIResponse apiResponse) {
+        if (appContext == null) {
+            Log.d("Debug", "Need to call init first.");
+            throw new UnsupportedOperationException();
+        }
 
         StringBuilder apiURL = new StringBuilder();
-        apiURL.append(context.getResources().getString(R.string.apiURL));
+        apiURL.append(appContext.getString(R.string.apiURL));
         apiURL.append(url);
 
         ResponseHandlerInterface responseHandler = new JsonHttpResponseHandler() {
