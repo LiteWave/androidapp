@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void checkEvents() {
-        API.getEvents(new EventsResponse());
+        API.getEvents(getApplicationContext(), new EventsResponse());
     }
 
     protected void showNoEvents() {
