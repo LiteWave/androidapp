@@ -25,6 +25,7 @@ public class LiteWave_Splash extends AppCompatActivity {
     public static boolean _isDebug = false;
     private String _eventsURL = "";
 
+    //Text element for displaying no events.
     TextView _noEvents;
 
     public class EventsResponse extends APIResponse {
