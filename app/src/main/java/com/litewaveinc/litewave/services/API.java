@@ -1,25 +1,15 @@
 package com.litewaveinc.litewave.services;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Hashtable;
+import android.content.Context;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
+
+import com.litewaveinc.litewave.R;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -31,34 +21,34 @@ import cz.msebera.android.httpclient.Header;
 
 public final class API {
 
-    public static void getEvents(IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events", response);
+    public static void getEvents(Context context, IAPIResponse response) {
+        API.get("clients/5260316cbf80240000000001/events", context, response);
     }
 
-    public static void getEvent(String eventID, IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events/"+eventID, response);
+    public static void getEvent(String eventID, Context context, IAPIResponse response) {
+        API.get("clients/5260316cbf80240000000001/events/" + eventID, context, response);
     }
 
-    private static void get(String url, IAPIResponse response) {
-        API.request(url, "GET", new RequestParams(), response);
+    private static void get(String url, Context context, IAPIResponse response) {
+        API.request(url, "GET", new RequestParams(), context, response);
     }
 
-    private static void post(String url, RequestParams params, IAPIResponse response) {
-        API.request(url, "POST", params, response);
+    private static void post(String url, RequestParams params, Context context, IAPIResponse response) {
+        API.request(url, "POST", params, context, response);
     }
 
-    private static void put(String url, RequestParams params, IAPIResponse response) {
-        API.request(url, "PUT", params, response);
+    private static void put(String url, RequestParams params, Context context, IAPIResponse response) {
+        API.request(url, "PUT", params, context, response);
     }
 
-    private static void delete(String url, IAPIResponse response) {
-        API.request(url, "DELETE", new RequestParams(), response);
+    private static void delete(String url, Context context, IAPIResponse response) {
+        API.request(url, "DELETE", new RequestParams(), context, response);
     }
 
-    private static void request(String url, String method, RequestParams params, final IAPIResponse apiResponse) {
+    private static void request(String url, String method, RequestParams params, Context context, final IAPIResponse apiResponse) {
 
         StringBuilder apiURL = new StringBuilder();
-        apiURL.append("http://www.litewaveinc.com/api/");
+        apiURL.append(context.getResources().getString(R.string.apiURL));
         apiURL.append(url);
 
         ResponseHandlerInterface responseHandler = new JsonHttpResponseHandler() {

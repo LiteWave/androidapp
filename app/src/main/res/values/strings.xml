@@ -2,6 +2,8 @@
     <string name="app_name">LiteWave</string>
 
     <string name="action_settings">Settings</string>
+
+    //Activity Resources
     <string name="title_activity_choose_event">ChooseEvent</string>
     <string name="title_activity_choose_level">Choose Level</string>
     <string name="title_activity_choose_seat">Choose Seat</string>
@@ -11,17 +13,34 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
+    <string name="noEventsToday">"No events today"</string>
     <string name="title_activity_winners_circle">Winners Circle</string>
-
     <string name="title_activity_thanks_for_participating">Thanks For Participating</string>
 
-    <string name="getEventsURL">http://104.130.156.82:8080/api/clients/5260316cbf80240000000001/events</string>
+    //Client IDs
+    <string name="clientID_Blazers">5260316cbf80240000000001</string>
+
+    //URL Resources
+    <string name="apiURL">http://litewaveinc.com/api/</string>
+    <string name="getClients">clients/[clientID]</string>
+    <string name="getStadiums">stadiums/</string>
+    <string name="getStadium">stadiums/[stadiumID]</string>
+    <string name="getStadiumLevels">stadiums/[stadiumID]/levels</string>
+    <string name="getEvents">clients/[clientID]/events/</string>
+    //joinEvent: POST
+    <string name="joinEvent">clients/[clientID/events/[eventID]</string>
+    //leaveEvent DELETE
+    <string name="leaveEvent">clients/[clientID/events/[eventID]</string>
+    <string name="getShows">events/[eventID]/shows</string>
+    <string name="getShow">events/[eventID]/shows/[showID]</string>
+    //joinShow: POST
+    <string name="joinShow">events/[eventID]/shows/[showID]</string>
+
+
     <string name="getStadiumLevelsURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/</string>
     <string name="getStadiumSeatingURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/Levels/LEVELID</string>
     //NOTE: This will return everything we want to just get the levels and then seating info.
     <string name="getStadiumInfoURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/levels</string>
-    <string name="noEventsToday">"No events today"</string>
-
     <string name="getStadiumsURL">http://104.130.156.82:8080/api/stadiums</string>
-    <string name="getStadiumsTESTURL">http://</string>
+
 </resources>
