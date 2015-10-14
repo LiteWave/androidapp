@@ -1,19 +1,14 @@
 package com.litewaveinc.litewave.activities;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.litewaveinc.litewave.util.JSONHelper;
 import com.litewaveinc.litewave.R;
-import com.litewaveinc.litewave.util.RESTClientHelper;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 
@@ -27,7 +22,6 @@ import java.text.SimpleDateFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    Handler handler = new Handler();
     TextView noEvents;
 
     public class EventsResponse extends APIResponse {
@@ -88,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void showEvent(JSONObject event) {
         String stadiumID = "";
+
         try {
             stadiumID = event.getString("_stadiumId");
         } catch (JSONException e) {

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.util.JSONHelper;
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.util.RESTClientHelper;
@@ -25,11 +26,14 @@ import java.util.ArrayList;
 
 public class LevelActivity extends AppCompatActivity {
 
-    //CODE SAMPLE: as part of runnable sample below.
-    //private Button _imageButton;
-    //Handler mHandler = new Handler();
-    //TextView textView1;
-    //int num1=0,num2=0;
+
+    public class EventsResponse extends APIResponse {
+
+        @Override
+        public void success(JSONArray content) {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,28 +101,6 @@ public class LevelActivity extends AppCompatActivity {
             lm.addView(ll);
         }
 
-
-
-        //SAMPLE CODE: This code creates a runable to update text at runtime if needed.
-        /*textView1 = (TextView) this.findViewById(R.id.textView1);
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                {
-                    textView1.setText(String.valueOf(num1)+" ");
-                    num1++;
-                    if (num1<10)
-                    {
-                        mHandler.postDelayed(this, 1000);
-                    }
-                }
-            }
-        };
-        mHandler.post(runnable);
-
-        Thread mythread = new Thread(runnable);
-        mythread.start();*/
     }
 
     private class getLevels extends AsyncTask<String, Void, String> {
