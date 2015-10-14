@@ -23,7 +23,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class ChooseLevel extends AppCompatActivity {
+public class LevelActivity extends AppCompatActivity {
 
     //CODE SAMPLE: as part of runnable sample below.
     //private Button _imageButton;
@@ -35,7 +35,7 @@ public class ChooseLevel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_choose_level);
+        setContentView(R.layout.activity_level);
         //OPTION: This is the option to hide the title bar. Need to decide on best layout.
         ActionBar actionBar = getSupportActionBar();
         //actionBar.hide();
@@ -73,7 +73,7 @@ public class ChooseLevel extends AppCompatActivity {
             btn.setId(index);
 
             //TODO: Set the button to the level of stadium
-            btn.setText("Level " + index);
+            btn.setText("LevelActivity " + index);
             // set the layoutParams on the button
             btn.setLayoutParams(params);
 
@@ -135,7 +135,7 @@ public class ChooseLevel extends AppCompatActivity {
 
         private ArrayList<String> getCurrentLevels(JSONArray stadiumSeatingCollection) throws JSONException {
             String result = "";
-            //NOTE: Sequence Section->Level->Row-Seat
+            //NOTE: Sequence Section->LevelActivity->Row-SeatActivity
             ArrayList<String> sectionList = new ArrayList<String>();
             for(int i = 0 ; i < stadiumSeatingCollection.length(); i++){
                 sectionList.add(stadiumSeatingCollection.getJSONObject(i).getString("name"));
@@ -154,7 +154,7 @@ public class ChooseLevel extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                //Intent intent = new Intent(ChooseLevel.this, ChooseSeat.class);
+                //Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
                 //Setup a bundle to be passed to the next intent
                 Bundle b = new Bundle();
                 //Pass the StadiumID to be used to get the seat information
