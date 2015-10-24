@@ -1,33 +1,39 @@
 package com.litewaveinc.litewave.activities;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.services.APIResponse;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class SeatActivity extends AppCompatActivity {
+
+
+    public class EventsResponse extends APIResponse {
+
+        @Override
+        public void success(JSONArray content) {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat);
+        Bundle b = getIntent().getExtras();
+        ArrayList<Hashtable> sectionList = (ArrayList<Hashtable>)b.getSerializable("table");
 
-        Thread timer = new Thread(){
-            public void run(){
-                try{
-                    sleep(3000);
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }finally{
-                    Intent myIntent = new Intent(SeatActivity.this, ReadyActivity.class);
-                    startActivity(myIntent);
-                }
-            }
-        };
-        timer.start();
+        Log.d("SeatActivity", "DEBUG");
+
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.litewaveinc.litewave.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
                     Date currentDate = Calendar.getInstance().getTime();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-d");
                     String formattedCurrentDate = simpleDateFormat.format(currentDate);
+
+                    //DEBUG REMOVE
+                    //showEvent(event);
+                    //return;
+                    //END DEBUG
 
                     if (eventDate.compareTo(formattedCurrentDate) == 0) {
                         showEvent(event);
