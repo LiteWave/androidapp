@@ -76,11 +76,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
 
+        API.init(getApplicationContext());
+
         checkEvents();
     }
 
     protected void checkEvents() {
-        API.getEvents(getApplicationContext(), new EventsResponse());
+        API.getEvents(new EventsResponse());
     }
 
     protected void showNoEvents() {
