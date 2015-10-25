@@ -1,26 +1,72 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="fill_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LiteWave_Splash"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".LiteWave_Splash"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
     <ImageView
+        android:id="@+id/backgroundImage"
         android:visibility="visible"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/defaultsplash" />
-
-    <TextView
-        android:id="@+id/textViewNoEvents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:enabled="false"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:textColor="#010101" />
+
+        android:scaleType="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.percent.PercentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewNoEvents"
+            android:enabled="true"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/default_text"
+            android:layout_height="100dp"
+            android:layout_width="0dp"
+            app:layout_widthPercent="80%"
+            app:layout_marginTopPercent="10%"
+            android:textSize="30dp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/textViewPoweredBy"
+            android:enabled="true"
+            android:text="powered by"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:textAlignment="center"
+            android:textColor="@color/default_text"
+            android:layout_height="50dp"
+            android:layout_width="0dp"
+            app:layout_widthPercent="100%"
+            android:textSize="14dp"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="110px"
+
+            />
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+
+            android:scaleType="fitCenter"
+            android:layout_width="500px"
+            android:layout_height="112px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25px"
+            android:src="@drawable/lwlogosm" />
+
+
+
+    </android.support.percent.PercentRelativeLayout>
 
 </RelativeLayout>

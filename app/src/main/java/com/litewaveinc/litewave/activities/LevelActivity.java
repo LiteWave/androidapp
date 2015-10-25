@@ -1,6 +1,7 @@
 package com.litewaveinc.litewave.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -11,23 +12,35 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.services.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class LevelActivity extends AppCompatActivity {
 
+    ImageView backgroundImage;
 
-    public class EventsResponse extends APIResponse {
+    public class LevelsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -95,23 +108,46 @@ public class LevelActivity extends AppCompatActivity {
             //TODO: TEMPORARY Code to wire up Choose Seat and develop seat activity code. Ultimately
             //we need upon seat selection bundle the _id for the section.
 
-            Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
-            //Setup a bundle to be passed to the next intent
-            Bundle b = new Bundle();
-            //TODO: Once selected pass section identifier. Currently passing everything this will change
-            //NOTE: passed just the sections. We might want to add a API just to get the seating info.
-            //b.putSerializable("Sections", sectionList);
-            //TODO: Hardcoded section ID for now until UX is wired up.
-            b.putString("SelectedLevel", "55de78afa1d569ec11646bca");
-            b.putString("StadiumInfo", content.toString());
-            intent.putExtras(b); //Put your id to your next Intent
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
+//            //Setup a bundle to be passed to the next intent
+//            Bundle b = new Bundle();
+//            //TODO: Once selected pass section identifier. Currently passing everything this will change
+//            //NOTE: passed just the sections. We might want to add a API just to get the seating info.
+//            //b.putSerializable("Sections", sectionList);
+//            //TODO: Hardcoded section ID for now until UX is wired up.
+//            b.putString("SelectedLevel", "55de78afa1d569ec11646bca");
+//            b.putString("StadiumInfo", content.toString());
+//            intent.putExtras(b); //Put your id to your next Intent
+//            startActivity(intent);
+//            finish();
         }
     }
 
     protected void getLevels(String stadiumID) {
-        API.getLevels(stadiumID, getApplicationContext(), new EventsResponse());
+        API.getLevels(stadiumID, new LevelsResponse());
+    }
+
+    protected void getImage() {
+        final Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bitmap = Config.getBitmap("logoBitmap");
+                        if (bitmap != null) {
+                            backgroundImage.setImageBitmap(bitmap);
+                            timer.cancel();
+                        }
+                    }
+                });
+
+
+            }
+        },0,500);
     }
 
     @Override
@@ -120,10 +156,18 @@ public class LevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_level);
-        //OPTION: This is the option to hide the title bar. Need to decide on best layout.
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.hide();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+
+        String[] colorRGB = Config.get("highlightColor").split(",");
+        int color = Color.rgb(
+                Integer.parseInt(colorRGB[0]),
+                Integer.parseInt(colorRGB[1]),
+                Integer.parseInt(colorRGB[2]));
+        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+
+        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        backgroundImage.setAlpha((float) 0.05);
+        getImage();
 
         Bundle b = getIntent().getExtras();
         String stadiumID = b.getString("StadiumID");
