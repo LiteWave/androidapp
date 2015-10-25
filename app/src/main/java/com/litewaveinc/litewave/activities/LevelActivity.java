@@ -116,6 +116,7 @@ public class LevelActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("LevelActivity:onCreate", "START");
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_level);
@@ -129,5 +130,6 @@ public class LevelActivity extends AppCompatActivity {
 
         //Get levels from server
         getLevels(stadiumID);
+        Log.d("LevelActivity:onCreate", "FINISH");
     }
 }
