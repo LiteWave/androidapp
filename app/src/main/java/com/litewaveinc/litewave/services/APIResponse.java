@@ -11,6 +11,10 @@ public class APIResponse implements IAPIResponse {
 
     }
 
+    public void success(JSONObject content) {
+
+    }
+
     public void failure(JSONArray content) {
         System.out.println("An error has occured: " + content.toString());
     }
