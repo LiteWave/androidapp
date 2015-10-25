@@ -13,7 +13,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="noEventsToday">"No events today"</string>
+    <string name="noEventsToday">"There are curently no events scheduled."</string>
     <string name="title_activity_winners_circle">Winners Circle</string>
     <string name="title_activity_thanks_for_participating">Thanks For Participating</string>
 

@@ -27,7 +27,7 @@ import java.util.Hashtable;
 public class LevelActivity extends AppCompatActivity {
 
 
-    public class EventsResponse extends APIResponse {
+    public class LevelsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -95,23 +95,23 @@ public class LevelActivity extends AppCompatActivity {
             //TODO: TEMPORARY Code to wire up Choose Seat and develop seat activity code. Ultimately
             //we need upon seat selection bundle the _id for the section.
 
-            Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
-            //Setup a bundle to be passed to the next intent
-            Bundle b = new Bundle();
-            //TODO: Once selected pass section identifier. Currently passing everything this will change
-            //NOTE: passed just the sections. We might want to add a API just to get the seating info.
-            //b.putSerializable("Sections", sectionList);
-            //TODO: Hardcoded section ID for now until UX is wired up.
-            b.putString("SelectedLevel", "55de78afa1d569ec11646bca");
-            b.putString("StadiumInfo", content.toString());
-            intent.putExtras(b); //Put your id to your next Intent
-            startActivity(intent);
-            finish();
+//            Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
+//            //Setup a bundle to be passed to the next intent
+//            Bundle b = new Bundle();
+//            //TODO: Once selected pass section identifier. Currently passing everything this will change
+//            //NOTE: passed just the sections. We might want to add a API just to get the seating info.
+//            //b.putSerializable("Sections", sectionList);
+//            //TODO: Hardcoded section ID for now until UX is wired up.
+//            b.putString("SelectedLevel", "55de78afa1d569ec11646bca");
+//            b.putString("StadiumInfo", content.toString());
+//            intent.putExtras(b); //Put your id to your next Intent
+//            startActivity(intent);
+//            finish();
         }
     }
 
     protected void getLevels(String stadiumID) {
-        API.getLevels(stadiumID, getApplicationContext(), new EventsResponse());
+        API.getLevels(stadiumID, new LevelsResponse());
     }
 
     @Override

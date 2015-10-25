@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -28,16 +29,20 @@ public final class API {
         API.appContext = context;
     }
 
-    public static void getEvents(IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events", response);
+    public static void getClient(String clientID, IAPIResponse response) {
+        API.get("clients/" + clientID, response);
     }
 
-    public static void getEvent(String eventID, Context context, IAPIResponse response) {
-        API.get("clients/5260316cbf80240000000001/events/" + eventID, response);
+    public static void getEvents(String clientID, IAPIResponse response) {
+        API.get("clients/" + clientID + "/events", response);
     }
 
-    public static void getLevels(String stadiumID, Context context, IAPIResponse response) {
-        API.get(context.getResources().getString(R.string.getStadiumLevels).replaceFirst("\\[stadiumID\\]", stadiumID), response);
+    public static void getEvent(String clientID, String eventID, IAPIResponse response) {
+        API.get("clients/" + clientID + "/events/" + eventID, response);
+    }
+
+    public static void getLevels(String stadiumID, IAPIResponse response) {
+        API.get(appContext.getResources().getString(R.string.getStadiumLevels).replaceFirst("\\[stadiumID\\]", stadiumID), response);
     }
 
     private static void get(String url, IAPIResponse response) {
@@ -70,6 +75,10 @@ public final class API {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                apiResponse.success(response);
+            }
+
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 apiResponse.success(response);
             }
 
