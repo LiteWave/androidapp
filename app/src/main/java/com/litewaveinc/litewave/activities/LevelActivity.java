@@ -1,6 +1,7 @@
 package com.litewaveinc.litewave.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
@@ -11,21 +12,33 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.services.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class LevelActivity extends AppCompatActivity {
 
+    ImageView backgroundImage;
 
     public class LevelsResponse extends APIResponse {
 
@@ -114,16 +127,47 @@ public class LevelActivity extends AppCompatActivity {
         API.getLevels(stadiumID, new LevelsResponse());
     }
 
+    protected void getImage() {
+        final Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Bitmap bitmap = Config.getBitmap("logoBitmap");
+                        if (bitmap != null) {
+                            backgroundImage.setImageBitmap(bitmap);
+                            timer.cancel();
+                        }
+                    }
+                });
+
+
+            }
+        },0,500);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("LevelActivity:onCreate", "START");
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_level);
-        //OPTION: This is the option to hide the title bar. Need to decide on best layout.
         ActionBar actionBar = getSupportActionBar();
-        //actionBar.hide();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+
+        String[] colorRGB = Config.get("highlightColor").split(",");
+        int color = Color.rgb(
+                Integer.parseInt(colorRGB[0]),
+                Integer.parseInt(colorRGB[1]),
+                Integer.parseInt(colorRGB[2]));
+        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+
+        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        backgroundImage.setAlpha((float) 0.05);
+        getImage();
 
         Bundle b = getIntent().getExtras();
         String stadiumID = b.getString("StadiumID");

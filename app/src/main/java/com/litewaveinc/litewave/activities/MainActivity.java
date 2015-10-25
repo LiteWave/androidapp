@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView noEvents;
     ImageView backgroundImage;
+    ImageView logoImage;
 
     public class EventsResponse extends APIResponse {
 
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             bmImage.setImageBitmap(resized);
             bmImage.setAlpha((float) 0.05);
 
-            Config.setBitmap("logoImage", resized);
+            Config.setBitmap("logoBitmap", resized);
         }
     }
 
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        logoImage = (ImageView) this.findViewById(R.id.logoImage);
 
         API.init(getApplicationContext());
 
@@ -155,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void showNoEvents() {
         noEvents.setText(R.string.noEventsToday);
+        noEvents.setVisibility(View.VISIBLE);
+        logoImage.setVisibility(View.VISIBLE);
         Log.d("MainActivity", "Logo url: " + Config.get("logoUrl"));
         saveLogo();
     }

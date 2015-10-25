@@ -2,10 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="0px"
-    android:paddingRight="0px"
-    android:paddingTop="0px"
-    android:paddingBottom="0px"
     tools:context=".LiteWave_Splash"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
@@ -43,6 +39,7 @@
             android:enabled="true"
             android:text="powered by"
             android:layout_centerHorizontal="true"
+            android:visibility="invisible"
             android:textAlignment="center"
             android:textColor="@color/default_text"
             android:layout_height="50dp"
@@ -57,7 +54,7 @@
 
         <ImageView
             android:id="@+id/logoImage"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
 
