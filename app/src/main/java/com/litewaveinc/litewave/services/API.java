@@ -36,6 +36,10 @@ public final class API {
         API.get("clients/5260316cbf80240000000001/events/" + eventID, response);
     }
 
+    public static void getLevels(String stadiumID, Context context, IAPIResponse response) {
+        API.get(context.getResources().getString(R.string.getStadiumLevels).replaceFirst("\\[stadiumID\\]", stadiumID), response);
+    }
+
     private static void get(String url, IAPIResponse response) {
         API.request(url, "GET", new RequestParams(), response);
     }

@@ -22,7 +22,8 @@
 
     //URL Resources
     <string name="apiURL">http://litewaveinc.com/api/</string>
-    <string name="getClients">clients/[clientID]</string>
+    <string name="getClients">clients/</string>
+    <string name="getClient">clients/[cliendID]</string>
     <string name="getStadiums">stadiums/</string>
     <string name="getStadium">stadiums/[stadiumID]</string>
     <string name="getStadiumLevels">stadiums/[stadiumID]/levels</string>
@@ -30,7 +31,7 @@
     //joinEvent: POST
     <string name="joinEvent">clients/[clientID/events/[eventID]</string>
     //leaveEvent DELETE
-    <string name="leaveEvent">clients/[clientID/events/[eventID]</string>
+    <string name="leaveEvent">clients/[clientID]/events/[eventID]</string>
     <string name="getShows">events/[eventID]/shows</string>
     <string name="getShow">events/[eventID]/shows/[showID]</string>
     //joinShow: POST
