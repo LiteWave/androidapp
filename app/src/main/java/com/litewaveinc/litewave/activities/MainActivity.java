@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONArray content) {
-            Log.d("Debug", content.toString());
+            Date currentDate = Calendar.getInstance().getTime();
+
             if (content.length() > 0) {
                 for(int i = 0 ; i < content.length(); i++) {
                     JSONObject event = null;
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     eventDate = eventDate.substring(0, eventDate.indexOf('T'));
-                    Date currentDate = Calendar.getInstance().getTime();
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-d");
                     String formattedCurrentDate = simpleDateFormat.format(currentDate);
 
@@ -51,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
                     //END DEBUG
 
                     if (eventDate.compareTo(formattedCurrentDate) == 0) {
+                        Log.d("MainActivity", "Event found for: " + formattedCurrentDate.toString());
                         showEvent(event);
                         return;
                     }
                 }
+                Log.d("MainActivity", "No Events found for: " + currentDate.toString());
                 showNoEvents();
             } else {
+                Log.d("MainActivity", "No Events found for: " + currentDate.toString());
                 showNoEvents();
             }
 

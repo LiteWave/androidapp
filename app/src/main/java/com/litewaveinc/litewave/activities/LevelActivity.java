@@ -42,20 +42,20 @@ public class LevelActivity extends AppCompatActivity {
 
             //1. Enumerate through content getting levels and thier identifiers
             String result = "";
-            ArrayList<Hashtable> sectionList = new ArrayList<Hashtable>();
+            ArrayList<Hashtable> levelList = new ArrayList<Hashtable>();
             for(int i = 0 ; i < content.length(); i++){
                 try {
-                    Hashtable<String, String> sectionMap = new Hashtable<String, String>();
-                    sectionMap.put(content.getJSONObject(i).getString("_id"),
+                    Hashtable<String, String> levelMap = new Hashtable<String, String>();
+                    levelMap.put(content.getJSONObject(i).getString("_id"),
                             content.getJSONObject(i).getString("name"));
-                    sectionList.add(sectionMap);
+                    levelList.add(levelMap);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
             //Create Buttons dependent on service call on number of rows per stadium.
-            for(int j=0;j<sectionList.size();j++) {
+            for(int j=0;j<levelList.size();j++) {
                 // Create LinearLayout
                 LinearLayout ll = new LinearLayout(getApplicationContext());
                 ll.setOrientation(LinearLayout.VERTICAL);
@@ -99,7 +99,11 @@ public class LevelActivity extends AppCompatActivity {
             //Setup a bundle to be passed to the next intent
             Bundle b = new Bundle();
             //TODO: Once selected pass section identifier. Currently passing everything this will change
-            b.putSerializable("Sections", sectionList);
+            //NOTE: passed just the sections. We might want to add a API just to get the seating info.
+            //b.putSerializable("Sections", sectionList);
+            //TODO: Hardcoded section ID for now until UX is wired up.
+            b.putString("SelectedLevel", "55de78afa1d569ec11646bca");
+            b.putString("StadiumInfo", content.toString());
             intent.putExtras(b); //Put your id to your next Intent
             startActivity(intent);
             finish();
