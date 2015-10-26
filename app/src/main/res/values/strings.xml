@@ -5,8 +5,8 @@
 
     //Activity Resources
     <string name="title_activity_choose_event">ChooseEvent</string>
-    <string name="title_activity_choose_level">Choose Level</string>
-    <string name="title_activity_choose_seat">Choose Seat</string>
+    <string name="title_activity_choose_level">Choose level</string>
+    <string name="title_activity_choose_seat">Choose seat</string>
     <string name="title_activity_game_time">Game Time</string>
 
     <string name="title_activity_show_starts">Show Starts</string>
