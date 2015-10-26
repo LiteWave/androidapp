@@ -49,7 +49,6 @@
             android:gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="110px"
-
             />
 
         <ImageView

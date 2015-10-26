@@ -66,12 +66,13 @@ public class SeatActivity extends AppCompatActivity {
         //NOTE: If we use a single API to get seating info we might want to implement this.
         //ArrayList<Hashtable> sectionList = (ArrayList<Hashtable>)b.getSerializable("table");
 
-        String levelIdentifier = b.getString("SelectedLevel");
-        JSONArray stadiumInfo = JSONHelper.getJSONArray(b.getString("StadiumInfo"));
+        return;
+        //String levelIdentifier = b.getString("SelectedLevel");
+        //JSONArray stadiumInfo = JSONHelper.getJSONArray(b.getString("StadiumInfo"));
 
-        ArrayList<String> sectionList =  this.getSections(stadiumInfo, levelIdentifier);
+        //ArrayList<String> sectionList =  this.getSections(stadiumInfo, levelIdentifier);
 
-        Log.d("SeatActivity:onCreate", "FINISH");
+        //Log.d("SeatActivity:onCreate", "FINISH");
     }
 
     @Override
