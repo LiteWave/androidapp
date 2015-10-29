@@ -33,6 +33,9 @@
             android:id="@+id/listView"
             android:layout_gravity="center_horizontal"
             android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:divider="@null"
+            android:dividerHeight="0dp"
             />
 
         <TextView

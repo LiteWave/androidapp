@@ -42,7 +42,11 @@ public final class API {
     }
 
     public static void getLevels(String stadiumID, IAPIResponse response) {
-        API.get(appContext.getResources().getString(R.string.getStadiumLevels).replaceFirst("\\[stadiumID\\]", stadiumID), response);
+        API.get("stadiums/" + stadiumID + "/levels", response);
+    }
+
+    public static void getSeats(String stadiumID, String level, IAPIResponse response) {
+        API.get("stadiums/" + stadiumID + "/levels/" + level, response);
     }
 
     private static void get(String url, IAPIResponse response) {

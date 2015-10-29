@@ -10,60 +10,160 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.adapters.CircleListAdapter;
+import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.util.JSONHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class SeatActivity extends AppCompatActivity {
 
-    ImageView backgroundImage;
+    public ImageView backgroundImage;
+    public String selectedLevel;
+    public String selectedSection;
+    public String selectedRow;
+    public String selectedSeat;
+
+    public ListView sectionsListView;
+    public ListView rowsListView;
+    public ListView seatsListView;
+
+    public ArrayList<String> sections;
+    public Hashtable<String, JSONObject>sectionsMap;
+    public ArrayList<String> rows;
+    public Hashtable<String, JSONObject>rowsMap;
+    public ArrayList<String> seats;
 
 
-    public class EventsResponse extends APIResponse {
+    public class GetSeatsResponse extends APIResponse {
 
         @Override
-        public void success(JSONArray content) {
-
+        public void success(JSONObject content) {
+            JSONArray sectionsContent;
+            try {
+                sectionsContent = content.getJSONArray("sections");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+            buildSections(sectionsContent);
         }
     }
 
-    private static ArrayList<String> getSections(JSONArray stadiumInfo, String levelIdentifier) {
-        ArrayList<String> sectionList = new ArrayList<String>();
-
-        for(int i = 0 ; i < stadiumInfo.length(); i++) {
+    protected void buildSections(JSONArray content) {
+        sections = new ArrayList<String>();
+        sectionsMap = new Hashtable<String, JSONObject>();
+        for (int i = 0 ; i < content.length(); i++){
             try {
-                //Find level
-                if(stadiumInfo.getJSONObject(i).getString("_id") == levelIdentifier); {
-                    JSONArray sectionsInfo = stadiumInfo.getJSONObject(i).getJSONArray("sections");
-                    //Collect the sections
-                    for(int j = 0; j < sectionsInfo.length(); j++) {
-                        sectionList.add(sectionsInfo.getJSONObject(j).getString("name"));
-                    }
-                }
+                String name = content.getJSONObject(i).getString("name");
+                sectionsMap.put(name, content.getJSONObject(i));
+                sections.add(name);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return sectionList;
+
+        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), sections);
+        sectionsListView.setAdapter(adapter);
+        sectionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedSection = (String) sectionsListView.getItemAtPosition(position);
+                JSONArray rowsContent;
+                try {
+                    rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                buildRows(rowsContent);
+            }
+        });
+        rowsListView.setVisibility(View.VISIBLE);
+        clearListView(rowsListView);
+
+        seatsListView.setVisibility(View.INVISIBLE);
+        clearListView(seatsListView);
     }
 
-    private static ArrayList<String> getRows(JSONArray sectionInfo) {
+    protected void buildRows(JSONArray content) {
+        rows = new ArrayList<String>();
+        rowsMap = new Hashtable<String, JSONObject>();
+        for (int i = 0 ; i < content.length(); i++){
+            try {
+                String name = content.getJSONObject(i).getString("name");
+                rowsMap.put(name, content.getJSONObject(i));
+                rows.add(name);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-        return null;
+        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), rows);
+        rowsListView.setAdapter(adapter);
+        rowsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedRow = (String)rowsListView.getItemAtPosition(position);
+                JSONArray seatsContent;
+                try {
+                    seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return;
+                }
+                buildSeats(seatsContent);
+            }
+        });
+        seatsListView.setVisibility(View.VISIBLE);
+        clearListView(seatsListView);
     }
 
-    private static ArrayList<String> getSeats(JSONArray sectionInfo) {
+    protected void buildSeats(JSONArray content) {
+        seats = new ArrayList<String>();
+        for (int i = 0 ; i < content.length(); i++){
+            try {
+                String name = content.getString(i);
+                seats.add(name);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
-        return null;
+        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), seats);
+        seatsListView.setAdapter(adapter);
+        seatsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectedSeat = (String)seatsListView.getItemAtPosition(position);
+            }
+        });
+    }
+
+    protected void clearListView(ListView listView) {
+        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), new ArrayList<String>());
+        listView.setAdapter(adapter);
+    }
+
+
+    protected void getSeats(String level) {
+        API.getSeats((String)Config.get("StadiumID"), level, new GetSeatsResponse());
     }
 
     @Override
@@ -89,16 +189,12 @@ public class SeatActivity extends AppCompatActivity {
             backgroundImage.setImageBitmap(bitmap);
         }
 
-        return;
-        //NOTE: If we use a single API to get seating info we might want to implement this.
-        //ArrayList<Hashtable> sectionList = (ArrayList<Hashtable>)b.getSerializable("table");
+        sectionsListView = (ListView) findViewById(R.id.sectionsListView);
+        rowsListView = (ListView) findViewById(R.id.rowsListView);
+        seatsListView = (ListView) findViewById(R.id.seatsListView);
 
-        //String levelIdentifier = b.getString("SelectedLevel");
-        //JSONArray stadiumInfo = JSONHelper.getJSONArray(b.getString("StadiumInfo"));
-
-        //ArrayList<String> sectionList =  this.getSections(stadiumInfo, levelIdentifier);
-
-        //Log.d("SeatActivity:onCreate", "FINISH");
+        selectedLevel = (String)Config.get("SelectedLevel");
+        getSeats(selectedLevel);
     }
 
     @Override

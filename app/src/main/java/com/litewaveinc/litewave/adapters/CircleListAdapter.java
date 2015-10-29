@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
 
+import java.util.ArrayList;
+
 /**
  * Created by davidanderson on 10/25/15.
  */
@@ -28,11 +30,11 @@ public class CircleListAdapter extends BaseAdapter {
     protected int CIRCLE_RADIUS = 300;
 
     protected Context context;
-    protected String[] data;
+    protected ArrayList<String> data;
 
     private static LayoutInflater inflater = null;
 
-    public CircleListAdapter(Context context, String[] data) {
+    public CircleListAdapter(Context context, ArrayList data) {
         this.context = context;
         this.data = data;
         inflater = (LayoutInflater) context
@@ -41,12 +43,12 @@ public class CircleListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class CircleListAdapter extends BaseAdapter {
         view.setMinimumHeight(CIRCLE_RADIUS + 75);
 
         TextView text = (TextView) view.findViewById(R.id.text);
-        text.setText(data[position]);
+        text.setText(data.get(position));
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
         imageView.setOnTouchListener(new View.OnTouchListener() {

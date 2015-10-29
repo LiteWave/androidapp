@@ -47,7 +47,7 @@ public class LevelActivity extends AppCompatActivity {
     ImageView backgroundImage;
     ListView listView;
     ArrayList<String> levels;
-    Hashtable<String, JSONObject> levelMap;
+    Hashtable<String, JSONObject> levelsMap;
 
     public class GetLevelsResponse extends APIResponse {
 
@@ -55,21 +55,18 @@ public class LevelActivity extends AppCompatActivity {
         public void success(JSONArray content) {
 
             levels = new ArrayList<String>();
-            levelMap = new Hashtable<String, JSONObject>();
+            levelsMap = new Hashtable<String, JSONObject>();
             for (int i = 0 ; i < content.length(); i++){
                 try {
                     String name = content.getJSONObject(i).getString("name");
-                    levelMap.put(name, content.getJSONObject(i));
+                    levelsMap.put(name, content.getJSONObject(i));
                     levels.add(name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
-            String[] levelsArray = new String[levels.size()];
-            levelsArray = levels.toArray(levelsArray);
-
-            CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), levelsArray);
+            CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), levels);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,8 +78,7 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
-    protected void selectLevel(String name) {
-        JSONObject level = levelMap.get(name);
+    protected void selectLevel(String level) {
         Config.set("SelectedLevel", level);
 
         Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
