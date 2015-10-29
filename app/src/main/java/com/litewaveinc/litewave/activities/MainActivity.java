@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             bmImage.setImageBitmap(resized);
             bmImage.setAlpha((float) 0.05);
 
-            Config.setBitmap("logoBitmap", resized);
+            Config.set("logoBitmap", resized);
         }
     }
 
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void saveLogo() {
         new DownloadLogoTask((ImageView) findViewById(R.id.backgroundImage))
-                .execute(Config.get("logoUrl"));
+                .execute((String)Config.get("logoUrl"));
     }
 
     protected void showEvent(JSONObject event) {
@@ -191,12 +191,10 @@ public class MainActivity extends AppCompatActivity {
             showError(e);
             return;
         }
+        Config.set("StadiumID", stadiumID);
+
 
         Intent intent = new Intent(MainActivity.this, LevelActivity.class);
-
-        Bundle b = new Bundle();
-        b.putString("StadiumID", stadiumID);
-        intent.putExtras(b);
 
         startActivity(intent);
         finish();

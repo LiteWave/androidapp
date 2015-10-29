@@ -10,10 +10,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activities.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,7 +22,11 @@
         </activity>
         <activity
             android:name=".activities.SeatActivity"
-            android:label="@string/title_activity_choose_seat" >
+            android:label="@string/title_activity_choose_seat"
+            android:parentActivityName=".activities.LevelActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.LevelActivity" />
         </activity>
         <activity
             android:name=".activities.ReadyActivity"

@@ -47,7 +47,7 @@ public class LevelActivity extends AppCompatActivity {
     ImageView backgroundImage;
     ListView listView;
     ArrayList<String> levels;
-    Hashtable<String, JSONObject> levelMap;
+    Hashtable<String, JSONObject> levelsMap;
 
     public class GetLevelsResponse extends APIResponse {
 
@@ -55,21 +55,18 @@ public class LevelActivity extends AppCompatActivity {
         public void success(JSONArray content) {
 
             levels = new ArrayList<String>();
-            levelMap = new Hashtable<String, JSONObject>();
+            levelsMap = new Hashtable<String, JSONObject>();
             for (int i = 0 ; i < content.length(); i++){
                 try {
                     String name = content.getJSONObject(i).getString("name");
-                    levelMap.put(name, content.getJSONObject(i));
+                    levelsMap.put(name, content.getJSONObject(i));
                     levels.add(name);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
 
-            String[] levelsArray = new String[levels.size()];
-            levelsArray = levels.toArray(levelsArray);
-
-            CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), levelsArray);
+            CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), levels);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -81,20 +78,12 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
-    protected void selectLevel(String name) {
-        JSONObject level = levelMap.get(name);
+    protected void selectLevel(String level) {
+        Config.set("SelectedLevel", level);
 
         Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
-
-        Bundle b = new Bundle();
-        b.putString("SelectedLevel", level.toString());
-
-        intent.putExtras(b);
         startActivity(intent);
-
-        finish();
     }
-
 
     protected void getLevels(String stadiumID) {
         API.getLevels(stadiumID, new GetLevelsResponse());
@@ -110,15 +99,13 @@ public class LevelActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Bitmap bitmap = Config.getBitmap("logoBitmap");
+                        Bitmap bitmap = (Bitmap)Config.get("logoBitmap");
                         if (bitmap != null) {
-                            backgroundImage.setImageBitmap(bitmap);
                             timer.cancel();
+                            backgroundImage.setImageBitmap(bitmap);
                         }
                     }
                 });
-
-
             }
         },0,50);
     }
@@ -131,7 +118,7 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
         ActionBar actionBar = getSupportActionBar();
 
-        String[] colorRGB = Config.get("highlightColor").split(",");
+        String[] colorRGB = ((String)Config.get("highlightColor")).split(",");
         int color = Color.rgb(
                 Integer.parseInt(colorRGB[0]),
                 Integer.parseInt(colorRGB[1]),
@@ -145,10 +132,10 @@ public class LevelActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setDivider(null);
 
-        Bundle b = getIntent().getExtras();
-        String stadiumID = b.getString("StadiumID");
+        String stadiumID = (String)Config.get("StadiumID");
 
         getLevels(stadiumID);
         Log.d("LevelActivity:onCreate", "FINISH");
     }
+
 }

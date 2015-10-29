@@ -11,23 +11,15 @@ import java.util.Map;
  */
 public class Config {
 
-    private static Map<String, String> strings = new HashMap<String, String>();
+    private static Map<String, Object> data = new HashMap<String, Object>();
     private static Map<String, Bitmap> bitmaps = new HashMap<String, Bitmap>();
 
-    public static String get(String name) {
-        return strings.get(name);
+    public static Object get(String name) {
+        return data.get(name);
     }
 
-    public static void set(String name, String value) {
-        strings.put(name, value);
-    }
-
-    public static Bitmap getBitmap(String name) {
-        return bitmaps.get(name);
-    }
-
-    public static Bitmap setBitmap(String name, Bitmap bitmap) {
-        return bitmaps.put(name, bitmap);
+    public static void set(String name, Object value) {
+        data.put(name, value);
     }
 
 }
