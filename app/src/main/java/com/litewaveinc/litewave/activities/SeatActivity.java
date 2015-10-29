@@ -1,13 +1,20 @@
 package com.litewaveinc.litewave.activities;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.APIResponse;
+import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.util.JSONHelper;
 
 import org.json.JSONArray;
@@ -17,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class SeatActivity extends AppCompatActivity {
+
+    ImageView backgroundImage;
 
 
     public class EventsResponse extends APIResponse {
@@ -61,12 +70,29 @@ public class SeatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("SeatActivity:onCreate", "START");
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_seat);
-        Bundle b = getIntent().getExtras();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        String[] colorRGB = ((String) Config.get("highlightColor")).split(",");
+        int color = Color.rgb(
+                Integer.parseInt(colorRGB[0]),
+                Integer.parseInt(colorRGB[1]),
+                Integer.parseInt(colorRGB[2]));
+        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+
+        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        backgroundImage.setAlpha((float) 0.05);
+        Bitmap bitmap = (Bitmap)Config.get("logoBitmap");
+        if (bitmap != null) {
+            backgroundImage.setImageBitmap(bitmap);
+        }
+
+        return;
         //NOTE: If we use a single API to get seating info we might want to implement this.
         //ArrayList<Hashtable> sectionList = (ArrayList<Hashtable>)b.getSerializable("table");
 
-        return;
         //String levelIdentifier = b.getString("SelectedLevel");
         //JSONArray stadiumInfo = JSONHelper.getJSONArray(b.getString("StadiumInfo"));
 
@@ -76,24 +102,14 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_choose_seat, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 }

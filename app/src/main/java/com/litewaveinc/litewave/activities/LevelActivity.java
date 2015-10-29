@@ -83,18 +83,11 @@ public class LevelActivity extends AppCompatActivity {
 
     protected void selectLevel(String name) {
         JSONObject level = levelMap.get(name);
+        Config.set("SelectedLevel", level);
 
         Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
-
-        Bundle b = new Bundle();
-        b.putString("SelectedLevel", level.toString());
-
-        intent.putExtras(b);
         startActivity(intent);
-
-        finish();
     }
-
 
     protected void getLevels(String stadiumID) {
         API.getLevels(stadiumID, new GetLevelsResponse());
@@ -110,15 +103,13 @@ public class LevelActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Bitmap bitmap = Config.getBitmap("logoBitmap");
+                        Bitmap bitmap = (Bitmap)Config.get("logoBitmap");
                         if (bitmap != null) {
-                            backgroundImage.setImageBitmap(bitmap);
                             timer.cancel();
+                            backgroundImage.setImageBitmap(bitmap);
                         }
                     }
                 });
-
-
             }
         },0,50);
     }
@@ -131,7 +122,7 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
         ActionBar actionBar = getSupportActionBar();
 
-        String[] colorRGB = Config.get("highlightColor").split(",");
+        String[] colorRGB = ((String)Config.get("highlightColor")).split(",");
         int color = Color.rgb(
                 Integer.parseInt(colorRGB[0]),
                 Integer.parseInt(colorRGB[1]),
@@ -145,10 +136,10 @@ public class LevelActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setDivider(null);
 
-        Bundle b = getIntent().getExtras();
-        String stadiumID = b.getString("StadiumID");
+        String stadiumID = (String)Config.get("StadiumID");
 
         getLevels(stadiumID);
         Log.d("LevelActivity:onCreate", "FINISH");
     }
+
 }

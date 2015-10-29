@@ -93,9 +93,9 @@ public class CircleListAdapter extends BaseAdapter {
         int color;
         String[] colorRGB;
         if (select) {
-            colorRGB = Config.get("textSelectedColor").split(",");
+            colorRGB = ((String)Config.get("textSelectedColor")).split(",");
         } else {
-            colorRGB = Config.get("textColor").split(",");
+            colorRGB = ((String)Config.get("textColor")).split(",");
         }
         color = Color.rgb(
                 Integer.parseInt(colorRGB[0]),
@@ -115,7 +115,7 @@ public class CircleListAdapter extends BaseAdapter {
         String[] colorRGB;
         Paint paint;
         if (select) {
-            colorRGB = Config.get("highlightColor").split(",");
+            colorRGB = ((String)Config.get("highlightColor")).split(",");
             color = Color.rgb(
                     Integer.parseInt(colorRGB[0]),
                     Integer.parseInt(colorRGB[1]),
@@ -129,7 +129,7 @@ public class CircleListAdapter extends BaseAdapter {
 
             canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
         } else {
-            colorRGB = Config.get("backgroundColor").split(",");
+            colorRGB = ((String)Config.get("backgroundColor")).split(",");
             color = Color.rgb(
                     Integer.parseInt(colorRGB[0]),
                     Integer.parseInt(colorRGB[1]),
@@ -142,7 +142,7 @@ public class CircleListAdapter extends BaseAdapter {
             paint.setColor(color);
             canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
 
-            colorRGB = Config.get("borderColor").split(",");
+            colorRGB = ((String)Config.get("borderColor")).split(",");
             color = Color.rgb(
                     Integer.parseInt(colorRGB[0]),
                     Integer.parseInt(colorRGB[1]),
@@ -155,8 +155,6 @@ public class CircleListAdapter extends BaseAdapter {
             paint.setColor(color);
             canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
         }
-
-
 
         imageView.setImageBitmap(bitmap);
     }
