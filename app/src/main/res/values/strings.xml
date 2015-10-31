@@ -44,4 +44,6 @@
     <string name="getStadiumInfoURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/levels</string>
     <string name="getStadiumsURL">http://104.130.156.82:8080/api/stadiums</string>
 
+    // POST params resources
+    <string name="postUserLocationParams">{ "userKey": "PhoneGUID", "userSeat": { "section": "SectionNumber", "row": "RowNumber", "seat": "SeatNumber" } };</string>
 </resources>

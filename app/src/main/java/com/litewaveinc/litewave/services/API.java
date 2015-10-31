@@ -48,6 +48,17 @@ public final class API {
     public static void getSeats(String stadiumID, String level, IAPIResponse response) {
         API.get("stadiums/" + stadiumID + "/levels/" + level, response);
     }
+    // postUserLocation is used to post the seat information and return the user location id
+    public static void postUserLocation(String eventid, RequestParams params, IAPIResponse response) {
+        // http://127.0.0.1:3000/api/events/{eventid}/user_locations:
+        API.post("events/" + eventid + "/user_locations", params, response);
+    }
+
+    public static void joinEvent(String userLocationId, IAPIResponse response)
+    {
+        // http://127.0.0.1:3000/api/user_locations/{UserLocationIdFromAbove}/event_joins
+    }
+
 
     private static void get(String url, IAPIResponse response) {
         API.request(url, "GET", new RequestParams(), response);

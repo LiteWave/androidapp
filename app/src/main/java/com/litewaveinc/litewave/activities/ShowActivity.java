@@ -1,15 +1,26 @@
 package com.litewaveinc.litewave.activities;
 
 import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.services.API;
+import com.litewaveinc.litewave.services.APIResponse;
+import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.util.DeviceHelper;
 import com.litewaveinc.litewave.util.SystemUiHider;
+import com.loopj.android.http.RequestParams;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.View;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -18,6 +29,21 @@ import android.view.View;
  * @see SystemUiHider
  */
 public class ShowActivity extends Activity {
+
+    public class postUserLocationResponse extends APIResponse {
+
+        @Override
+        public void success(JSONObject content) {
+            JSONArray sectionsContent;
+            try {
+                sectionsContent = content.getJSONArray("sections");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+
+        }
+    }
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -46,11 +72,34 @@ public class ShowActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    private RequestParams getUserLocationParams()
+    {
+        RequestParams params = new RequestParams();
+
+        String section = (String) Config.get("section");
+        String row = (String) Config.get("row");
+        String seat = (String) Config.get("seat");
+        String userLocationParams = getString(R.string.postUserLocationParams);
+
+        userLocationParams = userLocationParams.replaceFirst("SectionNumber", section);
+        userLocationParams = userLocationParams.replaceFirst("RowNumber", row);
+        userLocationParams = userLocationParams.replaceFirst("SeatNumber", seat);
+        userLocationParams = userLocationParams.replaceFirst("PhoneGUID", (String) DeviceHelper.getDeviceID(getApplicationContext()));
+        userLocationParams = userLocationParams.replaceFirst("userKey", DeviceHelper.getLocalIpAddress() + DeviceHelper.getDeviceID(getApplicationContext()));
+
+        //TODO: May need to modify the API client as the POST might need to post "application/json"
+        //and NOT RequestParams. See: http://stackoverflow.com/questions/13052036/posting-json-xml-using-android-async-http-loopj
+        return params;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_show);
+
+        String eventId = (String) Config.get("eventId");
+        //String userLocationParams = this.getUserLocationParams();
+        //API.postUserLocation(eventId, new postUserLocationResponse());
 
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);

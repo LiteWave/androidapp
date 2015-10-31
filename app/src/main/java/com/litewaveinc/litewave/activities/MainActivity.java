@@ -62,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
                     if (eventDate.compareTo(formattedCurrentDate) == 0) {
                         Log.d("MainActivity", "Event found for: " + formattedCurrentDate.toString());
+                        try {
+                            Config.set("eventId", event.getString("_id"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         saveSettings(settings);
                         saveLogo();
                         showEvent(event);
@@ -192,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Config.set("StadiumID", stadiumID);
-
 
         Intent intent = new Intent(MainActivity.this, LevelActivity.class);
 
