@@ -1,6 +1,8 @@
 package com.litewaveinc.litewave.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -28,6 +30,7 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -143,9 +146,29 @@ public class MainActivity extends AppCompatActivity {
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         logoImage = (ImageView) this.findViewById(R.id.logoImage);
 
+
         API.init(getApplicationContext());
 
+        loadPreferences();
         checkEvents();
+    }
+
+    protected void loadPreferences() {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if (preferences.getString("UserID", "") == "") {
+            editor.putString("UserID", UUID.randomUUID().toString());
+            editor.commit();
+        }
+
+        Config.set("UserID", preferences.getString("UserID", ""));
+        Config.set("UserID", preferences.getString("EventID", ""));
+
+        Config.set("LevelID", preferences.getString("LevelID", ""));
+        Config.set("SectionID", preferences.getString("SectionID", ""));
+        Config.set("RowID", preferences.getString("RowID", ""));
+        Config.set("SeatID", preferences.getString("SeatID", ""));
     }
 
     protected void checkEvents() {
@@ -160,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
         noEvents.setText(R.string.noEventsToday);
         noEvents.setVisibility(View.VISIBLE);
         logoImage.setVisibility(View.VISIBLE);
-        Log.d("MainActivity", "Logo url: " + Config.get("logoUrl"));
         saveLogo();
     }
 
@@ -184,14 +206,17 @@ public class MainActivity extends AppCompatActivity {
 
     protected void showEvent(JSONObject event) {
         String stadiumID = "";
+        String eventID = "";
 
         try {
             stadiumID = event.getString("_stadiumId");
+            eventID = event.getString("_id");
         } catch (JSONException e) {
             showError(e);
             return;
         }
         Config.set("StadiumID", stadiumID);
+        Config.set("EventID", eventID);
 
 
         Intent intent = new Intent(MainActivity.this, LevelActivity.class);
