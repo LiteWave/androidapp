@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -15,6 +16,7 @@ import com.loopj.android.http.ResponseHandlerInterface;
 import com.litewaveinc.litewave.R;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by jonathan on 10/10/15.
@@ -29,17 +31,27 @@ public final class API {
         API.appContext = context;
     }
 
+    /* CLIENTS */
+
     public static void getClient(String clientID, IAPIResponse response) {
         API.get("clients/" + clientID, response);
     }
+
+    /* EVENTS */
 
     public static void getEvents(String clientID, IAPIResponse response) {
         API.get("clients/" + clientID + "/events", response);
     }
 
+    public static void joinEvent(String eventID, JSONObject params, IAPIResponse response) {
+        API.post("events/" + eventID + "/user_locations", params, response);
+    }
+
     public static void getEvent(String clientID, String eventID, IAPIResponse response) {
         API.get("clients/" + clientID + "/events/" + eventID, response);
     }
+
+    /* SEATS */
 
     public static void getLevels(String stadiumID, IAPIResponse response) {
         API.get("stadiums/" + stadiumID + "/levels", response);
@@ -50,22 +62,22 @@ public final class API {
     }
 
     private static void get(String url, IAPIResponse response) {
-        API.request(url, "GET", new RequestParams(), response);
+        API.request(url, "GET", new JSONObject(), response);
     }
 
-    private static void post(String url, RequestParams params, IAPIResponse response) {
+    private static void post(String url, JSONObject params, IAPIResponse response) {
         API.request(url, "POST", params, response);
     }
 
-    private static void put(String url, RequestParams params, IAPIResponse response) {
+    private static void put(String url, JSONObject params, IAPIResponse response) {
         API.request(url, "PUT", params, response);
     }
 
     private static void delete(String url, IAPIResponse response) {
-        API.request(url, "DELETE", new RequestParams(), response);
+        API.request(url, "DELETE", new JSONObject(), response);
     }
 
-    private static void request(String url, String method, RequestParams params, final IAPIResponse apiResponse) {
+    private static void request(String url, String method, JSONObject params, final IAPIResponse apiResponse) {
         if (appContext == null) {
             Log.d("Debug", "Need to call init first.");
             throw new UnsupportedOperationException();
@@ -87,24 +99,41 @@ public final class API {
             }
 
             @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                Log.d("Failed: ", "" + statusCode);
+                Log.d("Error : ", "" + throwable);
+                apiResponse.failure(new JSONArray());
+            }
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("Failed: ", ""+statusCode);
+                Log.d("Error : ", "" + throwable);
                 apiResponse.failure(errorResponse);
             }
         };
 
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(params.toString());
+        } catch (Exception e) {
+            return;
+        }
+
         AsyncHttpClient client = new AsyncHttpClient();
         switch (method) {
             case "GET":
-                client.get(apiURL.toString(), params, responseHandler);
+                client.get(appContext, apiURL.toString(), entity, "application/json", responseHandler);
                 break;
             case "POST":
-                client.post(apiURL.toString(), params, responseHandler);
+                client.post(appContext, apiURL.toString(), entity, "application/json", responseHandler);
                 break;
             case "PUT":
-                client.put(apiURL.toString(), params, responseHandler);
+                client.put(appContext, apiURL.toString(), entity, "application/json", responseHandler);
                 break;
             case "DELETE":
-                client.delete(apiURL.toString(), responseHandler);
+                client.delete(appContext, apiURL.toString(), entity, "application/json", responseHandler);
                 break;
 
         }

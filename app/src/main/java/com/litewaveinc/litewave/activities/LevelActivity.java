@@ -25,6 +25,7 @@ import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.adapters.CircleListAdapter;
+import com.litewaveinc.litewave.util.Helper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,11 +119,7 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
         ActionBar actionBar = getSupportActionBar();
 
-        String[] colorRGB = ((String)Config.get("highlightColor")).split(",");
-        int color = Color.rgb(
-                Integer.parseInt(colorRGB[0]),
-                Integer.parseInt(colorRGB[1]),
-                Integer.parseInt(colorRGB[2]));
+        int color = Helper.getColor((String)Config.get("highlightColor"));
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);

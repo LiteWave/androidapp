@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -20,7 +22,9 @@ import com.litewaveinc.litewave.adapters.CircleListAdapter;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.util.Helper;
 import com.litewaveinc.litewave.util.JSONHelper;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.UUID;
 
 public class SeatActivity extends AppCompatActivity {
 
@@ -41,12 +46,22 @@ public class SeatActivity extends AppCompatActivity {
     public ListView rowsListView;
     public ListView seatsListView;
 
+    public Button joinButton;
+
     public ArrayList<String> sections;
     public Hashtable<String, JSONObject>sectionsMap;
     public ArrayList<String> rows;
     public Hashtable<String, JSONObject>rowsMap;
     public ArrayList<String> seats;
 
+
+    public class JoinEventResponse extends APIResponse {
+
+        @Override
+        public void success(JSONObject content) {
+            Log.d("SeatActivity:onJoin", "START");
+        }
+    }
 
     public class GetSeatsResponse extends APIResponse {
 
@@ -103,6 +118,7 @@ public class SeatActivity extends AppCompatActivity {
                     }
                     buildRows(rowsContent);
                 }
+                disableJoin();
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -138,7 +154,7 @@ public class SeatActivity extends AppCompatActivity {
                     seatsListView.setVisibility(View.INVISIBLE);
                     clearListView(seatsListView);
                 } else {
-                    selectedRow = (String) rowsListView.getItemAtPosition(position);
+                    selectedRow = newSelectedRow;
                     JSONArray seatsContent;
                     try {
                         seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
@@ -149,7 +165,7 @@ public class SeatActivity extends AppCompatActivity {
                     buildSeats(seatsContent);
                     seatsListView.setVisibility(View.VISIBLE);
                 }
-
+                disableJoin();
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -175,7 +191,14 @@ public class SeatActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedSeat = (String)seatsListView.getItemAtPosition(position);
+                String newSelectedSeat = (String) rowsListView.getItemAtPosition(position);
+                if (newSelectedSeat == selectedSeat) {
+                    selectedSeat = null;
+                    disableJoin();
+                } else {
+                    selectedSeat = newSelectedSeat;
+                    enableJoin();
+                }
             }
         });
     }
@@ -187,23 +210,60 @@ public class SeatActivity extends AppCompatActivity {
 
 
     protected void getSeats(String level) {
-        API.getSeats((String)Config.get("StadiumID"), level, new GetSeatsResponse());
+        API.getSeats((String) Config.get("StadiumID"), level, new GetSeatsResponse());
+    }
+
+    protected void enableJoin() {
+
+        int color = Helper.getColor((String)Config.get("highlightColor"));
+        joinButton.setBackgroundColor(color);
+        joinButton.setTextColor(Color.parseColor("#FFFFFF"));
+        joinButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+               joinEvent();
+            }
+        });
+    }
+
+    protected void disableJoin() {
+        int color = Helper.getColor((String)Config.get("highlightColor"));
+        joinButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.disabled_button_background));
+        joinButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.disabled_button_text));
+        joinButton.setOnClickListener(null);
+    }
+
+    protected void joinEvent() {
+        JSONObject params = new JSONObject();
+        JSONObject jsonUserSeat = new JSONObject();
+
+        try {
+            jsonUserSeat.put("level", selectedLevel);
+            jsonUserSeat.put("section", selectedSection);
+            jsonUserSeat.put("row", selectedRow);
+            jsonUserSeat.put("seat", selectedSeat);
+
+            params.put("userKey", (String)Config.get("UserID"));
+            params.put("userSeat", jsonUserSeat);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        API.joinEvent((String)Config.get("EventID"), params, new JoinEventResponse());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("SeatActivity:onCreate", "START");
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_seat);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        String[] colorRGB = ((String) Config.get("highlightColor")).split(",");
-        int color = Color.rgb(
-                Integer.parseInt(colorRGB[0]),
-                Integer.parseInt(colorRGB[1]),
-                Integer.parseInt(colorRGB[2]));
+
+        int color = Helper.getColor((String) Config.get("highlightColor"));
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
@@ -217,8 +277,12 @@ public class SeatActivity extends AppCompatActivity {
         rowsListView = (ListView) findViewById(R.id.rowsListView);
         seatsListView = (ListView) findViewById(R.id.seatsListView);
 
+        joinButton = (Button)findViewById(R.id.joinButton);
+
         selectedLevel = (String)Config.get("SelectedLevel");
         getSeats(selectedLevel);
+
+        disableJoin();
     }
 
     @Override
