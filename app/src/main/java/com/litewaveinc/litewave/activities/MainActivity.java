@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     eventDate = eventDate.substring(0, eventDate.indexOf('T'));
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-d");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-dd");
                     String formattedCurrentDate = simpleDateFormat.format(currentDate);
 
                     if (eventDate.compareTo(formattedCurrentDate) == 0) {

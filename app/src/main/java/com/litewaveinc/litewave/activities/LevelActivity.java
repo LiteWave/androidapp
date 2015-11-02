@@ -66,7 +66,7 @@ public class LevelActivity extends AppCompatActivity {
                 }
             }
 
-            CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), levels);
+            CircleListAdapter adapter = new CircleListAdapter(listView, getApplicationContext(), levels);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
