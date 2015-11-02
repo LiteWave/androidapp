@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.litewaveinc.litewave.R;
@@ -30,12 +32,16 @@ public class CircleListAdapter extends BaseAdapter {
     protected int CIRCLE_RADIUS = 300;
 
     protected Context context;
+    protected ListView listView;
     protected ArrayList<String> data;
+
+    protected int selectedIndex = -1;
 
     private static LayoutInflater inflater = null;
 
-    public CircleListAdapter(Context context, ArrayList data) {
+    public CircleListAdapter(ListView listView, Context context, ArrayList data) {
         this.context = context;
+        this.listView = listView;
         this.data = data;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,28 +70,64 @@ public class CircleListAdapter extends BaseAdapter {
         else
             view = convertView;
 
+        view.setId(position);
         view.setMinimumHeight(CIRCLE_RADIUS + 75);
 
         TextView text = (TextView) view.findViewById(R.id.text);
         text.setText(data.get(position));
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int position = view.getId();
+                if (position == selectedIndex) {
+                    selectedIndex = -1;
+                } else {
+                    selectedIndex = position;
+                }
+                notifyDataSetChanged();
+
+                listView.performItemClick(
+                        listView.getAdapter().getView(position, null, null),
+                        position,
+                        listView.getAdapter().getItemId(position));
+
+            }
+
+        });
+
+
         imageView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN ) {
-                    drawCircle(view, true);
-                    drawText(view, true);
-                    return false;
+                boolean selected = false;
+                int position = view.getId();
+                if (position == selectedIndex) {
+                    selected = true;
+                }
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    drawCircle(view, !selected);
+                    drawText(view, !selected);
+                } else if (event.getAction() == MotionEvent.ACTION_MOVE ) {
+                    drawCircle(view, selected);
+                    drawText(view, selected);
                 }
                 return false;
             }
 
         });
 
-        drawText(view, false);
-        drawCircle(view, false);
+        boolean select = false;
+        if (position == selectedIndex) {
+            select = true;
+        }
+        drawText(view, select);
+        drawCircle(view, select);
 
         return view;
     }

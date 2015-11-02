@@ -76,21 +76,33 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), sections);
+        CircleListAdapter adapter = new CircleListAdapter(sectionsListView, getApplicationContext(), sections);
         sectionsListView.setAdapter(adapter);
         sectionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedSection = (String) sectionsListView.getItemAtPosition(position);
-                JSONArray rowsContent;
-                try {
-                    rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
+
+                String newSelectedSection = (String) sectionsListView.getItemAtPosition(position);
+                if (newSelectedSection == selectedSection) {
+                    selectedSection = null;
+
+                    rowsListView.setVisibility(View.INVISIBLE);
+                    clearListView(rowsListView);
+
+                    seatsListView.setVisibility(View.INVISIBLE);
+                    clearListView(seatsListView);
+                } else {
+                    selectedSection = newSelectedSection;
+                    JSONArray rowsContent;
+                    try {
+                        rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    buildRows(rowsContent);
                 }
-                buildRows(rowsContent);
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -113,23 +125,35 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), rows);
+        CircleListAdapter adapter = new CircleListAdapter(rowsListView, getApplicationContext(), rows);
         rowsListView.setAdapter(adapter);
         rowsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedRow = (String)rowsListView.getItemAtPosition(position);
-                JSONArray seatsContent;
-                try {
-                    seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
+                String newSelectedRow = (String) rowsListView.getItemAtPosition(position);
+                if (newSelectedRow == selectedRow) {
+                    selectedRow = null;
+
+                    seatsListView.setVisibility(View.INVISIBLE);
+                    clearListView(seatsListView);
+                } else {
+                    selectedRow = (String) rowsListView.getItemAtPosition(position);
+                    JSONArray seatsContent;
+                    try {
+                        seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return;
+                    }
+                    buildSeats(seatsContent);
+                    seatsListView.setVisibility(View.VISIBLE);
                 }
-                buildSeats(seatsContent);
+
             }
         });
+        rowsListView.setVisibility(View.VISIBLE);
+
         seatsListView.setVisibility(View.VISIBLE);
         clearListView(seatsListView);
     }
@@ -145,7 +169,7 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), seats);
+        CircleListAdapter adapter = new CircleListAdapter(seatsListView, getApplicationContext(), seats);
         seatsListView.setAdapter(adapter);
         seatsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -157,7 +181,7 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void clearListView(ListView listView) {
-        CircleListAdapter adapter = new CircleListAdapter(getApplicationContext(), new ArrayList<String>());
+        CircleListAdapter adapter = new CircleListAdapter(listView, getApplicationContext(), new ArrayList<String>());
         listView.setAdapter(adapter);
     }
 
