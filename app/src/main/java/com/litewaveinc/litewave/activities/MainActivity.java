@@ -35,11 +35,12 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView noEvents;
+    TextView noEventsTextView;
+    TextView poweredByTextView;
     ImageView backgroundImage;
     ImageView logoImage;
 
-    public class EventsResponse extends APIResponse {
+    public class GetEventsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -142,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
 
         setContentView(R.layout.activity_main);
-        noEvents = (TextView) this.findViewById(R.id.textViewNoEvents);
+        noEventsTextView = (TextView) this.findViewById(R.id.noEventsTextView);
+        poweredByTextView = (TextView) this.findViewById(R.id.poweredByTextView);
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         logoImage = (ImageView) this.findViewById(R.id.logoImage);
-
 
         API.init(getApplicationContext());
 
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void checkEvents() {
-        API.getEvents(getString(R.string.clientID_Blazers), new EventsResponse());
+        API.getEvents(getString(R.string.clientID_Blazers), new GetEventsResponse());
     }
 
     protected void getClient() {
@@ -180,8 +181,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void showNoEvents() {
-        noEvents.setText(R.string.noEventsToday);
-        noEvents.setVisibility(View.VISIBLE);
+        noEventsTextView.setText(R.string.noEventsToday);
+        noEventsTextView.setVisibility(View.VISIBLE);
+
+        poweredByTextView.setVisibility(View.VISIBLE);
+
         logoImage.setVisibility(View.VISIBLE);
         saveLogo();
     }
