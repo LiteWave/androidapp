@@ -22,15 +22,11 @@
         </activity>
         <activity
             android:name=".activities.SeatActivity"
-            android:label="@string/title_activity_choose_seat"
-            android:parentActivityName=".activities.LevelActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.LevelActivity" />
+            android:label="@string/title_activity_choose_seat">
         </activity>
         <activity
             android:name=".activities.ReadyActivity"
-            android:label="@string/title_activity_game_time" >
+            android:label="@string/title_activity_game_time">
         </activity>
         <activity
             android:name=".activities.ShowActivity"

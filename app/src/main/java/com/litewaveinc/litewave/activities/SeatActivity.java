@@ -27,6 +27,7 @@ import com.litewaveinc.litewave.adapters.CircleListAdapter;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;
 import com.litewaveinc.litewave.util.JSONHelper;
 import com.loopj.android.http.RequestParams;
@@ -40,6 +41,8 @@ import java.util.Hashtable;
 import java.util.UUID;
 
 public class SeatActivity extends AppCompatActivity {
+
+    Context context;
 
     public ImageView backgroundImage;
     public String selectedLevel;
@@ -66,8 +69,11 @@ public class SeatActivity extends AppCompatActivity {
         public void success(JSONObject content) {
             saveSeat();
 
+            ViewStack.push(SeatActivity.class);
+
             Intent intent = new Intent(SeatActivity.this, ReadyActivity.class);
             startActivity(intent);
+            finish();
         }
 
         @Override
@@ -97,6 +103,12 @@ public class SeatActivity extends AppCompatActivity {
                 return;
             }
             buildSections(sectionsContent);
+
+            if (selectedSection.equals("")) {
+                disableJoin();
+            } else {
+                selectSection(selectedSection, true);
+            }
         }
     }
 
@@ -113,34 +125,15 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(sectionsListView, getApplicationContext(), sections);
+        CircleListAdapter adapter = new CircleListAdapter(sectionsListView, context, sections, selectedSection);
         sectionsListView.setAdapter(adapter);
         sectionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                String newSelectedSection = (String) sectionsListView.getItemAtPosition(position);
-                if (newSelectedSection == selectedSection) {
-                    selectedSection = null;
-
-                    rowsListView.setVisibility(View.INVISIBLE);
-                    clearListView(rowsListView);
-
-                    seatsListView.setVisibility(View.INVISIBLE);
-                    clearListView(seatsListView);
-                } else {
-                    selectedSection = newSelectedSection;
-                    JSONArray rowsContent;
-                    try {
-                        rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                    buildRows(rowsContent);
-                }
-                disableJoin();
+                selectedRow = "";
+                selectedSeat = "";
+                selectSection((String) sectionsListView.getItemAtPosition(position), false);
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -148,6 +141,34 @@ public class SeatActivity extends AppCompatActivity {
 
         seatsListView.setVisibility(View.INVISIBLE);
         clearListView(seatsListView);
+    }
+
+    protected void selectSection(String newSelectedSection, boolean force) {
+        if (newSelectedSection == selectedSection && !force) {
+            selectedSection = null;
+
+            rowsListView.setVisibility(View.INVISIBLE);
+            clearListView(rowsListView);
+
+            seatsListView.setVisibility(View.INVISIBLE);
+            clearListView(seatsListView);
+        } else {
+            selectedSection = newSelectedSection;
+            JSONArray rowsContent;
+            try {
+                rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+            buildRows(rowsContent);
+        }
+
+        if (selectedRow.equals("")) {
+            disableJoin();
+        } else {
+            selectRow(selectedRow, true);
+        }
     }
 
     protected void buildRows(JSONArray content) {
@@ -163,37 +184,47 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(rowsListView, getApplicationContext(), rows);
+        CircleListAdapter adapter = new CircleListAdapter(rowsListView, context, rows, selectedRow);
         rowsListView.setAdapter(adapter);
         rowsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String newSelectedRow = (String) rowsListView.getItemAtPosition(position);
-                if (newSelectedRow == selectedRow) {
-                    selectedRow = null;
-
-                    seatsListView.setVisibility(View.INVISIBLE);
-                    clearListView(seatsListView);
-                } else {
-                    selectedRow = newSelectedRow;
-                    JSONArray seatsContent;
-                    try {
-                        seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        return;
-                    }
-                    buildSeats(seatsContent);
-                    seatsListView.setVisibility(View.VISIBLE);
-                }
-                disableJoin();
+                selectedSeat = "";
+                selectRow((String) rowsListView.getItemAtPosition(position), false);
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
 
         seatsListView.setVisibility(View.VISIBLE);
         clearListView(seatsListView);
+    }
+
+    protected void selectRow(String newSelectedRow, boolean force) {
+        if (newSelectedRow == selectedRow && !force) {
+            selectedRow = null;
+
+            seatsListView.setVisibility(View.INVISIBLE);
+            clearListView(seatsListView);
+        } else {
+            selectedRow = newSelectedRow;
+            JSONArray seatsContent;
+            try {
+                seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return;
+            }
+            buildSeats(seatsContent);
+            seatsListView.setVisibility(View.VISIBLE);
+        }
+
+        if (selectedSeat.equals("")) {
+            disableJoin();
+        } else {
+            selectSeat(selectedSeat, true);
+        }
+
     }
 
     protected void buildSeats(JSONArray content) {
@@ -207,26 +238,29 @@ public class SeatActivity extends AppCompatActivity {
             }
         }
 
-        CircleListAdapter adapter = new CircleListAdapter(seatsListView, getApplicationContext(), seats);
+        CircleListAdapter adapter = new CircleListAdapter(seatsListView, context, seats, selectedSeat);
         seatsListView.setAdapter(adapter);
         seatsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String newSelectedSeat = (String) seatsListView.getItemAtPosition(position);
-                if (newSelectedSeat == selectedSeat) {
-                    selectedSeat = null;
-                    disableJoin();
-                } else {
-                    selectedSeat = newSelectedSeat;
-                    enableJoin();
-                }
+                selectSeat((String) seatsListView.getItemAtPosition(position), false);
             }
         });
     }
 
+    protected void selectSeat(String newSelectedSeat, boolean force) {
+        if (newSelectedSeat == selectedSeat && !force) {
+            selectedSeat = null;
+            disableJoin();
+        } else {
+            selectedSeat = newSelectedSeat;
+            enableJoin();
+        }
+    }
+
     protected void clearListView(ListView listView) {
-        CircleListAdapter adapter = new CircleListAdapter(listView, getApplicationContext(), new ArrayList<String>());
+        CircleListAdapter adapter = new CircleListAdapter(listView, context, new ArrayList<String>(), null);
         listView.setAdapter(adapter);
     }
 
@@ -250,8 +284,8 @@ public class SeatActivity extends AppCompatActivity {
 
     protected void disableJoin() {
         int color = Helper.getColor((String)Config.get("highlightColor"));
-        joinButton.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.disabled_button_background));
-        joinButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.disabled_button_text));
+        joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
+        joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
     }
 
@@ -276,20 +310,18 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void saveSeat() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        editor.putString("EventID", (String)Config.get("EventID"));
-
-        editor.putString("SelectedLevel", selectedLevel);
-        editor.putString("SelectedSection", selectedSection);
-        editor.putString("SelectedRow", selectedRow);
-        editor.putString("SelectedSeat", selectedSeat);
+        Config.setPreference("EventID", (String) Config.get("EventID"), context);
+        Config.setPreference("LevelID", (String)Config.set("LevelID", selectedLevel), context);
+        Config.setPreference("SectionID", (String)Config.set("SectionID", selectedSection), context);
+        Config.setPreference("RowID", (String)Config.set("RowID", selectedRow), context);
+        Config.setPreference("SeatID", (String)Config.set("SeatID", selectedSeat), context);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        context = getApplicationContext();
 
         setContentView(R.layout.activity_seat);
 
@@ -312,7 +344,10 @@ public class SeatActivity extends AppCompatActivity {
 
         joinButton = (Button)findViewById(R.id.joinButton);
 
-        selectedLevel = (String)Config.get("SelectedLevel");
+        selectedLevel = (String)Config.get("LevelID");
+        selectedSection = (String)Config.get("SectionID");
+        selectedRow = (String)Config.get("RowID");
+        selectedSeat = (String)Config.get("SeatID");
         getSeats(selectedLevel);
 
         disableJoin();
@@ -322,7 +357,9 @@ public class SeatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                Intent parentActivityIntent = new Intent(SeatActivity.this, ViewStack.pop());
+                parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(parentActivityIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

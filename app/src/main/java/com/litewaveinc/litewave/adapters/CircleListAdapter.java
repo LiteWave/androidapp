@@ -36,13 +36,15 @@ public class CircleListAdapter extends BaseAdapter {
     protected ArrayList<String> data;
 
     protected int selectedIndex = -1;
+    protected String initialSelection;
 
     private static LayoutInflater inflater = null;
 
-    public CircleListAdapter(ListView listView, Context context, ArrayList data) {
+    public CircleListAdapter(ListView listView, Context context, ArrayList data, String initialSelection) {
         this.context = context;
         this.listView = listView;
         this.data = data;
+        this.initialSelection = initialSelection;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -123,6 +125,10 @@ public class CircleListAdapter extends BaseAdapter {
         });
 
         boolean select = false;
+        if (initialSelection != null && data.get(position).equals(initialSelection)) {
+            selectedIndex = position;
+            initialSelection = null;
+        }
         if (position == selectedIndex) {
             select = true;
         }
