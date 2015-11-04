@@ -72,7 +72,6 @@ public class SeatActivity extends AppCompatActivity {
             try {
                 userLocationID = content.getString("_id");
             } catch (JSONException e) {
-                Helper.showDialog("Whoops", "An error occurred.", self);
                 return;
             }
 
@@ -87,7 +86,11 @@ public class SeatActivity extends AppCompatActivity {
 
         @Override
         public void failure(JSONArray content, int statusCode) {
-            Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
+            if (statusCode == 400) {
+                Helper.showDialog("Seat", "Sorry, this seat has been taken.", self);
+            } else {
+                Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
+            }
         }
     }
 
