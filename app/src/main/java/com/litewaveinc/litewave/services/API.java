@@ -100,18 +100,18 @@ public final class API {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
                 Log.d("Failed: ", "" + statusCode);
                 Log.d("Error : ", "" + throwable);
-                apiResponse.failure(new JSONArray());
+                apiResponse.failure(new JSONArray(), statusCode);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d("Failed: ", ""+statusCode);
                 Log.d("Error : ", "" + throwable);
-                apiResponse.failure(errorResponse);
+                apiResponse.failure(errorResponse, statusCode);
             }
+
         };
 
         StringEntity entity = null;
@@ -120,6 +120,8 @@ public final class API {
         } catch (Exception e) {
             return;
         }
+
+        Log.d("Debug", "Requesting: " + method + ":" + apiURL.toString());
 
         AsyncHttpClient client = new AsyncHttpClient();
         switch (method) {

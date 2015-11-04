@@ -15,7 +15,7 @@ public class APIResponse implements IAPIResponse {
 
     }
 
-    public void failure(JSONArray content) {
-        System.out.println("An error has occured: " + content.toString());
+    public void failure(JSONArray content, int statusCode) {
+        System.out.println("Request error " + statusCode + ": " + content.toString());
     }
 }

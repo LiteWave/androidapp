@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void loadPreferences() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         if (preferences.getString("UserID", "") == "") {
@@ -164,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Config.set("UserID", preferences.getString("UserID", ""));
-        Config.set("UserID", preferences.getString("EventID", ""));
 
         Config.set("LevelID", preferences.getString("LevelID", ""));
         Config.set("SectionID", preferences.getString("SectionID", ""));
