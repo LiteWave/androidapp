@@ -41,8 +41,7 @@
         <activity
             android:name=".activities.ResultsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_thanks_for_participating"
-            android:theme="@style/FullscreenTheme" >
+            android:label="@string/title_activity_thanks_for_participating">
         </activity>
     </application>
 
