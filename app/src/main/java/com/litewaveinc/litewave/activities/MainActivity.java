@@ -201,18 +201,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void showEvent(JSONObject event) {
-        String stadiumID = "";
-        String eventID = "";
-
         try {
-            stadiumID = event.getString("_stadiumId");
-            eventID = event.getString("_id");
+            Config.set("StadiumID", event.getString("_stadiumId"));
+            Config.set("EventID", event.getString("_id"));
+            Config.set("EventName", event.getString("name"));
+            Config.set("EventDate", event.getString("date"));
         } catch (JSONException e) {
             showError(e);
             return;
         }
-        Config.set("StadiumID", stadiumID);
-        Config.set("EventID", eventID);
 
         Intent intent;
         if (Config.getPreference("UserLocationID", "", context) == "") {

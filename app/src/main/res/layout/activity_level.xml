@@ -39,7 +39,7 @@
             />
 
         <TextView
-            android:id="@+id/textChoseSeat"
+            android:id="@+id/chooseSeatTextView"
             android:enabled="true"
             android:text="Please choose the level your are seated in"
             android:layout_centerHorizontal="true"
