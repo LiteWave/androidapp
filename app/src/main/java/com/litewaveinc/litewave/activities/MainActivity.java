@@ -22,6 +22,7 @@ import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.services.ViewStack;
+import com.litewaveinc.litewave.util.Helper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,8 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity {
 
     Context context;
+    MainActivity self;
+
     TextView noEventsTextView;
     TextView poweredByTextView;
     ImageView backgroundImage;
@@ -79,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
             getClient();
             clearSeat();
         }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
+        }
     }
 
     public class GetClientResponse extends APIResponse {
@@ -94,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
 
             saveSettings(settings);
             showNoEvents();
+        }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
         }
 
     }
@@ -188,21 +201,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void showEvent(JSONObject event) {
-        String stadiumID = "";
-        String eventID = "";
-
         try {
-            stadiumID = event.getString("_stadiumId");
-            eventID = event.getString("_id");
+            Config.set("StadiumID", event.getString("_stadiumId"));
+            Config.set("EventID", event.getString("_id"));
+            Config.set("EventName", event.getString("name"));
+            Config.set("EventDate", event.getString("date"));
         } catch (JSONException e) {
             showError(e);
             return;
         }
-        Config.set("StadiumID", stadiumID);
-        Config.set("EventID", eventID);
 
         Intent intent;
-        if (Config.getPreference("SeatID", "", context) == "") {
+        if (Config.getPreference("UserLocationID", "", context) == "") {
             intent = new Intent(MainActivity.this, LevelActivity.class);
         } else {
             intent = new Intent(MainActivity.this, ReadyActivity.class);
@@ -222,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
+        self = this;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

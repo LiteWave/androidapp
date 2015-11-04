@@ -43,12 +43,16 @@ public final class API {
         API.get("clients/" + clientID + "/events", response);
     }
 
+    public static void getEvent(String clientID, String eventID, IAPIResponse response) {
+        API.get("clients/" + clientID + "/events/" + eventID, response);
+    }
+
     public static void joinEvent(String eventID, JSONObject params, IAPIResponse response) {
         API.post("events/" + eventID + "/user_locations", params, response);
     }
 
-    public static void getEvent(String clientID, String eventID, IAPIResponse response) {
-        API.get("clients/" + clientID + "/events/" + eventID, response);
+    public static void leaveEvent(String userLocationID, IAPIResponse response) {
+        API.delete("user_locations/" + userLocationID, response);
     }
 
     /* SEATS */

@@ -18,20 +18,18 @@
         </activity>
         <activity
             android:name=".activities.LevelActivity"
-            android:label="@string/title_activity_choose_level" >
+            android:label="Choose level" >
         </activity>
         <activity
             android:name=".activities.SeatActivity"
             android:label="@string/title_activity_choose_seat">
         </activity>
         <activity
-            android:name=".activities.ReadyActivity"
-            android:label="@string/title_activity_game_time">
+            android:name=".activities.ReadyActivity">
         </activity>
         <activity
             android:name=".activities.ShowActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_winners_circle"
             android:theme="@style/FullscreenTheme" >
         </activity>
         <activity

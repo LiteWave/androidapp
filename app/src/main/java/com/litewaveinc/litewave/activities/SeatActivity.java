@@ -43,6 +43,7 @@ import java.util.UUID;
 public class SeatActivity extends AppCompatActivity {
 
     Context context;
+    SeatActivity self;
 
     public ImageView backgroundImage;
     public String selectedLevel;
@@ -67,7 +68,14 @@ public class SeatActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONObject content) {
-            saveSeat();
+            String userLocationID = "";
+            try {
+                userLocationID = content.getString("_id");
+            } catch (JSONException e) {
+                return;
+            }
+
+            saveSeat(userLocationID);
 
             ViewStack.push(SeatActivity.class);
 
@@ -78,16 +86,11 @@ public class SeatActivity extends AppCompatActivity {
 
         @Override
         public void failure(JSONArray content, int statusCode) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(SeatActivity.this);
-            builder.setTitle("Seat");
-            builder.setMessage("Sorry, this seat has been taken.");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+            if (statusCode == 400) {
+                Helper.showDialog("Seat", "Sorry, this seat has been taken.", self);
+            } else {
+                Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
+            }
         }
     }
 
@@ -109,6 +112,11 @@ public class SeatActivity extends AppCompatActivity {
             } else {
                 selectSection(selectedSection, true);
             }
+        }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
         }
     }
 
@@ -309,7 +317,8 @@ public class SeatActivity extends AppCompatActivity {
         API.joinEvent((String) Config.get("EventID"), params, new JoinEventResponse());
     }
 
-    protected void saveSeat() {
+    protected void saveSeat(String userLocationID) {
+        Config.setPreference("UserLocationID", (String) Config.set("UserLocationID", userLocationID), context);
         Config.setPreference("EventID", (String) Config.get("EventID"), context);
         Config.setPreference("LevelID", (String)Config.set("LevelID", selectedLevel), context);
         Config.setPreference("SectionID", (String)Config.set("SectionID", selectedSection), context);
@@ -322,6 +331,7 @@ public class SeatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
+        self = this;
 
         setContentView(R.layout.activity_seat);
 
