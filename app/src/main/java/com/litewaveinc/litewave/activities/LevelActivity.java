@@ -1,5 +1,6 @@
 package com.litewaveinc.litewave.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,6 +26,7 @@ import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.adapters.CircleListAdapter;
+import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;
 
 import org.json.JSONArray;
@@ -44,6 +46,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 public class LevelActivity extends AppCompatActivity {
+
+    Context context;
 
     ImageView backgroundImage;
     ListView listView;
@@ -67,7 +71,7 @@ public class LevelActivity extends AppCompatActivity {
                 }
             }
 
-            CircleListAdapter adapter = new CircleListAdapter(listView, getApplicationContext(), levels);
+            CircleListAdapter adapter = new CircleListAdapter(listView, getApplicationContext(), levels, null);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -80,10 +84,13 @@ public class LevelActivity extends AppCompatActivity {
     }
 
     protected void selectLevel(String level) {
-        Config.set("SelectedLevel", level);
+        Config.set("LevelID", level);
+
+        ViewStack.push(LevelActivity.class);
 
         Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
         startActivity(intent);
+        finish();
     }
 
     protected void getLevels(String stadiumID) {
@@ -96,7 +103,6 @@ public class LevelActivity extends AppCompatActivity {
         timer.schedule(new TimerTask() {
 
             public void run() {
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -115,10 +121,12 @@ public class LevelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        context = getApplicationContext();
+
         setContentView(R.layout.activity_level);
-        ActionBar actionBar = getSupportActionBar();
 
         int color = Helper.getColor((String)Config.get("highlightColor"));
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);

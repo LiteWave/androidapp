@@ -1,5 +1,7 @@
 package com.litewaveinc.litewave.services;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
 import java.util.Dictionary;
@@ -18,8 +20,23 @@ public class Config {
         return data.get(name);
     }
 
-    public static void set(String name, Object value) {
+    public static Object set(String name, Object value) {
         data.put(name, value);
+        return value;
+    }
+
+    public static String getPreference(String name, String defaultValue, Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        return preferences.getString(name, defaultValue);
+    }
+
+    public static String setPreference(String name, String value, Context context) {
+        SharedPreferences preferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(name, value);
+        editor.commit();
+
+        return value;
     }
 
 }

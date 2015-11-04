@@ -17,4 +17,5 @@ public class Helper {
                 Integer.parseInt(colorRGB[1]),
                 Integer.parseInt(colorRGB[2]));
     }
+
 }

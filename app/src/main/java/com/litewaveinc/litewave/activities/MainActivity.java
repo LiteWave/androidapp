@@ -21,6 +21,7 @@ import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.services.ViewStack;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +36,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    Context context;
     TextView noEventsTextView;
     TextView poweredByTextView;
     ImageView backgroundImage;
@@ -72,14 +74,10 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-                Log.d("MainActivity", "No Events found for: " + currentDate.toString());
-                getClient();
-
-            } else {
-                Log.d("MainActivity", "No Events found for: " + currentDate.toString());
-                getClient();
             }
-
+            Log.d("MainActivity", "No Available event found for: " + currentDate.toString());
+            getClient();
+            clearSeat();
         }
     }
 
@@ -134,41 +132,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
-        setContentView(R.layout.activity_main);
-        noEventsTextView = (TextView) this.findViewById(R.id.noEventsTextView);
-        poweredByTextView = (TextView) this.findViewById(R.id.poweredByTextView);
-        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
-        logoImage = (ImageView) this.findViewById(R.id.logoImage);
-
-        API.init(getApplicationContext());
-
-        loadPreferences();
-        checkEvents();
-    }
-
     protected void loadPreferences() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        if (preferences.getString("UserID", "") == "") {
-            editor.putString("UserID", UUID.randomUUID().toString());
-            editor.commit();
+        if (Config.getPreference("UserID", "", context) == "") {
+            Config.setPreference("UserID", UUID.randomUUID().toString(), context);
         }
 
-        Config.set("UserID", preferences.getString("UserID", ""));
+        Config.set("UserID", Config.getPreference("UserID", "", context));
+        Config.set("LevelID", Config.getPreference("LevelID", "", context));
+        Config.set("SectionID", Config.getPreference("SectionID", "", context));
+        Config.set("RowID", Config.getPreference("RowID", "", context));
+        Config.set("SeatID", Config.getPreference("SeatID", "", context));
+    }
 
-        Config.set("LevelID", preferences.getString("LevelID", ""));
-        Config.set("SectionID", preferences.getString("SectionID", ""));
-        Config.set("RowID", preferences.getString("RowID", ""));
-        Config.set("SeatID", preferences.getString("SeatID", ""));
+    protected void clearSeat() {
+        Config.setPreference("LevelID", null, context);
+        Config.setPreference("SectionID", null, context);
+        Config.setPreference("RowID", null, context);
+        Config.setPreference("SeatID", null, context);
     }
 
     protected void checkEvents() {
@@ -204,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void saveLogo() {
         new DownloadLogoTask((ImageView) findViewById(R.id.backgroundImage))
-                .execute((String)Config.get("logoUrl"));
+                .execute((String) Config.get("logoUrl"));
     }
 
     protected void showEvent(JSONObject event) {
@@ -221,14 +201,40 @@ public class MainActivity extends AppCompatActivity {
         Config.set("StadiumID", stadiumID);
         Config.set("EventID", eventID);
 
+        Intent intent;
+        if (Config.getPreference("SeatID", "", context) == "") {
+            intent = new Intent(MainActivity.this, LevelActivity.class);
+        } else {
+            intent = new Intent(MainActivity.this, ReadyActivity.class);
+        }
 
-        Intent intent = new Intent(MainActivity.this, LevelActivity.class);
-
+        ViewStack.push(MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     protected void showError(Exception e) {
         e.printStackTrace();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        context = getApplicationContext();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        setContentView(R.layout.activity_main);
+        noEventsTextView = (TextView) this.findViewById(R.id.noEventsTextView);
+        poweredByTextView = (TextView) this.findViewById(R.id.poweredByTextView);
+        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        logoImage = (ImageView) this.findViewById(R.id.logoImage);
+
+        API.init(context);
+
+        loadPreferences();
+        checkEvents();
     }
 }
