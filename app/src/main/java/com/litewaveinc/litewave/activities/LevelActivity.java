@@ -48,6 +48,7 @@ import java.util.concurrent.TimeoutException;
 public class LevelActivity extends AppCompatActivity {
 
     Context context;
+    LevelActivity self;
 
     ImageView backgroundImage;
     ListView listView;
@@ -80,6 +81,11 @@ public class LevelActivity extends AppCompatActivity {
                     selectLevel((String)listView.getItemAtPosition(position));
                 }
             });
+        }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            Helper.showDialog("Whoops", "Sorry, an error has occurred.", self);
         }
     }
 
@@ -122,6 +128,7 @@ public class LevelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         context = getApplicationContext();
+        self = this;
 
         setContentView(R.layout.activity_level);
 
