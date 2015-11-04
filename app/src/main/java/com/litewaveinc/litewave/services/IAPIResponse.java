@@ -9,5 +9,5 @@ import org.json.JSONObject;
 public interface IAPIResponse {
     void success(JSONArray content);
     void success(JSONObject content);
-    void failure(JSONArray content);
+    void failure(JSONArray content, int statusCode);
 }

@@ -1,5 +1,10 @@
 package com.litewaveinc.litewave.activities;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,7 +64,24 @@ public class SeatActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONObject content) {
-            Log.d("SeatActivity:onJoin", "START");
+            saveSeat();
+
+            Intent intent = new Intent(SeatActivity.this, ReadyActivity.class);
+            startActivity(intent);
+        }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SeatActivity.this);
+            builder.setTitle("Seat");
+            builder.setMessage("Sorry, this seat has been taken.");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
     }
 
@@ -191,7 +213,7 @@ public class SeatActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String newSelectedSeat = (String) rowsListView.getItemAtPosition(position);
+                String newSelectedSeat = (String) seatsListView.getItemAtPosition(position);
                 if (newSelectedSeat == selectedSeat) {
                     selectedSeat = null;
                     disableJoin();
@@ -221,7 +243,7 @@ public class SeatActivity extends AppCompatActivity {
         joinButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-               joinEvent();
+                joinEvent();
             }
         });
     }
@@ -250,8 +272,19 @@ public class SeatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        API.joinEvent((String) Config.get("EventID"), params, new JoinEventResponse());
+    }
 
-        API.joinEvent((String)Config.get("EventID"), params, new JoinEventResponse());
+    protected void saveSeat() {
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("Prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("EventID", (String)Config.get("EventID"));
+
+        editor.putString("SelectedLevel", selectedLevel);
+        editor.putString("SelectedSection", selectedSection);
+        editor.putString("SelectedRow", selectedRow);
+        editor.putString("SelectedSeat", selectedSeat);
     }
 
     @Override
