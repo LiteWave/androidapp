@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
             Config.setPreference("UserID", UUID.randomUUID().toString(), context);
         }
 
+        Config.set("UserLocationID", Config.getPreference("UserLocationID", "", context));
         Config.set("UserID", Config.getPreference("UserID", "", context));
         Config.set("LevelID", Config.getPreference("LevelID", "", context));
         Config.set("SectionID", Config.getPreference("SectionID", "", context));
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void clearSeat() {
+        Config.setPreference("UserLocationID", null, context);
         Config.setPreference("LevelID", null, context);
         Config.setPreference("SectionID", null, context);
         Config.setPreference("RowID", null, context);
@@ -190,6 +192,10 @@ public class MainActivity extends AppCompatActivity {
             Config.set("textColor", settings.getString("textColor"));
             Config.set("textSelectedColor", settings.getString("textSelectedColor"));
             Config.set("logoUrl", settings.getString("logoUrl"));
+
+            if (Config.getPreference("PollInterval", "", context) == "") {
+                Config.set("PollInterval", "5000");
+            }
         } catch (JSONException e) {
             showError(e);
         }

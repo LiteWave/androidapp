@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.util.Helper;
 
 import java.util.ArrayList;
 
@@ -84,18 +85,13 @@ public class CircleListAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                int position = view.getId();
-                if (position == selectedIndex) {
-                    selectedIndex = -1;
-                } else {
-                    selectedIndex = position;
-                }
+                selectedIndex = view.getId();
                 notifyDataSetChanged();
 
                 listView.performItemClick(
-                        listView.getAdapter().getView(position, null, null),
-                        position,
-                        listView.getAdapter().getItemId(position));
+                        listView.getAdapter().getView(selectedIndex, null, null),
+                        selectedIndex,
+                        listView.getAdapter().getItemId(selectedIndex));
 
             }
 
@@ -129,6 +125,7 @@ public class CircleListAdapter extends BaseAdapter {
             selectedIndex = position;
             initialSelection = null;
         }
+
         if (position == selectedIndex) {
             select = true;
         }
@@ -141,71 +138,27 @@ public class CircleListAdapter extends BaseAdapter {
     protected void drawText(View view, boolean select) {
         TextView text = (TextView) view.findViewById(R.id.text);
         int color;
-        String[] colorRGB;
         if (select) {
-            colorRGB = ((String)Config.get("textSelectedColor")).split(",");
+            color = Helper.getColor((String)Config.get("textSelectedColor"));
         } else {
-            colorRGB = ((String)Config.get("textColor")).split(",");
+            color = Helper.getColor((String)Config.get("textColor"));
         }
-        color = Color.rgb(
-                Integer.parseInt(colorRGB[0]),
-                Integer.parseInt(colorRGB[1]),
-                Integer.parseInt(colorRGB[2]));
         text.setTextColor(color);
     }
 
     protected void drawCircle(View view, boolean select) {
-        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
-        Bitmap bitmap = Bitmap.createBitmap(CIRCLE_RADIUS, CIRCLE_RADIUS, Bitmap.Config.ARGB_8888);
-        bitmap = bitmap.copy(bitmap.getConfig(), true);
+        int backgroundColor;
+        int borderColor;
 
-        Canvas canvas = new Canvas(bitmap);
-
-        int color;
-        String[] colorRGB;
-        Paint paint;
         if (select) {
-            colorRGB = ((String)Config.get("highlightColor")).split(",");
-            color = Color.rgb(
-                    Integer.parseInt(colorRGB[0]),
-                    Integer.parseInt(colorRGB[1]),
-                    Integer.parseInt(colorRGB[2]));
-
-            paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setStrokeWidth(STROKE_WIDTH);
-            paint.setStyle(Paint.Style.FILL_AND_STROKE);
-            paint.setColor(color);
-
-            canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
+            borderColor = Helper.getColor((String)Config.get("highlightColor"));
+            backgroundColor = Helper.getColor((String)Config.get("highlightColor"));
         } else {
-            colorRGB = ((String)Config.get("backgroundColor")).split(",");
-            color = Color.rgb(
-                    Integer.parseInt(colorRGB[0]),
-                    Integer.parseInt(colorRGB[1]),
-                    Integer.parseInt(colorRGB[2]));
-
-            paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setStrokeWidth(STROKE_WIDTH);
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(color);
-            canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
-
-            colorRGB = ((String)Config.get("borderColor")).split(",");
-            color = Color.rgb(
-                    Integer.parseInt(colorRGB[0]),
-                    Integer.parseInt(colorRGB[1]),
-                    Integer.parseInt(colorRGB[2]));
-
-            paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setStrokeWidth(STROKE_WIDTH);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(color);
-            canvas.drawCircle(CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 + STROKE_WIDTH/2, CIRCLE_RADIUS/2 - STROKE_WIDTH, paint);
+            borderColor = Helper.getColor((String)Config.get("borderColor"));
+            backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         }
 
-        imageView.setImageBitmap(bitmap);
+        ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+        Helper.drawCircle(imageView, CIRCLE_RADIUS, STROKE_WIDTH, borderColor, backgroundColor);
     }
 }

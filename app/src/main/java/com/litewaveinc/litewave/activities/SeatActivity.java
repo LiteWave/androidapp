@@ -110,7 +110,7 @@ public class SeatActivity extends AppCompatActivity {
             if (selectedSection.equals("")) {
                 disableJoin();
             } else {
-                selectSection(selectedSection, true);
+                selectSection(selectedSection);
             }
         }
 
@@ -139,9 +139,7 @@ public class SeatActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedRow = "";
-                selectedSeat = "";
-                selectSection((String) sectionsListView.getItemAtPosition(position), false);
+                selectSection((String)sectionsListView.getItemAtPosition(position));
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -151,31 +149,26 @@ public class SeatActivity extends AppCompatActivity {
         clearListView(seatsListView);
     }
 
-    protected void selectSection(String newSelectedSection, boolean force) {
-        if (newSelectedSection == selectedSection && !force) {
-            selectedSection = null;
-
-            rowsListView.setVisibility(View.INVISIBLE);
-            clearListView(rowsListView);
-
-            seatsListView.setVisibility(View.INVISIBLE);
-            clearListView(seatsListView);
-        } else {
-            selectedSection = newSelectedSection;
-            JSONArray rowsContent;
-            try {
-                rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            buildRows(rowsContent);
+    protected void selectSection(String newSelectedSection) {
+        if (!newSelectedSection.equals(selectedSection)) {
+            selectedRow = "";
+            selectedSeat = "";
         }
+        selectedSection = newSelectedSection;
+
+        JSONArray rowsContent;
+        try {
+            rowsContent = sectionsMap.get(selectedSection).getJSONArray("rows");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        buildRows(rowsContent);
 
         if (selectedRow.equals("")) {
             disableJoin();
         } else {
-            selectRow(selectedRow, true);
+            selectRow(selectedRow);
         }
     }
 
@@ -198,8 +191,7 @@ public class SeatActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectedSeat = "";
-                selectRow((String) rowsListView.getItemAtPosition(position), false);
+                selectRow((String) rowsListView.getItemAtPosition(position));
             }
         });
         rowsListView.setVisibility(View.VISIBLE);
@@ -208,29 +200,26 @@ public class SeatActivity extends AppCompatActivity {
         clearListView(seatsListView);
     }
 
-    protected void selectRow(String newSelectedRow, boolean force) {
-        if (newSelectedRow == selectedRow && !force) {
-            selectedRow = null;
-
-            seatsListView.setVisibility(View.INVISIBLE);
-            clearListView(seatsListView);
-        } else {
-            selectedRow = newSelectedRow;
-            JSONArray seatsContent;
-            try {
-                seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            buildSeats(seatsContent);
-            seatsListView.setVisibility(View.VISIBLE);
+    protected void selectRow(String newSelectedRow) {
+        if (!newSelectedRow.equals(selectedRow )) {
+            selectedSeat = "";
         }
+        selectedRow = newSelectedRow;
+
+        JSONArray seatsContent;
+        try {
+            seatsContent = rowsMap.get(selectedRow).getJSONArray("seats");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+        buildSeats(seatsContent);
+        seatsListView.setVisibility(View.VISIBLE);
 
         if (selectedSeat.equals("")) {
             disableJoin();
         } else {
-            selectSeat(selectedSeat, true);
+            selectSeat(selectedSeat);
         }
 
     }
@@ -252,17 +241,17 @@ public class SeatActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectSeat((String) seatsListView.getItemAtPosition(position), false);
+                selectSeat((String) seatsListView.getItemAtPosition(position));
             }
         });
     }
 
-    protected void selectSeat(String newSelectedSeat, boolean force) {
-        if (newSelectedSeat == selectedSeat && !force) {
-            selectedSeat = null;
+    protected void selectSeat(String newSelectedSeat) {
+        selectedSeat = newSelectedSeat;
+
+        if (selectedSeat.equals("")) {
             disableJoin();
         } else {
-            selectedSeat = newSelectedSeat;
             enableJoin();
         }
     }

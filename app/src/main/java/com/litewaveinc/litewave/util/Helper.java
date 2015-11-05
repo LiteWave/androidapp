@@ -3,9 +3,15 @@ package com.litewaveinc.litewave.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.activities.SeatActivity;
 import com.litewaveinc.litewave.services.Config;
 
@@ -33,6 +39,28 @@ public class Helper {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public static void drawCircle(ImageView imageView, int radius, int strokeWidth, int borderColor, int backgroundColor) {
+        Bitmap bitmap = Bitmap.createBitmap(radius, radius, Bitmap.Config.ARGB_8888);
+        bitmap = bitmap.copy(bitmap.getConfig(), true);
+
+        Canvas canvas = new Canvas(bitmap);
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(strokeWidth);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(backgroundColor);
+        canvas.drawCircle(radius/2 + strokeWidth/2, radius/2 + strokeWidth/2, radius/2 - strokeWidth, paint);
+
+        paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStrokeWidth(strokeWidth);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(borderColor);
+        canvas.drawCircle(radius / 2 + strokeWidth / 2, radius / 2 + strokeWidth / 2, radius / 2 - strokeWidth, paint);
+        imageView.setImageBitmap(bitmap);
     }
 
 }
