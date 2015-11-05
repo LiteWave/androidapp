@@ -55,6 +55,20 @@ public final class API {
         API.delete("user_locations/" + userLocationID, response);
     }
 
+    /* SHOWS */
+
+    public static void getShows(String eventID, IAPIResponse response) {
+        API.get("events/" + eventID + "/shows", response);
+    }
+
+    public static void getShow(String eventID, String showID, IAPIResponse response) {
+        API.get("events/" + eventID + "/shows/" + showID, response);
+    }
+
+    public static void joinShow(String userLocationID, JSONObject params, IAPIResponse response) {
+        API.post("user_locations/" + userLocationID + "/event_joins", params, response);
+    }
+
     /* SEATS */
 
     public static void getLevels(String stadiumID, IAPIResponse response) {

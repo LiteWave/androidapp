@@ -29,8 +29,16 @@ import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -56,6 +64,10 @@ public class ReadyActivity extends AppCompatActivity {
     public ImageView seatImageView;
     public TextView seatNameTextView;
 
+    public JSONObject currentShow;
+
+    final Timer pollTimer = new Timer();
+
     public class LeaveEventResponse extends APIResponse {
 
         @Override
@@ -65,6 +77,69 @@ public class ReadyActivity extends AppCompatActivity {
             Intent parentActivityIntent = new Intent(ReadyActivity.this, ViewStack.pop());
             parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(parentActivityIntent);
+        }
+
+        @Override
+        public void failure(JSONArray content, int statusCode) {
+            Helper.showDialog("Error", "Sorry, could not leave event at this time", self);
+        }
+    }
+
+    public class GetShowsResponse extends APIResponse {
+
+        @Override
+        public void success(JSONArray content) {
+            Date currentDate;
+            TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
+            DateFormat gmtFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            gmtFormat.setTimeZone(gmtTimeZone);
+            try {
+                currentDate = gmtFormat.parse(Calendar.getInstance().getTime().toString());
+            } catch (ParseException e) {e.printStackTrace(); return;}
+
+            if (content.length() > 0) {
+                for (int i = 0 ; i < content.length(); i++) {
+                    JSONObject show = null;
+                    String startAt;
+
+                    try {
+                        show = content.getJSONObject(i);
+                        startAt = show.getString("startAt");
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+                        dateFormat.setTimeZone(gmtTimeZone);
+                        Date startDate;
+                        try {
+                            startDate = dateFormat.parse(startAt);
+                        } catch (ParseException e) {e.printStackTrace(); return;}
+
+                        // necessary at the moment (3 minute extra padding)
+                        startDate =new Date(startDate.getTime() + (3 * 60000));
+
+                        if (startDate.after(currentDate)) {
+                            currentShow = show;
+                            enableJoin();
+                            stopPolling();
+                            return;
+                        }
+
+                    } catch (JSONException e) {e.printStackTrace();return;}
+                }
+            }
+            disableJoin();
+        }
+    }
+
+    public class JoinShowResponse extends APIResponse {
+
+        @Override
+        public void success(JSONObject content) {
+            ViewStack.push(ReadyActivity.class);
+
+            Config.set("ShowData", content);
+
+            Intent intent = new Intent(ReadyActivity.this, ShowActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         @Override
@@ -87,7 +162,6 @@ public class ReadyActivity extends AppCompatActivity {
 
     protected void getImage() {
         final Timer timer = new Timer();
-
         timer.schedule(new TimerTask() {
 
             public void run() {
@@ -130,7 +204,43 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     public void joinShow() {
+        String mobileStart;
+        TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
+        DateFormat gmtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        gmtFormat.setTimeZone(gmtTimeZone);
+        mobileStart = gmtFormat.format(Calendar.getInstance().getTime());
 
+        JSONObject params = new JSONObject();
+        try {
+            params.put("mobileTime", mobileStart);
+        } catch (JSONException e) {e.printStackTrace();}
+
+
+        API.joinShow((String)Config.get("UserLocationID"), params, new JoinShowResponse());
+    }
+
+    public void beginPolling() {
+        int pollInterval = Integer.parseInt((String)Config.get("PollInterval"));
+
+        pollTimer.schedule(new TimerTask() {
+
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getShow();
+                    }
+                });
+            }
+        }, 0, pollInterval);
+    }
+
+    public void stopPolling() {
+        pollTimer.cancel();
+    }
+
+    public void getShow() {
+        API.getShows((String)Config.get("EventID"), new GetShowsResponse());
     }
 
     public void drawCircle(ImageView imageView) {
@@ -171,28 +281,30 @@ public class ReadyActivity extends AppCompatActivity {
         levelImageView = (ImageView)findViewById(R.id.levelCircleImageView);
         drawCircle(levelImageView);
         levelNameTextView = (TextView)findViewById(R.id.levelNameTextView);
-        levelNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        levelNameTextView.setTextColor(Helper.getColor((String) Config.get("textSelectedColor")));
         levelNameTextView.setText((String) Config.get("LevelID"));
 
         sectionImageView = (ImageView)findViewById(R.id.sectionCircleImageView);
         drawCircle(sectionImageView);
         sectionNameTextView = (TextView)findViewById(R.id.sectionNameTextView);
-        sectionNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        sectionNameTextView.setTextColor(Helper.getColor((String) Config.get("textSelectedColor")));
         sectionNameTextView.setText((String) Config.get("SectionID"));
 
         rowImageView = (ImageView)findViewById(R.id.rowCircleImageView);
         drawCircle(rowImageView);
         rowNameTextView = (TextView)findViewById(R.id.rowNameTextView);
-        rowNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        rowNameTextView.setTextColor(Helper.getColor((String) Config.get("textSelectedColor")));
         rowNameTextView.setText((String) Config.get("RowID"));
 
         seatImageView = (ImageView)findViewById(R.id.seatCircleImageView);
         drawCircle(seatImageView);
         seatNameTextView = (TextView)findViewById(R.id.seatNameTextView);
-        seatNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
-        seatNameTextView.setText((String)Config.get("SeatID"));
+        seatNameTextView.setTextColor(Helper.getColor((String) Config.get("textSelectedColor")));
+        seatNameTextView.setText((String) Config.get("SeatID"));
 
         disableJoin();
+
+        beginPolling();
     }
 
     @Override
