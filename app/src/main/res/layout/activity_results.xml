@@ -27,7 +27,7 @@
 
     <TextView
         android:layout_width="460dp"
-        android:layout_height="26dp"
+        android:layout_height="25dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="powered by"
         android:id="@+id/textPoweredBy"
