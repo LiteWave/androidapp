@@ -28,15 +28,10 @@
             android:name=".activities.ReadyActivity">
         </activity>
         <activity
-            android:name=".activities.ShowActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/FullscreenTheme" >
+            android:name=".activities.ShowActivity">
         </activity>
         <activity
-            android:name=".activities.ResultsActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_thanks_for_participating"
-            android:theme="@style/FullscreenTheme" >
+            android:name=".activities.ResultsActivity">
         </activity>
     </application>
 

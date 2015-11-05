@@ -4,6 +4,7 @@ import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.util.SystemUiHider;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -22,20 +23,21 @@ import java.io.InputStream;
 
 public class ResultsActivity extends AppCompatActivity {
 
+    Context context;
+    ResultsActivity self;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        context = getApplicationContext();
+        self = this;
+
         setContentView(R.layout.activity_results);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        String[] colorRGB = ((String) Config.get("highlightColor")).split(",");
-        int color = Color.rgb(
-                Integer.parseInt(colorRGB[0]),
-                Integer.parseInt(colorRGB[1]),
-                Integer.parseInt(colorRGB[2]));
-        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        actionBar.hide();
 
         String winnerUserLocationID = (String)Config.get("WinnerUserLocationID");
         String winnerURL = (String)Config.get("WinnerURL");

@@ -18,4 +18,8 @@ public class APIResponse implements IAPIResponse {
     public void failure(JSONArray content, int statusCode) {
         System.out.println("Request error " + statusCode + ": " + content.toString());
     }
+
+    public void failure(JSONObject content, int statusCode) {
+        System.out.println("Request error " + statusCode + ": " + content.toString());
+    }
 }
