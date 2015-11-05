@@ -1,19 +1,11 @@
 package com.litewaveinc.litewave.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.support.v4.view.MotionEventCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,7 +61,7 @@ public class CircleListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final View view;
         if (convertView == null)
-            view = inflater.inflate(R.layout.circle_row, null);
+            view = inflater.inflate(R.layout.adapter_circle_row, null);
         else
             view = convertView;
 
@@ -141,7 +133,7 @@ public class CircleListAdapter extends BaseAdapter {
         if (select) {
             color = Helper.getColor((String)Config.get("textSelectedColor"));
         } else {
-            color = Helper.getColor((String)Config.get("textColor"));
+            color = Helper.getColor((String) Config.get("textColor"));
         }
         text.setTextColor(color);
     }
