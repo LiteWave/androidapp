@@ -36,6 +36,9 @@ import java.util.TimerTask;
 
 public class ReadyActivity extends AppCompatActivity {
 
+    int STROKE_WIDTH = 6;
+    protected int CIRCLE_RADIUS = 225;
+
     Context context;
     ReadyActivity self;
 
@@ -43,6 +46,15 @@ public class ReadyActivity extends AppCompatActivity {
     public ImageView backgroundImage;
     public Button joinButton;
     public ProgressBar spinner;
+
+    public ImageView levelImageView;
+    public TextView levelNameTextView;
+    public ImageView sectionImageView;
+    public TextView sectionNameTextView;
+    public ImageView rowImageView;
+    public TextView rowNameTextView;
+    public ImageView seatImageView;
+    public TextView seatNameTextView;
 
     public class LeaveEventResponse extends APIResponse {
 
@@ -121,6 +133,12 @@ public class ReadyActivity extends AppCompatActivity {
 
     }
 
+    public void drawCircle(ImageView imageView) {
+        int borderColor = Helper.getColor((String)Config.get("highlightColor"));
+        int backgroundColor = Helper.getColor((String)Config.get("highlightColor"));
+        Helper.drawCircle(imageView, CIRCLE_RADIUS, STROKE_WIDTH, borderColor, backgroundColor);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +167,30 @@ public class ReadyActivity extends AppCompatActivity {
         spinner = (ProgressBar)findViewById(R.id.spinner);
         spinner.getIndeterminateDrawable().setColorFilter(highlightColor,
                 android.graphics.PorterDuff.Mode.MULTIPLY);
+
+        levelImageView = (ImageView)findViewById(R.id.levelCircleImageView);
+        drawCircle(levelImageView);
+        levelNameTextView = (TextView)findViewById(R.id.levelNameTextView);
+        levelNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        levelNameTextView.setText((String) Config.get("LevelID"));
+
+        sectionImageView = (ImageView)findViewById(R.id.sectionCircleImageView);
+        drawCircle(sectionImageView);
+        sectionNameTextView = (TextView)findViewById(R.id.sectionNameTextView);
+        sectionNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        sectionNameTextView.setText((String) Config.get("SectionID"));
+
+        rowImageView = (ImageView)findViewById(R.id.rowCircleImageView);
+        drawCircle(rowImageView);
+        rowNameTextView = (TextView)findViewById(R.id.rowNameTextView);
+        rowNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        rowNameTextView.setText((String) Config.get("RowID"));
+
+        seatImageView = (ImageView)findViewById(R.id.seatCircleImageView);
+        drawCircle(seatImageView);
+        seatNameTextView = (TextView)findViewById(R.id.seatNameTextView);
+        seatNameTextView.setTextColor(Helper.getColor((String)Config.get("textSelectedColor")));
+        seatNameTextView.setText((String)Config.get("SeatID"));
 
         disableJoin();
     }
