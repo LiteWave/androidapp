@@ -84,18 +84,13 @@ public class CircleListAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                int position = view.getId();
-                if (position == selectedIndex) {
-                    selectedIndex = -1;
-                } else {
-                    selectedIndex = position;
-                }
+                selectedIndex = view.getId();
                 notifyDataSetChanged();
 
                 listView.performItemClick(
-                        listView.getAdapter().getView(position, null, null),
-                        position,
-                        listView.getAdapter().getItemId(position));
+                        listView.getAdapter().getView(selectedIndex, null, null),
+                        selectedIndex,
+                        listView.getAdapter().getItemId(selectedIndex));
 
             }
 
@@ -129,6 +124,7 @@ public class CircleListAdapter extends BaseAdapter {
             selectedIndex = position;
             initialSelection = null;
         }
+
         if (position == selectedIndex) {
             select = true;
         }
