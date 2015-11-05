@@ -66,7 +66,7 @@ public class ReadyActivity extends AppCompatActivity {
 
     public JSONObject currentShow;
 
-    final Timer pollTimer = new Timer();
+    Timer pollTimer;
 
     public class LeaveEventResponse extends APIResponse {
 
@@ -81,7 +81,7 @@ public class ReadyActivity extends AppCompatActivity {
 
         @Override
         public void failure(JSONArray content, int statusCode) {
-            Helper.showDialog("Error", "Sorry, could not leave event at this time", self);
+            Helper.showDialog("Error", "Sorry, could not leave event at this time.", self);
         }
     }
 
@@ -142,10 +142,13 @@ public class ReadyActivity extends AppCompatActivity {
             finish();
         }
 
-        @Override
-        public void failure(JSONArray content, int statusCode) {
-            Helper.showDialog("Error", "Sorry, could not leave event at this time", self);
+        public void failure(JSONObject content, int statusCode) {
+            Helper.showDialog("Show", "Sorry, the show has expired.", self);
+
+            disableJoin();
+            beginPolling();
         }
+
     }
 
     public void clearSeat() {
@@ -222,6 +225,10 @@ public class ReadyActivity extends AppCompatActivity {
     public void beginPolling() {
         int pollInterval = Integer.parseInt((String)Config.get("PollInterval"));
 
+        if (pollTimer != null) {
+            stopPolling();
+        }
+        pollTimer = new Timer();
         pollTimer.schedule(new TimerTask() {
 
             public void run() {
@@ -237,6 +244,7 @@ public class ReadyActivity extends AppCompatActivity {
 
     public void stopPolling() {
         pollTimer.cancel();
+        pollTimer = null;
     }
 
     public void getShow() {

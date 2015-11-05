@@ -10,4 +10,5 @@ public interface IAPIResponse {
     void success(JSONArray content);
     void success(JSONObject content);
     void failure(JSONArray content, int statusCode);
+    void failure(JSONObject content, int statusCode);
 }

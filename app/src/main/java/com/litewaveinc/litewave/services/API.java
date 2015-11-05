@@ -130,6 +130,13 @@ public final class API {
                 apiResponse.failure(errorResponse, statusCode);
             }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("Failed: ", ""+statusCode);
+                Log.d("Error : ", "" + throwable);
+                apiResponse.failure(errorResponse, statusCode);
+            }
+
         };
 
         StringEntity entity = null;
