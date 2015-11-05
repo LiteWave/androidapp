@@ -143,6 +143,11 @@ public class LevelActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         listView.setDivider(null);
 
+        // clear the seats
+        Config.set("SectionID", "");
+        Config.set("RowID", "");
+        Config.set("SeatID", "");
+
         String stadiumID = (String)Config.get("StadiumID");
 
         getLevels(stadiumID);
