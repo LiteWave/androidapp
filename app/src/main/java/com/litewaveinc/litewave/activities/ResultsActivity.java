@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 
 
@@ -26,6 +29,13 @@ public class ResultsActivity extends AppCompatActivity {
     Context context;
     ResultsActivity self;
 
+
+
+    public JSONObject show;
+    public boolean isWinner;
+    public String winnerID;
+    public String winnerURL;
+    public String winnerImageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +49,21 @@ public class ResultsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        /*
-        String winnerUserLocationID = (String)Config.get("WinnerUserLocationID");
-        String winnerURL = (String)Config.get("WinnerURL");
-        String winnerImageURL = (String)Config.get("WinnerImageURL");
+        show = (JSONObject)Config.get("Show");
+        try {
+            winnerID = show.getString("_winnerId");
+            winnerURL = show.getString("winnerUrl");
+            winnerImageURL = show.getString("winnerImageUrl");
+        } catch (JSONException e) {return;}
 
-        if(!winnerImageURL.isEmpty()) {
+        if (((String)Config.get("UserLocationID")).equals(winnerID)) {
+            isWinner = true;
+        }
+
+        if (isWinner) {
+            // do winner stuff
+        } else {
+            // do loser stuff
             new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
                     .execute(winnerImageURL);
             ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
@@ -52,8 +71,6 @@ public class ResultsActivity extends AppCompatActivity {
             TextView thanksView = (TextView) findViewById(R.id.textThanks);
             thanksView.setVisibility(View.INVISIBLE);
         }
-        */
-
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
