@@ -207,17 +207,11 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     public void joinShow() {
-        String mobileStart;
-        TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
-        DateFormat gmtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
-        gmtFormat.setTimeZone(gmtTimeZone);
-        mobileStart = gmtFormat.format(Calendar.getInstance().getTime());
-
+        String mobileStart = Helper.getNowInGMT();
         JSONObject params = new JSONObject();
         try {
             params.put("mobileTime", mobileStart);
         } catch (JSONException e) {e.printStackTrace();}
-
 
         API.joinShow((String)Config.get("UserLocationID"), params, new JoinShowResponse());
     }

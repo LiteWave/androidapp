@@ -15,6 +15,12 @@ import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.activities.SeatActivity;
 import com.litewaveinc.litewave.services.Config;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * Created by davidanderson on 11/1/15.
  */
@@ -61,6 +67,13 @@ public class Helper {
         paint.setColor(borderColor);
         canvas.drawCircle(radius / 2 + strokeWidth / 2, radius / 2 + strokeWidth / 2, radius / 2 - strokeWidth, paint);
         imageView.setImageBitmap(bitmap);
+    }
+
+    public static String getNowInGMT() {
+        TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
+        DateFormat gmtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        gmtFormat.setTimeZone(gmtTimeZone);
+        return gmtFormat.format(Calendar.getInstance().getTime());
     }
 
 }
