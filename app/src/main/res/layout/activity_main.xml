@@ -48,7 +48,7 @@
             android:textSize="14dp"
             android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="110px"
+            android:layout_marginBottom="120px"
             />
 
         <ImageView
@@ -56,14 +56,12 @@
             android:visibility="invisible"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-
             android:scaleType="fitCenter"
             android:layout_width="500px"
             android:layout_height="112px"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25px"
+            android:layout_marginBottom="35px"
             android:src="@drawable/lwlogosm" />
-
 
 
     </android.support.percent.PercentRelativeLayout>

@@ -51,8 +51,18 @@
             app:layout_marginTopPercent="5%"
             />
 
+        <ImageView
+            android:id="@+id/levelCircleImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            app:layout_widthPercent="25%"
+            app:layout_marginBottomPercent="15%"
+            />
         <TextView
             android:id="@+id/levelTextView"
+            android:layout_above="@id/levelCircleImageView"
             android:enabled="true"
             android:text="level"
             android:textAlignment="center"
@@ -61,17 +71,7 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textSize="55px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="525px"
-            app:layout_widthPercent="25%"
-            />
-        <ImageView
-            android:id="@+id/levelCircleImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="275px"
-            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40px"
             app:layout_widthPercent="25%"
             />
         <TextView
@@ -83,15 +83,25 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textSize="60px"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="350px"
+            android:textSize="55px"
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
+            app:layout_marginBottomPercent="15%"
             />
 
+        <ImageView
+            android:id="@+id/sectionCircleImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="25%"
+            app:layout_marginBottomPercent="15%"
+            />
         <TextView
             android:id="@+id/sectionTextView"
+            android:layout_above="@id/sectionCircleImageView"
             android:enabled="true"
             android:text="section"
             android:textAlignment="center"
@@ -100,20 +110,9 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textSize="55px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="525px"
+            android:layout_marginBottom="40px"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="25%"
-            />
-        <ImageView
-            android:id="@+id/sectionCircleImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="275px"
-            android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="25%"
-            app:layout_widthPercent="25%"
             />
         <TextView
             android:id="@+id/sectionNameTextView"
@@ -124,16 +123,26 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textSize="60px"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="350px"
+            android:textSize="55px"
             android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="25%"
             app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="25%"
+            app:layout_marginBottomPercent="15%"
             />
 
+        <ImageView
+            android:id="@+id/rowCircleImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="50%"
+            app:layout_marginBottomPercent="15%"
+            />
         <TextView
             android:id="@+id/rowTextView"
+            android:layout_above="@id/levelCircleImageView"
             android:enabled="true"
             android:text="row"
             android:textAlignment="center"
@@ -142,20 +151,9 @@
             android:layout_width="wrap_content"
             android:gravity="center"
             android:textSize="55px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="525px"
+            android:layout_marginBottom="40px"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="50%"
-            />
-        <ImageView
-            android:id="@+id/rowCircleImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="275px"
-            android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="50%"
-            app:layout_widthPercent="25%"
             />
         <TextView
             android:id="@+id/rowNameTextView"
@@ -166,37 +164,37 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textSize="60px"
-            android:layout_marginBottom="350px"
+            android:textSize="55px"
             android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="50%"
             app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="50%"
+            app:layout_marginBottomPercent="15%"
             />
 
+        <ImageView
+            android:id="@+id/seatCircleImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="75%"
+            app:layout_marginBottomPercent="15%"
+            />
         <TextView
             android:id="@+id/seatTextView"
+            android:layout_above="@id/levelCircleImageView"
             android:enabled="true"
             android:text="seat"
             android:textAlignment="center"
             android:textColor="@color/default_text"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:gravity="center"
             android:textSize="55px"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="525px"
+            android:layout_marginBottom="40px"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="75%"
-            />
-        <ImageView
-            android:id="@+id/seatCircleImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginBottom="275px"
-            android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="75%"
-            app:layout_widthPercent="25%"
             />
         <TextView
             android:id="@+id/seatNameTextView"
@@ -207,12 +205,11 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:gravity="center"
-            android:textSize="60px"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="350px"
+            android:textSize="55px"
             android:layout_alignParentBottom="true"
-            app:layout_marginLeftPercent="75%"
             app:layout_widthPercent="25%"
+            app:layout_marginLeftPercent="75%"
+            app:layout_marginBottomPercent="15%"
             />
 
         <Button

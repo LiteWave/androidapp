@@ -15,11 +15,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -97,6 +99,8 @@ public class ShowActivity extends AppCompatActivity {
 
     public void stopShow() {
         ViewStack.push(ReadyActivity.class);
+
+        disableScreenOn();
 
         Intent intent = new Intent(ShowActivity.this, ResultsActivity.class);
         startActivity(intent);
@@ -226,6 +230,13 @@ public class ShowActivity extends AppCompatActivity {
         }
     }
 
+    public void keepScreenOn() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    public void disableScreenOn() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,6 +269,7 @@ public class ShowActivity extends AppCompatActivity {
         } catch (JSONException e) { e.printStackTrace();}
 
         startCountdown();
+        keepScreenOn();
     }
 
 }
