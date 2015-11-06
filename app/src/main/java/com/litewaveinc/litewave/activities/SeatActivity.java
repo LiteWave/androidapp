@@ -289,6 +289,7 @@ public class SeatActivity extends AppCompatActivity {
     protected void joinEvent() {
         JSONObject params = new JSONObject();
         JSONObject jsonUserSeat = new JSONObject();
+        String mobileStart = Helper.getNowInGMT();
 
         try {
             jsonUserSeat.put("level", selectedLevel);
@@ -298,7 +299,7 @@ public class SeatActivity extends AppCompatActivity {
 
             params.put("userKey", (String)Config.get("UserID"));
             params.put("userSeat", jsonUserSeat);
-
+            params.put("mobileTime", mobileStart);
         } catch (JSONException e) {
             e.printStackTrace();
         }
