@@ -116,7 +116,7 @@ public class ReadyActivity extends AppCompatActivity {
                             startDate = dateFormat.parse(startAt);
                         } catch (ParseException e) {e.printStackTrace(); return;}
 
-                        if (startDate.after(currentDate)) {
+                        if (currentDate.before(startDate)) {
                             currentShow = show;
                             enableJoin();
                             stopPolling();
@@ -199,7 +199,7 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     protected void disableJoin() {
-        int color = Helper.getColor((String)Config.get("highlightColor"));
+        int color = Helper.getColor((String) Config.get("highlightColor"));
         joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
         joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
@@ -214,7 +214,7 @@ public class ReadyActivity extends AppCompatActivity {
             params.put("mobileTime", mobileStart);
         } catch (JSONException e) {e.printStackTrace();}
 
-        API.joinShow((String)Config.get("UserLocationID"), params, new JoinShowResponse());
+        API.joinShow((String) Config.get("UserLocationID"), params, new JoinShowResponse());
     }
 
     public void beginPolling() {
@@ -238,8 +238,10 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     public void stopPolling() {
-        pollTimer.cancel();
-        pollTimer = null;
+        if (pollTimer != null) {
+            pollTimer.cancel();
+            pollTimer = null;
+        }
     }
 
     public void getShow() {
