@@ -93,8 +93,12 @@ public class ReadyActivity extends AppCompatActivity {
             TimeZone gmtTimeZone = TimeZone.getTimeZone("GMT");
             DateFormat gmtFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
             gmtFormat.setTimeZone(gmtTimeZone);
+
             try {
+                String offset = (String)Config.get("MobileOffset");
+                int intOffset = Integer.parseInt(offset);
                 currentDate = gmtFormat.parse(Calendar.getInstance().getTime().toString());
+                currentDate = new Date(currentDate.getTime() + intOffset);
             } catch (ParseException e) {e.printStackTrace(); return;}
 
             if (content.length() > 0) {
@@ -111,9 +115,6 @@ public class ReadyActivity extends AppCompatActivity {
                         try {
                             startDate = dateFormat.parse(startAt);
                         } catch (ParseException e) {e.printStackTrace(); return;}
-
-                        // necessary at the moment (3 minute extra padding)
-                        startDate =new Date(startDate.getTime() + (3 * 60000));
 
                         if (startDate.after(currentDate)) {
                             currentShow = show;

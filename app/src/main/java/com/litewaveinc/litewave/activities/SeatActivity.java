@@ -69,12 +69,15 @@ public class SeatActivity extends AppCompatActivity {
         @Override
         public void success(JSONObject content) {
             String userLocationID = "";
+            String mobileOffset = "";
             try {
                 userLocationID = content.getString("_id");
+                mobileOffset = content.getString("mobileTimeOffset");
             } catch (JSONException e) {
                 return;
             }
 
+            saveOffset(mobileOffset);
             saveSeat(userLocationID);
 
             ViewStack.push(SeatActivity.class);
@@ -303,6 +306,10 @@ public class SeatActivity extends AppCompatActivity {
         }
 
         API.joinEvent((String) Config.get("EventID"), params, new JoinEventResponse());
+    }
+
+    protected void saveOffset(String mobileOffset) {
+        Config.setPreference("MobileOffset", (String) Config.set("MobileOffset", mobileOffset), context);
     }
 
     protected void saveSeat(String userLocationID) {

@@ -151,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Config.set("UserLocationID", Config.getPreference("UserLocationID", "", context));
+        Config.set("MobileOffset", Config.getPreference("MobileOffset", "", context));
+
         Config.set("UserID", Config.getPreference("UserID", "", context));
         Config.set("LevelID", Config.getPreference("LevelID", "", context));
         Config.set("SectionID", Config.getPreference("SectionID", "", context));
