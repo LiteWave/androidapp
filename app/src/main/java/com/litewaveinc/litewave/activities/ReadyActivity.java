@@ -151,6 +151,7 @@ public class ReadyActivity extends AppCompatActivity {
 
             saveOffset(mobileOffset);
             Config.set("ShowData", content);
+            Config.set("Show", currentShow);
 
             Intent intent = new Intent(ReadyActivity.this, ShowActivity.class);
             startActivity(intent);

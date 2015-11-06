@@ -53,7 +53,7 @@ public class ShowActivity extends AppCompatActivity {
     public Timer countdownTimer;
 
     protected JSONArray commands;
-    protected JSONObject show;
+    protected JSONObject showData;
     protected String startAt;
     protected String winnerID;
     protected boolean isWinner = false;
@@ -85,8 +85,8 @@ public class ShowActivity extends AppCompatActivity {
         showHelpTextView.setVisibility(View.INVISIBLE);
 
         try {
-            commands = show.getJSONArray("commands");
-            winnerID = show.getString("_winnerId");
+            commands = showData.getJSONArray("commands");
+            winnerID = showData.getString("_winnerId");
         } catch (JSONException e) {return;}
 
         if (((String)Config.get("UserLocationID")).equals(winnerID)) {
@@ -263,9 +263,9 @@ public class ShowActivity extends AppCompatActivity {
         showHelpTextView = (TextView)findViewById(R.id.showHelpTextView);
         showHelpTextView.setTextColor(highlightColor);
 
-        show = (JSONObject)Config.get("ShowData");
+        showData = (JSONObject)Config.get("ShowData");
         try {
-            startAt = show.getString("mobileStartAt");
+            startAt = showData.getString("mobileStartAt");
         } catch (JSONException e) { e.printStackTrace();}
 
         startCountdown();
