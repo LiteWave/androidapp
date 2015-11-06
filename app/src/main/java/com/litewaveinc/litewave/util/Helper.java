@@ -18,8 +18,10 @@ import com.litewaveinc.litewave.services.Config;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by davidanderson on 11/1/15.
@@ -74,6 +76,11 @@ public class Helper {
         DateFormat gmtFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
         gmtFormat.setTimeZone(gmtTimeZone);
         return gmtFormat.format(Calendar.getInstance().getTime());
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
 }

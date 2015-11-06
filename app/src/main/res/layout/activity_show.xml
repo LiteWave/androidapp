@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".activites.ShowActivity">
@@ -8,6 +7,8 @@
     <android.support.percent.PercentRelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/view"
+        android:background="@android:color/holo_red_dark"
         android:layout_width="match_parent"
         android:layout_marginTop="-150px"
         android:layout_height="match_parent">

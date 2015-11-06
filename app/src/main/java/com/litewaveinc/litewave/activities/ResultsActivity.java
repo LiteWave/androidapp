@@ -39,6 +39,7 @@ public class ResultsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        /*
         String winnerUserLocationID = (String)Config.get("WinnerUserLocationID");
         String winnerURL = (String)Config.get("WinnerURL");
         String winnerImageURL = (String)Config.get("WinnerImageURL");
@@ -51,6 +52,7 @@ public class ResultsActivity extends AppCompatActivity {
             TextView thanksView = (TextView) findViewById(R.id.textThanks);
             thanksView.setVisibility(View.INVISIBLE);
         }
+        */
 
     }
 
