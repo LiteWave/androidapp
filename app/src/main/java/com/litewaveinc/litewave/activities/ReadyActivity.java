@@ -95,10 +95,9 @@ public class ReadyActivity extends AppCompatActivity {
             gmtFormat.setTimeZone(gmtTimeZone);
 
             try {
-                String offset = (String)Config.get("MobileOffset");
-                int intOffset = Integer.parseInt(offset);
+                int offset = Integer.parseInt((String)Config.get("MobileOffset"));
                 currentDate = gmtFormat.parse(Calendar.getInstance().getTime().toString());
-                currentDate = new Date(currentDate.getTime() - intOffset);
+                currentDate = new Date(currentDate.getTime() - offset);
             } catch (ParseException e) {e.printStackTrace(); return;}
 
             if (content.length() > 0) {
@@ -136,6 +135,12 @@ public class ReadyActivity extends AppCompatActivity {
         public void success(JSONObject content) {
             ViewStack.push(ReadyActivity.class);
 
+            String mobileOffset = "";
+            try {
+                mobileOffset = content.getString("mobileTimeOffset");
+            } catch (JSONException e) {return;}
+
+            //saveOffset(mobileOffset);
             Config.set("ShowData", content);
 
             Intent intent = new Intent(ReadyActivity.this, ShowActivity.class);
@@ -163,6 +168,11 @@ public class ReadyActivity extends AppCompatActivity {
     public void leaveEvent() {
         API.leaveEvent((String) Config.get("UserLocationID"), new LeaveEventResponse());
     }
+
+    protected void saveOffset(String mobileOffset) {
+        Config.setPreference("MobileOffset", (String) Config.set("MobileOffset", mobileOffset), context);
+    }
+
 
     protected void getImage() {
         final Timer timer = new Timer();
