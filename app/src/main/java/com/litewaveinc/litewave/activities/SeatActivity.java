@@ -267,9 +267,8 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void enableJoin() {
-
-        int color = Helper.getColor((String)Config.get("highlightColor"));
-        joinButton.setBackgroundColor(color);
+        int highlightColor = Helper.getColor((String)Config.get("highlightColor"));
+        joinButton.setBackgroundColor(highlightColor);
         joinButton.setTextColor(Color.parseColor("#FFFFFF"));
         joinButton.setOnClickListener(new View.OnClickListener() {
 
@@ -280,7 +279,6 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void disableJoin() {
-        int color = Helper.getColor((String)Config.get("highlightColor"));
         joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
         joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
