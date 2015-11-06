@@ -1,6 +1,9 @@
 package com.litewaveinc.litewave.adapters;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +25,6 @@ import java.util.ArrayList;
 public class CircleListAdapter extends BaseAdapter {
 
     int STROKE_WIDTH = 6;
-    protected int CIRCLE_RADIUS = 300;
 
     protected Context context;
     protected ListView listView;
@@ -32,6 +34,7 @@ public class CircleListAdapter extends BaseAdapter {
     protected String initialSelection;
 
     private static LayoutInflater inflater = null;
+    DisplayMetrics displayMetrics;
 
     public CircleListAdapter(ListView listView, Context context, ArrayList data, String initialSelection) {
         this.context = context;
@@ -40,6 +43,8 @@ public class CircleListAdapter extends BaseAdapter {
         this.initialSelection = initialSelection;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        displayMetrics = context.getResources().getDisplayMetrics();
     }
 
     @Override
@@ -65,8 +70,10 @@ public class CircleListAdapter extends BaseAdapter {
         else
             view = convertView;
 
+        final int radius = (displayMetrics.widthPixels/3) - 75;
+
         view.setId(position);
-        view.setMinimumHeight(CIRCLE_RADIUS + 75);
+        view.setMinimumHeight(radius + 75);
 
         TextView text = (TextView) view.findViewById(R.id.text);
         text.setText(data.get(position));
@@ -89,7 +96,6 @@ public class CircleListAdapter extends BaseAdapter {
 
         });
 
-
         imageView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -101,11 +107,11 @@ public class CircleListAdapter extends BaseAdapter {
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    drawCircle(view, !selected);
-                    drawText(view, !selected);
+                    drawCircle(view, radius, !selected);
+                    drawText(view, radius, !selected);
                 } else if (event.getAction() == MotionEvent.ACTION_MOVE ) {
-                    drawCircle(view, selected);
-                    drawText(view, selected);
+                    drawCircle(view, radius, selected);
+                    drawText(view, radius, selected);
                 }
                 return false;
             }
@@ -121,14 +127,15 @@ public class CircleListAdapter extends BaseAdapter {
         if (position == selectedIndex) {
             select = true;
         }
-        drawText(view, select);
-        drawCircle(view, select);
+        drawText(view, radius, select);
+        drawCircle(view, radius, select);
 
         return view;
     }
 
-    protected void drawText(View view, boolean select) {
+    protected void drawText(View view, int radius, boolean select) {
         TextView text = (TextView) view.findViewById(R.id.text);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_PX, radius / 4);
         int color;
         if (select) {
             color = Helper.getColor((String)Config.get("textSelectedColor"));
@@ -138,7 +145,7 @@ public class CircleListAdapter extends BaseAdapter {
         text.setTextColor(color);
     }
 
-    protected void drawCircle(View view, boolean select) {
+    protected void drawCircle(View view, int radius, boolean select) {
         int backgroundColor;
         int borderColor;
 
@@ -151,6 +158,6 @@ public class CircleListAdapter extends BaseAdapter {
         }
 
         ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
-        Helper.drawCircle(imageView, CIRCLE_RADIUS, STROKE_WIDTH, borderColor, backgroundColor);
+        Helper.drawCircle(imageView, radius, STROKE_WIDTH, borderColor, backgroundColor);
     }
 }
