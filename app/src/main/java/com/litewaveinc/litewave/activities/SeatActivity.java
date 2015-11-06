@@ -69,12 +69,15 @@ public class SeatActivity extends AppCompatActivity {
         @Override
         public void success(JSONObject content) {
             String userLocationID = "";
+            String mobileOffset = "";
             try {
                 userLocationID = content.getString("_id");
+                mobileOffset = content.getString("mobileTimeOffset");
             } catch (JSONException e) {
                 return;
             }
 
+            saveOffset(mobileOffset);
             saveSeat(userLocationID);
 
             ViewStack.push(SeatActivity.class);
@@ -267,9 +270,8 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void enableJoin() {
-
-        int color = Helper.getColor((String)Config.get("highlightColor"));
-        joinButton.setBackgroundColor(color);
+        int highlightColor = Helper.getColor((String)Config.get("highlightColor"));
+        joinButton.setBackgroundColor(highlightColor);
         joinButton.setTextColor(Color.parseColor("#FFFFFF"));
         joinButton.setOnClickListener(new View.OnClickListener() {
 
@@ -280,7 +282,6 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void disableJoin() {
-        int color = Helper.getColor((String)Config.get("highlightColor"));
         joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
         joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
@@ -305,6 +306,10 @@ public class SeatActivity extends AppCompatActivity {
         }
 
         API.joinEvent((String) Config.get("EventID"), params, new JoinEventResponse());
+    }
+
+    protected void saveOffset(String mobileOffset) {
+        Config.setPreference("MobileOffset", (String) Config.set("MobileOffset", mobileOffset), context);
     }
 
     protected void saveSeat(String userLocationID) {
