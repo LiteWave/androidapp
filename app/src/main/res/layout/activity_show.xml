@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/countdownTextView"
             android:enabled="true"
-            android:text="30"
+            android:text=""
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:textAlignment="center"
@@ -57,9 +57,23 @@
             app:layout_widthPercent="85%"
             />
 
+        <TextView
+            android:id="@+id/winnerTextView"
+            android:enabled="true"
+            android:text="WINNER!"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="200px"
+            android:background="#00000000"
+            android:gravity="center"
+            app:layout_marginTopPercent="20%"
+            app:layout_widthPercent="100%"
+            />
+
     </android.support.percent.PercentRelativeLayout>
-
-
 
 
 

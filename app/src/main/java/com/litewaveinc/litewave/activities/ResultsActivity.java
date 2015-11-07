@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     public Button returnButton;
     ImageView backgroundImage;
+    View view;
 
     public JSONObject show;
 
@@ -42,9 +46,13 @@ public class ResultsActivity extends AppCompatActivity {
 
     private void returnReady()
     {
-        Intent intent = new Intent(ResultsActivity.this, ReadyActivity.class);
-        ViewStack.push(MainActivity.class);
-        startActivity(intent);
+        // popping the current view
+        ViewStack.pop();
+        // popping the show view
+        Intent parentActivityIntent = new Intent(ResultsActivity.this, ViewStack.pop());
+        parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(parentActivityIntent);
+
         finish();
     }
 
@@ -61,6 +69,13 @@ public class ResultsActivity extends AppCompatActivity {
         actionBar.hide();
         int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
 
+        view = (View) this.findViewById(R.id.view);
+        view.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openWebURL(winnerURL);
+            }
+        });
+
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         backgroundImage.setAlpha((float) 0.05);
         Bitmap bitmap = (Bitmap)Config.get("logoBitmap");
@@ -72,7 +87,6 @@ public class ResultsActivity extends AppCompatActivity {
         returnButton.setBackgroundColor(highlightColor);
         returnButton.setTextColor(Color.parseColor("#FFFFFF"));
         returnButton.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
                 returnReady();
             }
@@ -90,6 +104,11 @@ public class ResultsActivity extends AppCompatActivity {
         }
     }
 
+    public void openWebURL(String url) {
+        Intent browse = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
+        startActivity(browse);
+    }
+
     private void showWinner() {
         TextView thanksView = (TextView) findViewById(R.id.textThanks);
         thanksView.setVisibility(View.INVISIBLE);
@@ -105,6 +124,8 @@ public class ResultsActivity extends AppCompatActivity {
 
         ImageView backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
         backgroundImage.setVisibility(View.INVISIBLE);
+
+        view.setBackgroundColor(Color.BLACK);
 
         new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
                 .execute(winnerImageURL);

@@ -58,7 +58,7 @@
             android:gravity="center"
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
         <TextView
             android:id="@+id/levelTextView"
@@ -86,7 +86,7 @@
             android:textSize="55px"
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
 
         <ImageView
@@ -97,7 +97,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="25%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
         <TextView
             android:id="@+id/sectionTextView"
@@ -127,7 +127,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="25%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
 
         <ImageView
@@ -138,7 +138,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="50%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
         <TextView
             android:id="@+id/rowTextView"
@@ -168,7 +168,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="50%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
 
         <ImageView
@@ -179,7 +179,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="75%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
         <TextView
             android:id="@+id/seatTextView"
@@ -209,7 +209,7 @@
             android:layout_alignParentBottom="true"
             app:layout_widthPercent="25%"
             app:layout_marginLeftPercent="75%"
-            app:layout_marginBottomPercent="15%"
+            app:layout_marginBottomPercent="16%"
             />
 
         <Button

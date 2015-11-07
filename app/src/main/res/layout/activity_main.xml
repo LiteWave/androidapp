@@ -37,32 +37,25 @@
         <TextView
             android:id="@+id/poweredByTextView"
             android:enabled="true"
+            android:layout_width="460dp"
+            android:layout_height="29dp"
             android:text="powered by"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible"
             android:textAlignment="center"
-            android:textColor="@color/default_text"
-            android:layout_height="50dp"
-            android:layout_width="0dp"
-            app:layout_widthPercent="100%"
             android:textSize="14dp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="120px"
-            />
+            android:gravity="center_horizontal"
+            android:layout_above="@+id/logoImage"
+            android:textColor="@android:color/black"
+             />
 
         <ImageView
             android:id="@+id/logoImage"
-            android:visibility="invisible"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
             android:layout_width="500px"
             android:layout_height="112px"
+            android:layout_marginBottom="50px"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="35px"
-            android:src="@drawable/lwlogosm" />
-
+            android:layout_gravity="center_horizontal|bottom"
+            android:src="@drawable/lwlogosm"
+            android:layout_centerHorizontal="true" />
 
     </android.support.percent.PercentRelativeLayout>
 
