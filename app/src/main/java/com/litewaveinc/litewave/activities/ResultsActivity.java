@@ -93,15 +93,23 @@ public class ResultsActivity extends AppCompatActivity {
 
         if (isWinner) {
             // do winner stuff
-            new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
-                    .execute(winnerImageURL);
-            ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
-            winnerView.setVisibility(View.VISIBLE);
             TextView thanksView = (TextView) findViewById(R.id.textThanks);
             thanksView.setVisibility(View.INVISIBLE);
-        } else {
-            // do loser stuff
 
+            TextView textPoweredBy =(TextView) findViewById(R.id.textPoweredBy);
+            textPoweredBy.setVisibility(View.INVISIBLE);
+
+            ImageView lwLogo = (ImageView) findViewById(R.id.lwLogo);
+            lwLogo.setVisibility(View.INVISIBLE);
+
+            ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
+            winnerView.setVisibility(View.VISIBLE);
+
+            ImageView backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+            backgroundImage.setVisibility(View.INVISIBLE);
+
+            new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
+                    .execute(winnerImageURL);
         }
     }
 
