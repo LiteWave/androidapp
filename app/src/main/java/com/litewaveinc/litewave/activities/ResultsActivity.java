@@ -28,21 +28,22 @@ import java.io.InputStream;
 
 
 public class ResultsActivity extends AppCompatActivity {
-    private Context context;
-    private  ResultsActivity self;
 
-    private Button returnButton;
-    private ImageView backgroundImage;
-    private View view;
+    public Context context;
+    public ResultsActivity self;
 
-    private JSONObject show;
+    public Button returnButton;
+    public ImageView backgroundImage;
+    public View view;
 
-    private String winnerID;
-    private String winnerURL;
-    private String winnerImageURL;
+    public JSONObject show;
 
-    private TextView thanksView;
-    private TextView textPoweredBy;
+    public String winnerID;
+    public String winnerURL;
+    public String winnerImageURL;
+
+    public TextView thanksView;
+    public TextView textPoweredBy;
 
     private void returnReady()
     {
@@ -109,7 +110,7 @@ public class ResultsActivity extends AppCompatActivity {
         }
     }
 
-    private void openWebURL(String url) {
+    public void openWebURL(String url) {
         Intent browse = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
         startActivity(browse);
     }
