@@ -192,12 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void saveSettings(JSONObject settings) {
         try {
-//            Config.set("backgroundColor", "0,0,0");
-//            Config.set("borderColor", settings.getString("highlightColor"));
-//            Config.set("highlightColor", settings.getString("highlightColor"));
-//            Config.set("textColor", "255,255,255");
-//            Config.set("textSelectedColor", settings.getString("textSelectedColor"));
-
             Config.set("backgroundColor", settings.getString("backgroundColor"));
             Config.set("borderColor", settings.getString("borderColor"));
             Config.set("highlightColor", settings.getString("highlightColor"));
