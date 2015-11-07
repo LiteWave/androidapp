@@ -35,7 +35,7 @@ public class ResultsActivity extends AppCompatActivity {
     ImageView backgroundImage;
 
     public JSONObject show;
-    public boolean isWinner;
+
     public String winnerID;
     public String winnerURL;
     public String winnerImageURL;
@@ -86,29 +86,28 @@ public class ResultsActivity extends AppCompatActivity {
         } catch (JSONException e) {return;}
 
         if (((String)Config.get("UserLocationID")).equals(winnerID)) {
-            isWinner = true;
+            showWinner();
         }
+    }
 
-        if (isWinner) {
-            // do winner stuff
-            TextView thanksView = (TextView) findViewById(R.id.textThanks);
-            thanksView.setVisibility(View.INVISIBLE);
+    private void showWinner() {
+        TextView thanksView = (TextView) findViewById(R.id.textThanks);
+        thanksView.setVisibility(View.INVISIBLE);
 
-            TextView textPoweredBy =(TextView) findViewById(R.id.textPoweredBy);
-            textPoweredBy.setVisibility(View.INVISIBLE);
+        TextView textPoweredBy =(TextView) findViewById(R.id.textPoweredBy);
+        textPoweredBy.setVisibility(View.INVISIBLE);
 
-            ImageView lwLogo = (ImageView) findViewById(R.id.lwLogo);
-            lwLogo.setVisibility(View.INVISIBLE);
+        ImageView lwLogo = (ImageView) findViewById(R.id.lwLogo);
+        lwLogo.setVisibility(View.INVISIBLE);
 
-            ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
-            winnerView.setVisibility(View.VISIBLE);
+        ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
+        winnerView.setVisibility(View.VISIBLE);
 
-            ImageView backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
-            backgroundImage.setVisibility(View.INVISIBLE);
+        ImageView backgroundImage = (ImageView) findViewById(R.id.backgroundImage);
+        backgroundImage.setVisibility(View.INVISIBLE);
 
-            new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
-                    .execute(winnerImageURL);
-        }
+        new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
+                .execute(winnerImageURL);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
