@@ -1,19 +1,15 @@
 package com.litewaveinc.litewave.services;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.litewaveinc.litewave.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 
-import com.litewaveinc.litewave.R;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -139,7 +135,7 @@ public final class API {
 
         };
 
-        StringEntity entity = null;
+        StringEntity entity;
         try {
             entity = new StringEntity(params.toString());
         } catch (Exception e) {

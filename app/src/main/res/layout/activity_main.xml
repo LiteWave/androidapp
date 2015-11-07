@@ -40,7 +40,7 @@
             android:enabled="true"
             android:layout_width="460dp"
             android:layout_height="29dp"
-            android:text="powered by"
+            android:text="@string/activityResults_PoweredBy"
             android:textAlignment="center"
             android:textSize="14dp"
             android:gravity="center_horizontal"

@@ -60,8 +60,8 @@ public class SeatActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONObject content) {
-            String userLocationID = "";
-            String mobileOffset = "";
+            String userLocationID;
+            String mobileOffset;
             try {
                 userLocationID = content.getString("_id");
                 mobileOffset = content.getString("mobileTimeOffset");
@@ -290,7 +290,7 @@ public class SeatActivity extends AppCompatActivity {
             jsonUserSeat.put("row", selectedRow);
             jsonUserSeat.put("seat", selectedSeat);
 
-            params.put("userKey", (String)Config.get("UserID"));
+            params.put("userKey", Config.get("UserID"));
             params.put("userSeat", jsonUserSeat);
             params.put("mobileTime", mobileStart);
         } catch (JSONException e) {

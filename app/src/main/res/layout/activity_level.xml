@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/chooseSeatTextView"
             android:enabled="true"
-            android:text="Please choose the level you are seated in"
+            android:text="@string/activityLevel_LevelChoice"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textColor="@color/default_text"

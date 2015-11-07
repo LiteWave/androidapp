@@ -41,39 +41,39 @@ import java.util.TimerTask;
 
 public class ReadyActivity extends AppCompatActivity {
 
-    public int STROKE_WIDTH = 6;
+    private int STROKE_WIDTH = 6;
 
-    public Context context;
-    public ReadyActivity self;
+    private Context context;
+    private ReadyActivity self;
 
-    public TextView eventStatusTextView;
-    public ImageView backgroundImage;
-    public Button joinButton;
-    public ProgressBar spinner;
+    private TextView eventStatusTextView;
+    private ImageView backgroundImage;
+    private Button joinButton;
+    private ProgressBar spinner;
 
-    public ImageView levelImageView;
-    public TextView levelTextView;
-    public TextView levelNameTextView;
+    private ImageView levelImageView;
+    private TextView levelTextView;
+    private TextView levelNameTextView;
 
-    public ImageView sectionImageView;
-    public TextView sectionTextView;
-    public TextView sectionNameTextView;
+    private ImageView sectionImageView;
+    private TextView sectionTextView;
+    private TextView sectionNameTextView;
 
-    public ImageView rowImageView;
-    public TextView rowTextView;
-    public TextView rowNameTextView;
+    private ImageView rowImageView;
+    private TextView rowTextView;
+    private TextView rowNameTextView;
 
-    public ImageView seatImageView;
-    public TextView seatTextView;
-    public TextView seatNameTextView;
+    private ImageView seatImageView;
+    private TextView seatTextView;
+    private TextView seatNameTextView;
 
-    public View view;
+    private View view;
 
-    public JSONObject currentShow;
+    private JSONObject currentShow;
 
-    Timer pollTimer;
+    private Timer pollTimer;
 
-    public class LeaveEventResponse extends APIResponse {
+    private class LeaveEventResponse extends APIResponse {
 
         @Override
         public void success(JSONObject content) {
@@ -90,7 +90,7 @@ public class ReadyActivity extends AppCompatActivity {
         }
     }
 
-    public class GetShowsResponse extends APIResponse {
+    private class GetShowsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -107,7 +107,7 @@ public class ReadyActivity extends AppCompatActivity {
 
             if (content.length() > 0) {
                 for (int i = 0 ; i < content.length(); i++) {
-                    JSONObject show = null;
+                    JSONObject show;
                     String startAt;
 
                     try {
@@ -137,13 +137,13 @@ public class ReadyActivity extends AppCompatActivity {
         }
     }
 
-    public class JoinShowResponse extends APIResponse {
+    private class JoinShowResponse extends APIResponse {
 
         @Override
         public void success(JSONObject content) {
             ViewStack.push(ReadyActivity.class);
 
-            String mobileOffset = "";
+            String mobileOffset;
             try {
                 mobileOffset = content.getString("mobileTimeOffset");
             } catch (JSONException e) {return;}
@@ -166,7 +166,7 @@ public class ReadyActivity extends AppCompatActivity {
 
     }
 
-    public void clearSeat() {
+    private void clearSeat() {
         Config.setPreference("UserLocationID", null, context);
         Config.setPreference("LevelID", null, context);
         Config.setPreference("SectionID", null, context);
@@ -174,16 +174,16 @@ public class ReadyActivity extends AppCompatActivity {
         Config.setPreference("SeatID", null, context);
     }
 
-    public void leaveEvent() {
+    private void leaveEvent() {
         API.leaveEvent((String) Config.get("UserLocationID"), new LeaveEventResponse());
     }
 
-    protected void saveOffset(String mobileOffset) {
+    private void saveOffset(String mobileOffset) {
         Config.setPreference("MobileOffset", (String) Config.set("MobileOffset", mobileOffset), context);
     }
 
 
-    protected void getImage() {
+    private void getImage() {
         final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 
@@ -202,7 +202,7 @@ public class ReadyActivity extends AppCompatActivity {
         }, 0, 50);
     }
 
-    protected void enableJoin() {
+    private void enableJoin() {
 
         int color = Helper.getColor((String)Config.get("highlightColor"));
         joinButton.setBackgroundColor(color);
@@ -214,19 +214,18 @@ public class ReadyActivity extends AppCompatActivity {
             }
         });
 
-        eventStatusTextView.setText("Join the event to begin");
+        eventStatusTextView.setText(R.string.readyActivity_JoinEvent);
     }
 
-    protected void disableJoin() {
-        int color = Helper.getColor((String) Config.get("highlightColor"));
+    private void disableJoin() {
         joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
         joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
 
-        eventStatusTextView.setText("Waiting for the event to begin");
+        eventStatusTextView.setText(R.string.readyActivity_WatingEvent);
     }
 
-    public void joinShow() {
+    private void joinShow() {
         String mobileStart = Helper.getNowInGMT();
         JSONObject params = new JSONObject();
         try {
@@ -236,7 +235,7 @@ public class ReadyActivity extends AppCompatActivity {
         API.joinShow((String) Config.get("UserLocationID"), params, new JoinShowResponse());
     }
 
-    public void beginPolling() {
+    private void beginPolling() {
         int pollInterval = Integer.parseInt((String)Config.get("pollInterval"));
 
         if (pollTimer != null) {
@@ -256,18 +255,18 @@ public class ReadyActivity extends AppCompatActivity {
         }, 0, pollInterval);
     }
 
-    public void stopPolling() {
+    private void stopPolling() {
         if (pollTimer != null) {
             pollTimer.cancel();
             pollTimer = null;
         }
     }
 
-    public void getShow() {
+    private void getShow() {
         API.getShows((String) Config.get("EventID"), new GetShowsResponse());
     }
 
-    public void drawCircle(ImageView imageView, TextView textView, TextView textViewLabel) {
+    private void drawCircle(ImageView imageView, TextView textView, TextView textViewLabel) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 

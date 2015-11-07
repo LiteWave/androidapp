@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,13 +29,11 @@ public class Config {
         return preferences.getString(name, defaultValue);
     }
 
-    public static String setPreference(String name, String value, Context context) {
+    public static void setPreference(String name, String value, Context context) {
         SharedPreferences preferences = context.getSharedPreferences("Prefs", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(name, value);
         editor.commit();
-
-        return value;
     }
 
 }

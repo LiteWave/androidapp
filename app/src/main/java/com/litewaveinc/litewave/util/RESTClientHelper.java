@@ -1,8 +1,5 @@
 package com.litewaveinc.litewave.util;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import android.os.AsyncTask;
 
 /**
  * Created by jonathan on 8/28/15.

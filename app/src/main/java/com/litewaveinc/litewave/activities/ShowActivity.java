@@ -82,7 +82,7 @@ public class ShowActivity extends AppCompatActivity {
             winnerID = showData.getString("_winnerId");
         } catch (JSONException e) {return;}
 
-        if (((String)Config.get("UserLocationID")).equals(winnerID)) {
+        if (Config.get("UserLocationID").equals(winnerID)) {
             isWinner = true;
         }
 
@@ -176,7 +176,7 @@ public class ShowActivity extends AppCompatActivity {
                     framePosition++;
                     playFrames();
                 }
-            } catch (JSONException e) {e.printStackTrace(); return;}
+            } catch (JSONException e) {e.printStackTrace();}
         }
 
     }

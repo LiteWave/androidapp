@@ -29,21 +29,22 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public Context context;
-    public MainActivity self;
+    private Context context;
+    private MainActivity self;
 
-    public View view;
-    public TextView noEventsTextView;
-    public TextView poweredByTextView;
-    public ImageView backgroundImage;
-    public ImageView logoImage;
+    private View view;
+    private TextView noEventsTextView;
+    private TextView poweredByTextView;
+    private ImageView backgroundImage;
+    private ImageView logoImage;
 
-    public class GetEventsResponse extends APIResponse {
+    private class GetEventsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -51,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (content.length() > 0) {
                 for(int i = 0 ; i < content.length(); i++) {
-                    JSONObject event = null;
-                    JSONObject settings = null;
-                    String eventDate = null;
+                    JSONObject event;
+                    JSONObject settings;
+                    String eventDate;
                     try {
                         event = content.getJSONObject(i);
                         eventDate = event.getString("date");
@@ -64,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     eventDate = eventDate.substring(0, eventDate.indexOf('T'));
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-dd");
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("y-MM-dd", Locale.US);
                     String formattedCurrentDate = simpleDateFormat.format(currentDate);
 
                     if (eventDate.compareTo(formattedCurrentDate) == 0) {
-                        Log.d("MainActivity", "Event found for: " + formattedCurrentDate.toString());
+                        Log.d("MainActivity", "Event found for: " + formattedCurrentDate);
                         saveSettings(settings);
                         saveLogo();
                         showEvent(event);
@@ -87,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class GetClientResponse extends APIResponse {
+    private class GetClientResponse extends APIResponse {
         @Override
         public void success(JSONObject content) {
-            JSONObject settings = null;
+            JSONObject settings;
             try {
                 settings = content.getJSONObject("settings");
             } catch (JSONException e) {
@@ -143,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void loadPreferences() {
-        if (Config.getPreference("UserID", "", context) == "") {
+    private void loadPreferences() {
+        if (Config.getPreference("UserID", "", context).equals("")) {
             Config.setPreference("UserID", UUID.randomUUID().toString(), context);
         }
 
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         Config.set("SeatID", Config.getPreference("SeatID", "", context));
     }
 
-    protected void clearSeat() {
+    private void clearSeat() {
         Config.setPreference("UserLocationID", null, context);
         Config.setPreference("LevelID", null, context);
         Config.setPreference("SectionID", null, context);
@@ -166,15 +167,15 @@ public class MainActivity extends AppCompatActivity {
         Config.setPreference("SeatID", null, context);
     }
 
-    protected void checkEvents() {
+    private void checkEvents() {
         API.getEvents(getString(R.string.clientID_Blazers), new GetEventsResponse());
     }
 
-    protected void getClient() {
+    private void getClient() {
         API.getClient(getString(R.string.clientID_Blazers), new GetClientResponse());
     }
 
-    protected void showNoEvents() {
+    private void showNoEvents() {
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         int textColor = Helper.getColor((String)Config.get("textColor"));
         view.setBackgroundColor(backgroundColor);
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         saveLogo();
     }
 
-    protected void saveSettings(JSONObject settings) {
+    private void saveSettings(JSONObject settings) {
         try {
             Config.set("backgroundColor", settings.getString("backgroundColor"));
             Config.set("borderColor", settings.getString("borderColor"));
@@ -210,12 +211,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void saveLogo() {
+    private void saveLogo() {
         new DownloadLogoTask((ImageView) findViewById(R.id.backgroundImage))
                 .execute((String) Config.get("logoUrl"));
     }
 
-    protected void showEvent(JSONObject event) {
+    private void showEvent(JSONObject event) {
         try {
             Config.set("StadiumID", event.getString("_stadiumId"));
             Config.set("EventID", event.getString("_id"));
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Intent intent;
-        if (Config.getPreference("UserLocationID", "", context) == "") {
+        if (Config.getPreference("UserLocationID", "", context).equals("")) {
             intent = new Intent(MainActivity.this, LevelActivity.class);
         } else {
             intent = new Intent(MainActivity.this, ReadyActivity.class);
@@ -238,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    protected void showError(Exception e) {
+    private void showError(Exception e) {
         e.printStackTrace();
     }
 

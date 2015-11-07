@@ -65,7 +65,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="?android:attr/actionBarSize"
-            android:text="CONTINUE"
+            android:text="@string/activitySeat_ContinueBtn"
             android:id="@+id/joinButton"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"

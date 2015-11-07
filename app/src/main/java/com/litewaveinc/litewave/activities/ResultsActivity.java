@@ -10,9 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,22 +28,21 @@ import java.io.InputStream;
 
 
 public class ResultsActivity extends AppCompatActivity {
+    private Context context;
+    private  ResultsActivity self;
 
-    public Context context;
-    public ResultsActivity self;
+    private Button returnButton;
+    private ImageView backgroundImage;
+    private View view;
 
-    public Button returnButton;
-    public ImageView backgroundImage;
-    public View view;
+    private JSONObject show;
 
-    public JSONObject show;
+    private String winnerID;
+    private String winnerURL;
+    private String winnerImageURL;
 
-    public String winnerID;
-    public String winnerURL;
-    public String winnerImageURL;
-
-    public TextView thanksView;
-    public TextView textPoweredBy;
+    private TextView thanksView;
+    private TextView textPoweredBy;
 
     private void returnReady()
     {
@@ -68,14 +65,14 @@ public class ResultsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_results);
 
-        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
+        int backgroundColor = Helper.getColor((String) Config.get("backgroundColor"));
         int textColor = Helper.getColor((String)Config.get("textColor"));
         int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        view = (View) this.findViewById(R.id.view);
+        view = this.findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
@@ -107,12 +104,12 @@ public class ResultsActivity extends AppCompatActivity {
             winnerImageURL = show.getString("winnerImageUrl");
         } catch (JSONException e) {return;}
 
-        if (((String)Config.get("UserLocationID")).equals(winnerID)) {
+        if (Config.get("UserLocationID").equals(winnerID)) {
             showWinner();
         }
     }
 
-    public void openWebURL(String url) {
+    private void openWebURL(String url) {
         Intent browse = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
         startActivity(browse);
     }

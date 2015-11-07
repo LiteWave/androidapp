@@ -31,16 +31,16 @@ import java.util.TimerTask;
 
 public class LevelActivity extends AppCompatActivity {
 
-    public Context context;
-    public LevelActivity self;
+    private Context context;
+    private LevelActivity self;
 
-    public View view;
-    public ImageView backgroundImage;
-    public ListView listView;
-    public ArrayList<String> levels;
-    public Hashtable<String, JSONObject> levelsMap;
+    private View view;
+    private ImageView backgroundImage;
+    private ListView listView;
+    private ArrayList<String> levels;
+    private Hashtable<String, JSONObject> levelsMap;
 
-    public class GetLevelsResponse extends APIResponse {
+    private class GetLevelsResponse extends APIResponse {
 
         @Override
         public void success(JSONArray content) {
@@ -74,7 +74,7 @@ public class LevelActivity extends AppCompatActivity {
         }
     }
 
-    protected void selectLevel(String level) {
+    private void selectLevel(String level) {
         Config.set("LevelID", level);
 
         ViewStack.push(LevelActivity.class);
@@ -84,11 +84,11 @@ public class LevelActivity extends AppCompatActivity {
         finish();
     }
 
-    protected void getLevels(String stadiumID) {
+    private void getLevels(String stadiumID) {
         API.getLevels(stadiumID, new GetLevelsResponse());
     }
 
-    protected void getImage() {
+    private void getImage() {
         final Timer timer = new Timer();
 
         timer.schedule(new TimerTask() {
