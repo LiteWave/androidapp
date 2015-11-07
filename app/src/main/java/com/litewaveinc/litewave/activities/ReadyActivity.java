@@ -235,7 +235,7 @@ public class ReadyActivity extends AppCompatActivity {
     }
 
     public void beginPolling() {
-        int pollInterval = Integer.parseInt((String)Config.get("PollInterval"));
+        int pollInterval = Integer.parseInt((String)Config.get("pollInterval"));
 
         if (pollTimer != null) {
             stopPolling();
