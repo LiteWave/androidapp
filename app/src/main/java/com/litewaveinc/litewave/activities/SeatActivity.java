@@ -1,20 +1,14 @@
 package com.litewaveinc.litewave.activities;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.NavUtils;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +23,6 @@ import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;
-import com.litewaveinc.litewave.util.JSONHelper;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +30,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.UUID;
 
 public class SeatActivity extends AppCompatActivity {
 
