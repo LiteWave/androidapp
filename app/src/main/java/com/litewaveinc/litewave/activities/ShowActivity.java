@@ -158,7 +158,7 @@ public class ShowActivity extends AppCompatActivity {
                         if (frame.has("bg")) {
                             backgroundColor = Helper.getColor(frame.getString("bg"));
                         }
-                    } else if (commandType.equals("win")) {
+                    } else if (commandType.equals("win") && isWinner) {
                         showWinner();
                     }
                     setBackgroundColor(backgroundColor);
