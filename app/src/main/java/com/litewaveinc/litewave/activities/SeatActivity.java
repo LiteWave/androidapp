@@ -293,6 +293,7 @@ public class SeatActivity extends AppCompatActivity {
             params.put("userKey", (String)Config.get("UserID"));
             params.put("userSeat", jsonUserSeat);
             params.put("mobileTime", mobileStart);
+            params.put("device", "android");
         } catch (JSONException e) {
             e.printStackTrace();
         }
