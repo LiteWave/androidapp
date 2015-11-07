@@ -36,6 +36,7 @@ public class SeatActivity extends AppCompatActivity {
     Context context;
     SeatActivity self;
 
+    public View view;
     public ImageView backgroundImage;
     public String selectedLevel;
     public String selectedSection;
@@ -321,11 +322,16 @@ public class SeatActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_seat);
 
+        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
+        int highlightColor = Helper.getColor((String)Config.get("highlightColor"));
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        int color = Helper.getColor((String) Config.get("highlightColor"));
-        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+
+        view = findViewById(R.id.view);
+        view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         backgroundImage.setAlpha((float) 0.05);

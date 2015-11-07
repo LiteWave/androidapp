@@ -31,18 +31,21 @@ import java.io.InputStream;
 
 public class ResultsActivity extends AppCompatActivity {
 
-    Context context;
-    ResultsActivity self;
+    public Context context;
+    public ResultsActivity self;
 
     public Button returnButton;
-    ImageView backgroundImage;
-    View view;
+    public ImageView backgroundImage;
+    public View view;
 
     public JSONObject show;
 
     public String winnerID;
     public String winnerURL;
     public String winnerImageURL;
+
+    public TextView thanksView;
+    public TextView textPoweredBy;
 
     private void returnReady()
     {
@@ -65,16 +68,15 @@ public class ResultsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_results);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
+        int textColor = Helper.getColor((String)Config.get("textColor"));
         int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         view = (View) this.findViewById(R.id.view);
-        view.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                openWebURL(winnerURL);
-            }
-        });
+        view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         backgroundImage.setAlpha((float) 0.05);
@@ -91,6 +93,12 @@ public class ResultsActivity extends AppCompatActivity {
                 returnReady();
             }
         });
+
+        thanksView = (TextView)findViewById(R.id.textThanks);
+        thanksView.setTextColor(textColor);
+
+        textPoweredBy =( TextView)findViewById(R.id.textPoweredBy);
+        textPoweredBy.setTextColor(textColor);
 
         show = (JSONObject)Config.get("Show");
         try {
@@ -110,10 +118,8 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private void showWinner() {
-        TextView thanksView = (TextView) findViewById(R.id.textThanks);
         thanksView.setVisibility(View.INVISIBLE);
 
-        TextView textPoweredBy =(TextView) findViewById(R.id.textPoweredBy);
         textPoweredBy.setVisibility(View.INVISIBLE);
 
         ImageView lwLogo = (ImageView) findViewById(R.id.lwLogo);
@@ -126,6 +132,11 @@ public class ResultsActivity extends AppCompatActivity {
         backgroundImage.setVisibility(View.INVISIBLE);
 
         view.setBackgroundColor(Color.BLACK);
+        view.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openWebURL(winnerURL);
+            }
+        });
 
         new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
                 .execute(winnerImageURL);

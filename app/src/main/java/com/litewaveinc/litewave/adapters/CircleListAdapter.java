@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class CircleListAdapter extends BaseAdapter {
 
-    int STROKE_WIDTH = 6;
+    int STROKE_WIDTH = 8;
 
     protected Context context;
     protected ListView listView;

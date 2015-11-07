@@ -41,10 +41,10 @@ import java.util.TimerTask;
 
 public class ReadyActivity extends AppCompatActivity {
 
-    int STROKE_WIDTH = 6;
+    public int STROKE_WIDTH = 6;
 
-    Context context;
-    ReadyActivity self;
+    public Context context;
+    public ReadyActivity self;
 
     public TextView eventStatusTextView;
     public ImageView backgroundImage;
@@ -66,6 +66,8 @@ public class ReadyActivity extends AppCompatActivity {
     public ImageView seatImageView;
     public TextView seatTextView;
     public TextView seatNameTextView;
+
+    public View view;
 
     public JSONObject currentShow;
 
@@ -289,6 +291,7 @@ public class ReadyActivity extends AppCompatActivity {
         self = this;
         int highlightColor = Helper.getColor((String)Config.get("highlightColor"));
         int textColor = Helper.getColor((String) Config.get("textColor"));
+        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
 
         setContentView(R.layout.activity_ready);
 
@@ -296,6 +299,9 @@ public class ReadyActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle((String) Config.get("EventName"));
         actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+
+        view = findViewById(R.id.view);
+        view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         backgroundImage.setAlpha((float) 0.05);

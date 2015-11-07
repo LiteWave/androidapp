@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".activities.MainActivity"
+    android:id="@+id/view"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 
     <ImageView
