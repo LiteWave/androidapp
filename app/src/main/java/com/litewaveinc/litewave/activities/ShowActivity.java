@@ -1,28 +1,20 @@
 package com.litewaveinc.litewave.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Vibrator;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
+
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;
-import com.litewaveinc.litewave.util.SystemUiHider;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.PowerManager;
-import android.os.Vibrator;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,17 +1,10 @@
 package com.litewaveinc.litewave.activities;
 
-import com.litewaveinc.litewave.R;
-import com.litewaveinc.litewave.services.Config;
-import com.litewaveinc.litewave.services.ViewStack;
-import com.litewaveinc.litewave.util.Helper;
-import com.litewaveinc.litewave.util.SystemUiHider;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -21,6 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.litewaveinc.litewave.R;
+import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.services.ViewStack;
+import com.litewaveinc.litewave.util.Helper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
