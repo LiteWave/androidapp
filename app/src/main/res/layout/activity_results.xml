@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/textThanks"
         android:enabled="true"
-        android:text="Thanks for Participating!"
+        android:text="@string/resultsActivityThanks"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90px"
         android:textAlignment="center"
@@ -36,7 +36,7 @@
         android:layout_width="460dp"
         android:layout_height="29dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="powered by"
+        android:text="@string/activityResults_PoweredBy"
         android:id="@+id/textPoweredBy"
         android:textAlignment="center"
         android:textSize="14dp"
@@ -58,7 +58,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/actionBarSize"
-        android:text="RETURN"
+        android:text="@string/activityResults_ReturnBtn"
         android:id="@+id/returnButton"
         android:layout_centerVertical="true"
         android:layout_alignParentBottom="true"

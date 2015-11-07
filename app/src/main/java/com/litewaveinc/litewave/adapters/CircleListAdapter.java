@@ -3,7 +3,6 @@ package com.litewaveinc.litewave.adapters;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;

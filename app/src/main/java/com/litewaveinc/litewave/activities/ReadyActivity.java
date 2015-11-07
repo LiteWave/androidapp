@@ -214,7 +214,7 @@ public class ReadyActivity extends AppCompatActivity {
             }
         });
 
-        eventStatusTextView.setText("Join the event to begin");
+        eventStatusTextView.setText(R.string.readyActivity_JoinEvent);
     }
 
     protected void disableJoin() {
@@ -223,7 +223,7 @@ public class ReadyActivity extends AppCompatActivity {
         joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
         joinButton.setOnClickListener(null);
 
-        eventStatusTextView.setText("Waiting for the event to begin");
+        eventStatusTextView.setText(R.string.readyActivity_WatingEvent);
     }
 
     public void joinShow() {

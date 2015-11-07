@@ -13,7 +13,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <string name="noEventsToday">"There are curently no events scheduled."</string>
+    <string name="noEventsToday">"There are currently no events scheduled."</string>
     <string name="title_activity_winners_circle">Winners Circle</string>
     <string name="title_activity_thanks_for_participating">Thanks For Participating</string>
 
@@ -22,26 +22,21 @@
 
     //URL Resources
     <string name="apiURL">http://litewaveinc.com/api/</string>
-    <string name="getClients">clients/</string>
-    <string name="getClient">clients/[cliendID]</string>
-    <string name="getStadiums">stadiums/</string>
-    <string name="getStadium">stadiums/[stadiumID]</string>
-    <string name="getStadiumLevels">stadiums/[stadiumID]/levels</string>
-    <string name="getEvents">clients/[clientID]/events/</string>
-    //joinEvent: POST
-    <string name="joinEvent">clients/[clientID/events/[eventID]</string>
-    //leaveEvent DELETE
-    <string name="leaveEvent">clients/[clientID]/events/[eventID]</string>
-    <string name="getShows">events/[eventID]/shows</string>
-    <string name="getShow">events/[eventID]/shows/[showID]</string>
-    //joinShow: POST
-    <string name="joinShow">events/[eventID]/shows/[showID]</string>
 
-
-    <string name="getStadiumLevelsURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/</string>
-    <string name="getStadiumSeatingURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/Levels/LEVELID</string>
-    //NOTE: This will return everything we want to just get the levels and then seating info.
-    <string name="getStadiumInfoURL">http://104.130.156.82:8080/api/stadiums/STADIUMID/levels</string>
-    <string name="getStadiumsURL">http://104.130.156.82:8080/api/stadiums</string>
+    <string name="resultsActivityThanks">Thanks for Participating!</string>
+    <string name="activityShow_ShowStarts">SHOW STARTS IN</string>
+    <string name="activityResults_PoweredBy">powered by</string>
+    <string name="activityLevel_LevelChoice">Please choose the level you are seated in</string>
+    <string name="activityShow_PointScreenInstructions">Point your screen toward the court once the show begins</string>
+    <string name="activityResults_ReturnBtn">RETURN</string>
+    <string name="activityShow_Winner">WINNER!</string>
+    <string name="activitySeat_ContinueBtn">CONTINUE</string>
+    <string name="activityReady_Level">level</string>
+    <string name="activityReady_Section">section</string>
+    <string name="activityReady_Row">row</string>
+    <string name="activityReady_Seat">seat</string>
+    <string name="activtyReady_JoinBtn">JOIN</string>
+    <string name="readyActivity_JoinEvent">Join the event to begin</string>
+    <string name="readyActivity_WatingEvent">Waiting for the event to begin</string>
 
 </resources>

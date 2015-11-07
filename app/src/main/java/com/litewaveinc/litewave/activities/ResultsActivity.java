@@ -10,9 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -68,14 +66,14 @@ public class ResultsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_results);
 
-        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
+        int backgroundColor = Helper.getColor((String) Config.get("backgroundColor"));
         int textColor = Helper.getColor((String)Config.get("textColor"));
         int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        view = (View) this.findViewById(R.id.view);
+        view = this.findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
@@ -107,7 +105,7 @@ public class ResultsActivity extends AppCompatActivity {
             winnerImageURL = show.getString("winnerImageUrl");
         } catch (JSONException e) {return;}
 
-        if (((String)Config.get("UserLocationID")).equals(winnerID)) {
+        if (Config.get("UserLocationID").equals(winnerID)) {
             showWinner();
         }
     }
