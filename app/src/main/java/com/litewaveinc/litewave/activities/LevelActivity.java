@@ -31,13 +31,14 @@ import java.util.TimerTask;
 
 public class LevelActivity extends AppCompatActivity {
 
-    Context context;
-    LevelActivity self;
+    public Context context;
+    public LevelActivity self;
 
-    ImageView backgroundImage;
-    ListView listView;
-    ArrayList<String> levels;
-    Hashtable<String, JSONObject> levelsMap;
+    public View view;
+    public ImageView backgroundImage;
+    public ListView listView;
+    public ArrayList<String> levels;
+    public Hashtable<String, JSONObject> levelsMap;
 
     public class GetLevelsResponse extends APIResponse {
 
@@ -117,8 +118,12 @@ public class LevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_level);
 
         int color = Helper.getColor((String)Config.get("highlightColor"));
+        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(color));
+
+        view = findViewById(R.id.view);
+        view.setBackgroundColor(backgroundColor);
 
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
         backgroundImage.setAlpha((float) 0.05);

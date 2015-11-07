@@ -34,13 +34,14 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    Context context;
-    MainActivity self;
+    public Context context;
+    public MainActivity self;
 
-    TextView noEventsTextView;
-    TextView poweredByTextView;
-    ImageView backgroundImage;
-    ImageView logoImage;
+    public View view;
+    public TextView noEventsTextView;
+    public TextView poweredByTextView;
+    public ImageView backgroundImage;
+    public ImageView logoImage;
 
     public class GetEventsResponse extends APIResponse {
 
@@ -174,10 +175,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void showNoEvents() {
+        int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
+        int textColor = Helper.getColor((String)Config.get("textColor"));
+        view.setBackgroundColor(backgroundColor);
+
         noEventsTextView.setText(R.string.noEventsToday);
+        noEventsTextView.setTextColor(textColor);
         noEventsTextView.setVisibility(View.VISIBLE);
 
         poweredByTextView.setVisibility(View.VISIBLE);
+        poweredByTextView.setTextColor(textColor);
 
         logoImage.setVisibility(View.VISIBLE);
         saveLogo();
@@ -185,11 +192,18 @@ public class MainActivity extends AppCompatActivity {
 
     protected void saveSettings(JSONObject settings) {
         try {
+//            Config.set("backgroundColor", "0,0,0");
+//            Config.set("borderColor", settings.getString("highlightColor"));
+//            Config.set("highlightColor", settings.getString("highlightColor"));
+//            Config.set("textColor", "255,255,255");
+//            Config.set("textSelectedColor", settings.getString("textSelectedColor"));
+
             Config.set("backgroundColor", settings.getString("backgroundColor"));
             Config.set("borderColor", settings.getString("borderColor"));
             Config.set("highlightColor", settings.getString("highlightColor"));
             Config.set("textColor", settings.getString("textColor"));
             Config.set("textSelectedColor", settings.getString("textSelectedColor"));
+
             Config.set("logoUrl", settings.getString("logoUrl"));
 
             if (settings.has("pollInterval")) {
@@ -241,10 +255,13 @@ public class MainActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
+        setContentView(R.layout.activity_main);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        setContentView(R.layout.activity_main);
+        view = findViewById(R.id.view);
+
         noEventsTextView = (TextView) this.findViewById(R.id.noEventsTextView);
         poweredByTextView = (TextView) this.findViewById(R.id.poweredByTextView);
         backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
