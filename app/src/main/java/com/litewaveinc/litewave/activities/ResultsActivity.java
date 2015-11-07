@@ -2,9 +2,12 @@ package com.litewaveinc.litewave.activities;
 
 import com.litewaveinc.litewave.R;
 import com.litewaveinc.litewave.services.Config;
+import com.litewaveinc.litewave.services.ViewStack;
+import com.litewaveinc.litewave.util.Helper;
 import com.litewaveinc.litewave.util.SystemUiHider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -15,6 +18,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,13 +33,22 @@ public class ResultsActivity extends AppCompatActivity {
     Context context;
     ResultsActivity self;
 
-
+    public Button returnButton;
+    ImageView backgroundImage;
 
     public JSONObject show;
     public boolean isWinner;
     public String winnerID;
     public String winnerURL;
     public String winnerImageURL;
+
+    private void returnReady()
+    {
+        Intent intent = new Intent(ResultsActivity.this, ReadyActivity.class);
+        ViewStack.push(MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +61,24 @@ public class ResultsActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
+
+        backgroundImage = (ImageView) this.findViewById(R.id.backgroundImage);
+        backgroundImage.setAlpha((float) 0.05);
+        Bitmap bitmap = (Bitmap)Config.get("logoBitmap");
+        if (bitmap != null) {
+            backgroundImage.setImageBitmap(bitmap);
+        }
+
+        returnButton = (Button)findViewById(R.id.returnButton);
+        returnButton.setBackgroundColor(highlightColor);
+        returnButton.setTextColor(Color.parseColor("#FFFFFF"));
+        returnButton.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                returnReady();
+            }
+        });
 
         show = (JSONObject)Config.get("Show");
         try {
@@ -62,14 +93,15 @@ public class ResultsActivity extends AppCompatActivity {
 
         if (isWinner) {
             // do winner stuff
-        } else {
-            // do loser stuff
             new DownloadImageTask((ImageView) findViewById(R.id.imageViewWinner))
                     .execute(winnerImageURL);
             ImageView winnerView = (ImageView) findViewById(R.id.imageViewWinner);
             winnerView.setVisibility(View.VISIBLE);
             TextView thanksView = (TextView) findViewById(R.id.textThanks);
             thanksView.setVisibility(View.INVISIBLE);
+        } else {
+            // do loser stuff
+
         }
     }
 
