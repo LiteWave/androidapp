@@ -201,9 +201,8 @@ public class ShowActivity extends AppCompatActivity {
         DateFormat gmtFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
         gmtFormat.setTimeZone(gmtTimeZone);
         try {
-            int offset = Integer.parseInt((String)Config.get("MobileOffset"));
             currentDate = gmtFormat.parse(Calendar.getInstance().getTime().toString());
-            currentDate = new Date(currentDate.getTime() - offset);
+            currentDate = new Date(currentDate.getTime());
         } catch (ParseException e) {e.printStackTrace(); return;}
 
         Date startDate;
@@ -213,11 +212,15 @@ public class ShowActivity extends AppCompatActivity {
             startDate = dateFormat.parse(startAt);
         } catch (ParseException e) {e.printStackTrace(); return;}
 
-        long showSecondOffset = Helper.getDateDiff(currentDate, startDate, TimeUnit.SECONDS);
-        if (showSecondOffset >= 1) {
-            countdownTextView.setText(Integer.toString((int)showSecondOffset));
+        long showMillisecondOffset = Helper.getDateDiff(currentDate, startDate, TimeUnit.MILLISECONDS);
+        if (showMillisecondOffset > 0) {
+            int timeSeconds = (int)(showMillisecondOffset/1000);
+            if (timeSeconds > 0) {
+                countdownTextView.setText(Integer.toString(timeSeconds));
+            }
+
         }
-        else if (showSecondOffset <= 0) {
+        else {
             stopCountdown();
             beginShow();
         }
