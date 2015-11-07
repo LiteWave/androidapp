@@ -156,7 +156,7 @@ public class ReadyActivity extends AppCompatActivity {
         }
 
         public void failure(JSONObject content, int statusCode) {
-            Helper.showDialog("Show", "Sorry, the show has expired.", self);
+            Helper.showDialog("Show", "Sorry, but the show has expired.", self);
 
             disableJoin();
             beginPolling();
@@ -343,7 +343,7 @@ public class ReadyActivity extends AppCompatActivity {
         seatImageView = (ImageView)findViewById(R.id.seatCircleImageView);
 
         seatTextView = (TextView)findViewById(R.id.seatTextView);
-        seatTextView.setTextColor(Helper.getColor((String)Config.get("textColor")));
+        seatTextView.setTextColor(Helper.getColor((String) Config.get("textColor")));
 
         seatNameTextView = (TextView)findViewById(R.id.seatNameTextView);
         seatNameTextView.setTextColor(Helper.getColor((String) Config.get("textSelectedColor")));
