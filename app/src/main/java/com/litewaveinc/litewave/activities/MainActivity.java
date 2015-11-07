@@ -192,8 +192,9 @@ public class MainActivity extends AppCompatActivity {
             Config.set("textSelectedColor", settings.getString("textSelectedColor"));
             Config.set("logoUrl", settings.getString("logoUrl"));
 
-            Config.set("pollInterval", settings.getString("pollInterval"));
-            if (Config.getPreference("pollInterval", "", context) == "") {
+            if (settings.has("pollInterval")) {
+                Config.set("pollInterval", settings.getString("pollInterval"));
+            } else {
                 Config.set("pollInterval", "5000");
             }
         } catch (JSONException e) {
