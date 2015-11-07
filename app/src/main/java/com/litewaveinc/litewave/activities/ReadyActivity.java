@@ -117,6 +117,9 @@ public class ReadyActivity extends AppCompatActivity {
                     try {
                         show = content.getJSONObject(i);
                         startAt = show.getString("startAt");
+                        if (startAt.equals("null")) {
+                            continue;
+                        }
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
                         dateFormat.setTimeZone(gmtTimeZone);
                         Date startDate;
