@@ -42,7 +42,6 @@ import java.util.TimerTask;
 public class ReadyActivity extends AppCompatActivity {
 
     int STROKE_WIDTH = 6;
-    protected int CIRCLE_RADIUS = 225;
 
     Context context;
     ReadyActivity self;

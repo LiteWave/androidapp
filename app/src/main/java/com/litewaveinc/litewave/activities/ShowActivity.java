@@ -41,6 +41,7 @@ public class ShowActivity extends AppCompatActivity {
     public TextView countdownTextView;
     public TextView showStartTextView;
     public TextView showHelpTextView;
+    public TextView winnerTextView;
 
     public Timer countdownTimer;
 
@@ -181,7 +182,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     public void showWinner() {
-
+        winnerTextView.setVisibility(View.VISIBLE);
     }
 
     public void vibrate() {
@@ -254,6 +255,10 @@ public class ShowActivity extends AppCompatActivity {
 
         showHelpTextView = (TextView)findViewById(R.id.showHelpTextView);
         showHelpTextView.setTextColor(highlightColor);
+
+        winnerTextView = (TextView)findViewById(R.id.winnerTextView);
+        winnerTextView.setTextColor(highlightColor);
+        winnerTextView.setVisibility(View.INVISIBLE);
 
         showData = (JSONObject)Config.get("ShowData");
         try {
