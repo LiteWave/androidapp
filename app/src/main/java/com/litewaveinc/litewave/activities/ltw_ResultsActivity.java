@@ -64,7 +64,7 @@ public class ltw_ResultsActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
-        setContentView(R.layout.activity_results);
+        setContentView(R.layout.ltw_activity_results);
 
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         int textColor = Helper.getColor((String)Config.get("textColor"));

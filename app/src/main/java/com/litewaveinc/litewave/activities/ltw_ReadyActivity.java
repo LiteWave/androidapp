@@ -293,7 +293,7 @@ public class ltw_ReadyActivity extends AppCompatActivity {
         int textColor = Helper.getColor((String) Config.get("textColor"));
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
 
-        setContentView(R.layout.activity_ready);
+        setContentView(R.layout.ltw_activity_ready);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

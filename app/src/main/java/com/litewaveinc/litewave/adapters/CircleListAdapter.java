@@ -3,7 +3,6 @@ package com.litewaveinc.litewave.adapters;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -66,7 +65,7 @@ public class CircleListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final View view;
         if (convertView == null)
-            view = inflater.inflate(R.layout.adapter_circle_row, null);
+            view = inflater.inflate(R.layout.ltw_adapter_circle_row, null);
         else
             view = convertView;
 

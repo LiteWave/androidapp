@@ -6,13 +6,13 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/ltw_ic_launcher"
+        android:label="@string/ltw_app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.ltw_MainActivity"
             android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            android:label="@string/ltw_app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,7 +26,7 @@
         <activity
             android:name=".activities.ltw_SeatActivity"
             android:screenOrientation="portrait"
-            android:label="@string/title_activity_choose_seat">
+            android:label="@string/ltw_title_activity_choose_seat">
         </activity>
         <activity
             android:name=".activities.ltw_ReadyActivity"

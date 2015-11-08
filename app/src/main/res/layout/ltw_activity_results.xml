@@ -51,7 +51,7 @@
         android:layout_marginBottom="50px"
         android:id="@+id/lwLogo"
         android:layout_gravity="center_horizontal|bottom"
-        android:src="@drawable/lwlogosm"
+        android:src="@drawable/ltw_logosm"
         android:layout_above="@+id/returnButton"
         android:layout_centerHorizontal="true" />
 

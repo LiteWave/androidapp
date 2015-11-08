@@ -115,7 +115,7 @@ public class ltw_LevelActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
-        setContentView(R.layout.activity_level);
+        setContentView(R.layout.ltw_activity_level);
 
         int color = Helper.getColor((String)Config.get("highlightColor"));
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));

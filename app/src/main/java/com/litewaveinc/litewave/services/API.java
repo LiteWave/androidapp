@@ -1,16 +1,13 @@
 package com.litewaveinc.litewave.services;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 
 import com.litewaveinc.litewave.R;
@@ -102,7 +99,7 @@ public final class API {
         }
 
         StringBuilder apiURL = new StringBuilder();
-        apiURL.append(appContext.getString(R.string.apiURL));
+        apiURL.append(appContext.getString(R.string.ltw_apiURL));
         apiURL.append(url);
 
         ResponseHandlerInterface responseHandler = new JsonHttpResponseHandler() {

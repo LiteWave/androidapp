@@ -321,7 +321,7 @@ public class ltw_SeatActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
-        setContentView(R.layout.activity_seat);
+        setContentView(R.layout.ltw_activity_seat);
 
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         int highlightColor = Helper.getColor((String)Config.get("highlightColor"));

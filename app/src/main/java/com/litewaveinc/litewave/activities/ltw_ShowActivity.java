@@ -241,7 +241,7 @@ public class ltw_ShowActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
-        setContentView(R.layout.activity_show);
+        setContentView(R.layout.ltw_activity_show);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

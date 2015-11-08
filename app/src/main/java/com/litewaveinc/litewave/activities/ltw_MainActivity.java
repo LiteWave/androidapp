@@ -167,11 +167,11 @@ public class ltw_MainActivity extends AppCompatActivity {
     }
 
     protected void checkEvents() {
-        API.getEvents(getString(R.string.clientID_Blazers), new GetEventsResponse());
+        API.getEvents(getString(R.string.ltw_clientID_Blazers), new GetEventsResponse());
     }
 
     protected void getClient() {
-        API.getClient(getString(R.string.clientID_Blazers), new GetClientResponse());
+        API.getClient(getString(R.string.ltw_clientID_Blazers), new GetClientResponse());
     }
 
     protected void showNoEvents() {
@@ -179,7 +179,7 @@ public class ltw_MainActivity extends AppCompatActivity {
         int textColor = Helper.getColor((String)Config.get("textColor"));
         view.setBackgroundColor(backgroundColor);
 
-        noEventsTextView.setText(R.string.noEventsToday);
+        noEventsTextView.setText(R.string.ltw_noEventsToday);
         noEventsTextView.setTextColor(textColor);
         noEventsTextView.setVisibility(View.VISIBLE);
 
@@ -249,7 +249,7 @@ public class ltw_MainActivity extends AppCompatActivity {
         context = getApplicationContext();
         self = this;
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.ltw_activity_main);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
