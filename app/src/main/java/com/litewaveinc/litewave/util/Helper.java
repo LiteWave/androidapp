@@ -7,13 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.widget.ImageView;
-
-import com.litewaveinc.litewave.R;
-import com.litewaveinc.litewave.activities.SeatActivity;
-import com.litewaveinc.litewave.services.Config;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

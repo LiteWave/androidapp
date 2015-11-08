@@ -32,10 +32,10 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 
-public class ShowActivity extends AppCompatActivity {
+public class ltw_ShowActivity extends AppCompatActivity {
 
     public Context context;
-    public ShowActivity self;
+    public ltw_ShowActivity self;
 
     public View view;
     public TextView countdownTextView;
@@ -91,11 +91,11 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     public void stopShow() {
-        ViewStack.push(ReadyActivity.class);
+        ViewStack.push(ltw_ReadyActivity.class);
 
         disableScreenOn();
 
-        Intent intent = new Intent(ShowActivity.this, ResultsActivity.class);
+        Intent intent = new Intent(ltw_ShowActivity.this, ltw_ResultsActivity.class);
         startActivity(intent);
         finish();
     }

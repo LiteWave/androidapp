@@ -39,12 +39,12 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ReadyActivity extends AppCompatActivity {
+public class ltw_ReadyActivity extends AppCompatActivity {
 
     public int STROKE_WIDTH = 6;
 
     public Context context;
-    public ReadyActivity self;
+    public ltw_ReadyActivity self;
 
     public TextView eventStatusTextView;
     public ImageView backgroundImage;
@@ -79,7 +79,7 @@ public class ReadyActivity extends AppCompatActivity {
         public void success(JSONObject content) {
             clearSeat();
 
-            Intent parentActivityIntent = new Intent(ReadyActivity.this, ViewStack.pop());
+            Intent parentActivityIntent = new Intent(ltw_ReadyActivity.this, ViewStack.pop());
             parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(parentActivityIntent);
         }
@@ -141,7 +141,7 @@ public class ReadyActivity extends AppCompatActivity {
 
         @Override
         public void success(JSONObject content) {
-            ViewStack.push(ReadyActivity.class);
+            ViewStack.push(ltw_ReadyActivity.class);
 
             String mobileOffset = "";
             try {
@@ -152,7 +152,7 @@ public class ReadyActivity extends AppCompatActivity {
             Config.set("ShowData", content);
             Config.set("Show", currentShow);
 
-            Intent intent = new Intent(ReadyActivity.this, ShowActivity.class);
+            Intent intent = new Intent(ltw_ReadyActivity.this, ltw_ShowActivity.class);
             startActivity(intent);
             finish();
         }

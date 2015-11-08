@@ -32,10 +32,10 @@ import java.util.Date;
 import java.util.UUID;
 
 
-public class MainActivity extends AppCompatActivity {
+public class ltw_MainActivity extends AppCompatActivity {
 
     public Context context;
-    public MainActivity self;
+    public ltw_MainActivity self;
 
     public View view;
     public TextView noEventsTextView;
@@ -228,12 +228,12 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent;
         if (Config.getPreference("UserLocationID", "", context) == "") {
-            intent = new Intent(MainActivity.this, LevelActivity.class);
+            intent = new Intent(ltw_MainActivity.this, ltw_LevelActivity.class);
         } else {
-            intent = new Intent(MainActivity.this, ReadyActivity.class);
+            intent = new Intent(ltw_MainActivity.this, ltw_ReadyActivity.class);
         }
 
-        ViewStack.push(MainActivity.class);
+        ViewStack.push(ltw_MainActivity.class);
         startActivity(intent);
         finish();
     }
