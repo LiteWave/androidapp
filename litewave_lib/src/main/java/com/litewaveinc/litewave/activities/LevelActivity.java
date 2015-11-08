@@ -29,10 +29,10 @@ import java.util.Hashtable;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ltw_LevelActivity extends AppCompatActivity {
+public class LevelActivity extends AppCompatActivity {
 
     public Context context;
-    public ltw_LevelActivity self;
+    public LevelActivity self;
 
     public View view;
     public ImageView backgroundImage;
@@ -77,9 +77,9 @@ public class ltw_LevelActivity extends AppCompatActivity {
     protected void selectLevel(String level) {
         Config.set("LevelID", level);
 
-        ViewStack.push(ltw_LevelActivity.class);
+        ViewStack.push(LevelActivity.class);
 
-        Intent intent = new Intent(ltw_LevelActivity.this, ltw_SeatActivity.class);
+        Intent intent = new Intent(LevelActivity.this, SeatActivity.class);
         startActivity(intent);
         finish();
     }

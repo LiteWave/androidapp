@@ -27,10 +27,10 @@ import org.json.JSONObject;
 import java.io.InputStream;
 
 
-public class ltw_ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity {
 
     public Context context;
-    public ltw_ResultsActivity self;
+    public ResultsActivity self;
 
     public Button returnButton;
     public ImageView backgroundImage;
@@ -50,7 +50,7 @@ public class ltw_ResultsActivity extends AppCompatActivity {
         // popping the current view
         ViewStack.pop();
         // popping the show view
-        Intent parentActivityIntent = new Intent(ltw_ResultsActivity.this, ViewStack.pop());
+        Intent parentActivityIntent = new Intent(ResultsActivity.this, ViewStack.pop());
         parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(parentActivityIntent);
 

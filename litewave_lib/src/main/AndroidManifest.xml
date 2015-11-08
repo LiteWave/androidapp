@@ -4,13 +4,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ltw_ic_launcher"
-        android:label="@string/ltw_app_name"
-        android:theme="@style/AppTheme">
+    <application>
         <activity
-            android:name=".activities.ltw_MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/ltw_app_name">
             <intent-filter>
@@ -19,25 +15,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ltw_LevelActivity"
+            android:name=".activities.LevelActivity"
             android:screenOrientation="portrait"
             android:label="Choose level" >
         </activity>
         <activity
-            android:name=".activities.ltw_SeatActivity"
+            android:name=".activities.SeatActivity"
             android:screenOrientation="portrait"
             android:label="@string/ltw_title_activity_choose_seat">
         </activity>
         <activity
-            android:name=".activities.ltw_ReadyActivity"
+            android:name=".activities.ReadyActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.ltw_ShowActivity"
+            android:name=".activities.ShowActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activities.ltw_ResultsActivity"
+            android:name=".activities.ResultsActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>
