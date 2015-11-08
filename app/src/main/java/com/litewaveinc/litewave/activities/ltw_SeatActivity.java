@@ -31,10 +31,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class SeatActivity extends AppCompatActivity {
+public class ltw_SeatActivity extends AppCompatActivity {
 
     Context context;
-    SeatActivity self;
+    ltw_SeatActivity self;
 
     public View view;
     public ImageView backgroundImage;
@@ -72,9 +72,9 @@ public class SeatActivity extends AppCompatActivity {
             saveOffset(mobileOffset);
             saveSeat(userLocationID);
 
-            ViewStack.push(SeatActivity.class);
+            ViewStack.push(ltw_SeatActivity.class);
 
-            Intent intent = new Intent(SeatActivity.this, ReadyActivity.class);
+            Intent intent = new Intent(ltw_SeatActivity.this, ltw_ReadyActivity.class);
             startActivity(intent);
             finish();
         }
@@ -360,7 +360,7 @@ public class SeatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent parentActivityIntent = new Intent(SeatActivity.this, ViewStack.pop());
+                Intent parentActivityIntent = new Intent(ltw_SeatActivity.this, ViewStack.pop());
                 parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(parentActivityIntent);
                 return true;
