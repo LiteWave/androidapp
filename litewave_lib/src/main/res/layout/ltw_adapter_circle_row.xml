@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textSize="100px"
-        android:textColor="@color/default_text"
+        android:textColor="@color/ltw_default_text"
         android:id="@+id/text"/>
 
 

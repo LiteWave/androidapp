@@ -27,7 +27,7 @@
             android:enabled="true"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textColor="@color/default_text"
+            android:textColor="@color/ltw_default_text"
             android:layout_height="100dp"
             android:layout_width="0dp"
             app:layout_widthPercent="80%"

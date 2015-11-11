@@ -219,8 +219,8 @@ public class ReadyActivity extends AppCompatActivity {
 
     protected void disableJoin() {
         int color = Helper.getColor((String) Config.get("highlightColor"));
-        joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
-        joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
+        joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.ltw_disabled_button_background));
+        joinButton.setTextColor(ContextCompat.getColor(context, R.color.ltw_disabled_button_text));
         joinButton.setOnClickListener(null);
 
         eventStatusTextView.setText("Waiting for the event to begin");

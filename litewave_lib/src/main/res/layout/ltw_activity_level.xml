@@ -45,7 +45,7 @@
             android:text="Please choose the level you are seated in"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textColor="@color/default_text"
+            android:textColor="@color/ltw_default_text"
             android:layout_height="50dp"
             android:layout_width="0dp"
             app:layout_widthPercent="90%"

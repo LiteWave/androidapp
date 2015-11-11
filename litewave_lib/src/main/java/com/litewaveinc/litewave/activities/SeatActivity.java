@@ -274,8 +274,8 @@ public class SeatActivity extends AppCompatActivity {
     }
 
     protected void disableJoin() {
-        joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.disabled_button_background));
-        joinButton.setTextColor(ContextCompat.getColor(context, R.color.disabled_button_text));
+        joinButton.setBackgroundColor(ContextCompat.getColor(context, R.color.ltw_disabled_button_background));
+        joinButton.setTextColor(ContextCompat.getColor(context, R.color.ltw_disabled_button_text));
         joinButton.setOnClickListener(null);
     }
 
