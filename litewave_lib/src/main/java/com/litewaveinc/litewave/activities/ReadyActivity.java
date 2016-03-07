@@ -102,7 +102,7 @@ public class ReadyActivity extends AppCompatActivity {
             try {
                 int offset = Integer.parseInt((String)Config.get("MobileOffset"));
                 currentDate = gmtFormat.parse(Calendar.getInstance().getTime().toString());
-                currentDate = new Date(currentDate.getTime() + offset);
+                currentDate = new Date(currentDate.getTime() - offset);
             } catch (ParseException e) {e.printStackTrace(); return;}
 
             if (content.length() > 0) {

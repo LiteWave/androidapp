@@ -7,5 +7,5 @@
     //Client IDs
     <string name="ltw_clientID_Blazers">5260316cbf80240000000001</string>
     //URL Resources
-    <string name="ltw_apiURL">http://litewaveinc.com/api/</string>
+    <string name="ltw_apiURL">http://www.litewaveinc.com/api/</string>
 </resources>
