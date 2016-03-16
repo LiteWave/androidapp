@@ -11,9 +11,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 
 import com.litewaveinc.litewave.R;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.Header;
 
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * Created by jonathan on 10/10/15.
@@ -28,13 +28,13 @@ public final class API {
         API.appContext = context;
     }
 
-    /* CLIENTS */
+      /* CLIENTS */
 
     public static void getClient(String clientID, IAPIResponse response) {
         API.get("clients/" + clientID, response);
     }
 
-    /* EVENTS */
+      /* EVENTS */
 
     public static void getEvents(String clientID, IAPIResponse response) {
         API.get("clients/" + clientID + "/events", response);
@@ -52,7 +52,7 @@ public final class API {
         API.delete("user_locations/" + userLocationID, response);
     }
 
-    /* SHOWS */
+      /* SHOWS */
 
     public static void getShows(String eventID, IAPIResponse response) {
         API.get("events/" + eventID + "/shows", response);
@@ -66,7 +66,7 @@ public final class API {
         API.post("user_locations/" + userLocationID + "/event_joins", params, response);
     }
 
-    /* SEATS */
+      /* SEATS */
 
     public static void getLevels(String stadiumID, IAPIResponse response) {
         API.get("stadiums/" + stadiumID + "/levels", response);
@@ -104,7 +104,6 @@ public final class API {
 
         ResponseHandlerInterface responseHandler = new JsonHttpResponseHandler() {
 
-            @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 apiResponse.success(response);
             }
@@ -113,21 +112,18 @@ public final class API {
                 apiResponse.success(response);
             }
 
-            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("Failed: ", "" + statusCode);
                 Log.d("Error : ", "" + throwable);
                 apiResponse.failure(new JSONArray(), statusCode);
             }
 
-            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d("Failed: ", ""+statusCode);
                 Log.d("Error : ", "" + throwable);
                 apiResponse.failure(errorResponse, statusCode);
             }
 
-            @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("Failed: ", ""+statusCode);
                 Log.d("Error : ", "" + throwable);
@@ -146,9 +142,10 @@ public final class API {
         Log.d("Debug", "Requesting: " + method + ":" + apiURL.toString());
 
         AsyncHttpClient client = new AsyncHttpClient();
+
         switch (method) {
             case "GET":
-                client.get(appContext, apiURL.toString(), entity, "application/json", responseHandler);
+                client.get(appContext, apiURL.toString(), responseHandler);
                 break;
             case "POST":
                 client.post(appContext, apiURL.toString(), entity, "application/json", responseHandler);
@@ -157,7 +154,7 @@ public final class API {
                 client.put(appContext, apiURL.toString(), entity, "application/json", responseHandler);
                 break;
             case "DELETE":
-                client.delete(appContext, apiURL.toString(), entity, "application/json", responseHandler);
+                client.delete(appContext, apiURL.toString(), responseHandler);
                 break;
 
         }
