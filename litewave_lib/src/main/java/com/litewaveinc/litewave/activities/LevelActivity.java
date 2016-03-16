@@ -120,7 +120,9 @@ public class LevelActivity extends AppCompatActivity {
         int color = Helper.getColor((String)Config.get("highlightColor"));
         int backgroundColor = Helper.getColor((String)Config.get("backgroundColor"));
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(new ColorDrawable(color));
+        }
 
         view = findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);

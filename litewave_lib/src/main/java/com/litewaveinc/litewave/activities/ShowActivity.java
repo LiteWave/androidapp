@@ -244,7 +244,9 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.ltw_activity_show);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         view = findViewById(R.id.view);
         setBackgroundColor(Color.BLACK);

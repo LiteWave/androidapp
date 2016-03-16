@@ -252,7 +252,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.ltw_activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         view = findViewById(R.id.view);
 

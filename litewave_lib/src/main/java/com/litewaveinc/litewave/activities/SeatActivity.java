@@ -327,9 +327,10 @@ public class SeatActivity extends AppCompatActivity {
         int highlightColor = Helper.getColor((String)Config.get("highlightColor"));
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+        }
 
         view = findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);

@@ -296,9 +296,11 @@ public class ReadyActivity extends AppCompatActivity {
         setContentView(R.layout.ltw_activity_ready);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle((String) Config.get("EventName"));
-        actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle((String) Config.get("EventName"));
+            actionBar.setBackgroundDrawable(new ColorDrawable(highlightColor));
+        }
 
         view = findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);

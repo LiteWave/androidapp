@@ -71,7 +71,9 @@ public class ResultsActivity extends AppCompatActivity {
         int highlightColor = Helper.getColor((String) Config.get("highlightColor"));
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         view = (View) this.findViewById(R.id.view);
         view.setBackgroundColor(backgroundColor);
