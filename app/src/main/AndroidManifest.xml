@@ -8,7 +8,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:label="@string/ltw_app_name">
+            android:label="@string/ltw_app_name"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -17,24 +18,29 @@
         <activity
             android:name=".activities.LevelActivity"
             android:screenOrientation="portrait"
-            android:label="Choose level" >
+            android:label="Choose level"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".activities.SeatActivity"
             android:screenOrientation="portrait"
-            android:label="@string/ltw_title_activity_choose_seat">
+            android:label="@string/ltw_title_activity_choose_seat"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".activities.ReadyActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".activities.ShowActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".activities.ResultsActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 
