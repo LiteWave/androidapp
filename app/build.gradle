@@ -1,11 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        signingConfig {
+            keyAlias 'LiteWave'
+            keyPassword 'litewave'
+            storeFile file('../signing/keys/litewaveSigningKey.jks')
+            storePassword 'litewave'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.0"
-
     useLibrary "org.apache.http.legacy"
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
@@ -15,11 +21,12 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.signingConfig
         }
     }
     lintOptions {
         abortOnError false
-  }
+    }
 }
 
 dependencies {
