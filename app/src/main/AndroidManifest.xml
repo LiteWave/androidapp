@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.litewaveinc.litewave">
+    package="com.litewave.app">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <application>
+    <application android:icon="@drawable/icon">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.litewaveinc.litewave.activities.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/ltw_app_name"
             android:theme="@style/AppTheme">
@@ -16,29 +16,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LevelActivity"
+            android:name="com.litewaveinc.litewave.activities.LevelActivity"
             android:screenOrientation="portrait"
             android:label="Choose level"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".activities.SeatActivity"
+            android:name="com.litewaveinc.litewave.activities.SeatActivity"
             android:screenOrientation="portrait"
             android:label="@string/ltw_title_activity_choose_seat"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".activities.ReadyActivity"
+            android:name="com.litewaveinc.litewave.activities.ReadyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".activities.ShowActivity"
+            android:name="com.litewaveinc.litewave.activities.ShowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".activities.ResultsActivity"
+            android:name="com.litewaveinc.litewave.activities.ResultsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
         </activity>

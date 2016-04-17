@@ -10,7 +10,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.ResponseHandlerInterface;
 
-import com.litewaveinc.litewave.R;
+import com.litewave.app.R;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.Header;
 

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.litewaveinc.litewave.R;
+import com.litewave.app.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.util.Helper;
 

@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.litewaveinc.litewave.R;
+import com.litewave.app.R;
 import com.litewaveinc.litewave.services.Config;
 import com.litewaveinc.litewave.services.ViewStack;
 import com.litewaveinc.litewave.util.Helper;

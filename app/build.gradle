@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         signingConfig {
-            keyAlias 'LiteWave'
-            keyPassword 'litewave'
-            storeFile file('../signing/keys/litewaveSigningKey.jks')
-            storePassword 'litewave'
+            keyAlias 'selfsigned'
+            keyPassword 'litewavepassword'
+            storeFile file('../signing/keys/litewave.jks')
+            storePassword 'litewavepassword'
         }
     }
     compileSdkVersion 23
@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
     }
     buildTypes {
         release {

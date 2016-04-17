@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.litewaveinc.litewave.R;
+import com.litewave.app.R;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
 import com.litewaveinc.litewave.services.Config;

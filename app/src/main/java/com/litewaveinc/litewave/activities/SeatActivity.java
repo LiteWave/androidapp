@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.litewaveinc.litewave.R;
+import com.litewave.app.R;
 import com.litewaveinc.litewave.adapters.CircleListAdapter;
 import com.litewaveinc.litewave.services.API;
 import com.litewaveinc.litewave.services.APIResponse;
